@@ -1,0 +1,67 @@
+# encoding: utf-8
+#
+# This is an example of an attributes file that can be passed to the profile
+# to override the defaults of the attributes defined in each of the tests.
+# You can use this to automatically adjust your tests when using automation or
+# programmatic deployment or validation of different deployment patterns without
+# having to adjust the core profile.
+
+pg_owner: 'postgres'
+pg_group: 'postgres'
+pg_owner_password: ''
+
+pg_dba: ''
+pg_dba_password: ''
+
+pg_user: ''
+pg_user_password: ''
+
+pg_host: ''
+pg_port: ''
+
+pg_db: ''
+pg_table: ''
+
+# priv user account that can login to the postgres host
+login_user: ''
+login_host: ''
+
+pg_version: '9.5'
+
+pg_data_dir: "/var/lib/pgsql/9.5/data"
+pg_conf_file: "/var/lib/pgsql/9.5/data/postgresql.conf"
+pg_user_defined_conf: "/var/lib/pgsql/9.5/data/stig-postgresql.conf"
+pg_hba_conf_file: "/var/lib/pgsql/9.5/data/pg_hba.conf"
+pg_ident_conf_file: "/var/lib/pgsql/9.5/data/pg_ident.conf"
+
+pg_shared_dirs: [
+  "/usr/pgsql-9.5",
+  "/usr/pgsql-9.5/bin",
+  "/usr/pgsql-9.5/lib",
+  "/usr/pgsql-9.5/share"
+  ]
+
+pg_conf_mode: '0600'
+pg_ssl: 'on'
+pg_log_dest: 'syslog'
+pg_syslog_facility: ['local0']
+pg_syslog_owner: 'postgres'
+
+pgaudit_log_items: ['ddl','role','read','write']
+pgaudit_log_line_items: ['%m','%u','%c']
+
+pg_superusers: [
+  'postgres',
+  ]
+
+pg_users: [
+  '',
+  ]
+
+pg_replicas: [
+  '192.168.1.3/32',
+  ]
+
+pg_max_connections: '100'
+
+pg_timezone: 'UTC'
