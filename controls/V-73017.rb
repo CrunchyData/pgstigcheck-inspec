@@ -130,7 +130,7 @@ $ psql -c \"REVOKE ALL PRIVILEGES ON <table> FROM <role_name>;"
     "=[#{schema_public_privileges}]+)\/\\w+,?)+|)\\|"
   schema_acl_regex = Regexp.new(schema_acl)
 
-  databases_sql = 'SELECT datname FROM pg_catalog.pg_database;'
+  databases_sql = 'SELECT datname FROM pg_catalog.pg_database where datname not like \'%template%\';'
   databases_query = sql.query(databases_sql, [PG_DB])
   databases = databases_query.lines
 
