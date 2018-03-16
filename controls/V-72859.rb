@@ -275,7 +275,7 @@ https://www.postgresql.org/docs/current/static/sql-grant.html
     "WHERE c.relkind IN ('r', 'v', 'm', 'S', 'f') "\
     "AND n.nspname !~ '^pg_' AND pg_catalog.pg_table_is_visible(c.oid);"
 
-  databases_sql = 'SELECT datname FROM pg_catalog.pg_database where datname not like \'%template%\';'
+  databases_sql = 'SELECT datname FROM pg_catalog.pg_database where not datistemplate;'
   databases_query = sql.query(databases_sql, [PG_DB])
   databases = databases_query.lines
 
