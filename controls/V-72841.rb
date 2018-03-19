@@ -79,10 +79,8 @@ control "V-72841" do
   tag "gid": "V-72841"
   tag "rid": "SV-87493r1_rule"
   tag "stig_id": "PGS9-00-000100"
-  tag "cci": "CCI-000382"
-  tag "nist": ["CM-7 b", "Rev_4"]
-  tag "cci": "CCI-001762"
-  tag "nist": ["CM-7 (1) (b)", "Rev_4"]
+  tag "cci": ["CCI-000382","CCI-001762"]
+  tag "nist": ["CM-7 b", "Rev_4", "CM-7 (1) (b)", "Rev_4"]
 
   tag "check": "As the database administrator, run the following SQL:
 
