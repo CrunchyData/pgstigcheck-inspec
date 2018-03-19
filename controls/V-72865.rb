@@ -137,7 +137,7 @@ control "V-72865" do
     "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace "\
     "WHERE c.relkind IN ('r', 'v', 'm', 'S', 'f');"
 
-  databases_sql = 'SELECT datname FROM pg_catalog.pg_database;'
+  databases_sql = 'SELECT datname FROM pg_catalog.pg_database where not datistemplate;'
   databases_query = sql.query(databases_sql, [PG_DB])
   databases = databases_query.lines
 

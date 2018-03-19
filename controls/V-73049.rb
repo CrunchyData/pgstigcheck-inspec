@@ -47,6 +47,7 @@ PG_HOST = attribute(
 PG_USERS = attribute(
   'pg_users',
   description: 'Authorized accounts',
+  default: 'postgres',
 )
 
 PG_DATA_DIR = attribute(
