@@ -74,6 +74,7 @@ control "V-72841" do
         database to other components of the information system."
   impact 0.5
   
+  tag "severity": "medium"
   tag "gtitle": "SRG-APP-000142-DB-000094"
   tag "gid": "V-72841"
   tag "rid": "SV-87493r1_rule"
