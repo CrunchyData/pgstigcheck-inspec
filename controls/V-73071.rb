@@ -34,7 +34,7 @@ control "V-73071" do
   tag "gid": "V-73071"
   tag "rid": "SV-87723r1_rule"
   tag "stig_id": "PGS9-00-012800"
-  tag "cci": "CCI-000803"
+  tag "cci": ["CCI-000803"]
   tag "nist": ["IA-7", "Rev_4"]
 
   tag "check": "If the deployment incorporates a custom build of the operating

@@ -39,7 +39,7 @@ without the proper controls."
   tag "gid": "V-73057"
   tag "rid": "SV-87709r1_rule"
   tag "stig_id": "PGS9-00-011900"
-  tag "cci": "CCI-001090"
+  tag "cci": ["CCI-001090"]
   tag "nist": ["SC-4", "Rev_4"]
   tag "check": "Review the procedures for the refreshing of development/test data
 from production.

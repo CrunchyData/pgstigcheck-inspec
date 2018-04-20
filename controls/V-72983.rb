@@ -50,7 +50,7 @@ control "V-72983" do
   tag "gid": "V-72983"
   tag "rid": "SV-87635r1_rule"
   tag "stig_id": "PGS9-00-007400"
-  tag "cci": "CCI-000169"
+  tag "cci": ["CCI-000169"]
   tag "nist": ["AU-12 a", "Rev_4"]
   tag "check": "Check PostgreSQL auditing to determine whether
   organization-defined auditable events are being audited by the system.

@@ -61,7 +61,7 @@ control "V-72981" do
   tag "gid": "V-72981"
   tag "rid": "SV-87633r1_rule"
   tag "stig_id": "PGS9-00-007200"
-  tag "cci": "CCI-002420"
+  tag "cci": ["CCI-002420"]
   tag "nist": ["SC-8 (2)", "Rev_4"]
   tag "check": "If the data owner does not have a strict requirement for ensuring
   data integrity and confidentiality is maintained at every step of the data

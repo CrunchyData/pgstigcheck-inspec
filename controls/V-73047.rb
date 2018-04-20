@@ -59,7 +59,7 @@ effective."
   tag "gid": "V-73047"
   tag "rid": "SV-87699r1_rule"
   tag "stig_id": "PGS9-00-011400"
-  tag "cci": "CCI-001188"
+  tag "cci": ["CCI-001188"]
   tag "nist": ["SC-23 (3)", "Rev_4"]
   tag "check": "To check if PostgreSQL is configured to use ssl, as the database
 administrator (shown here as \"postgres\"), run the following SQL:

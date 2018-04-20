@@ -51,7 +51,7 @@ control "V-73001" do
   tag "gid": "V-73001"
   tag "rid": "SV-87653r1_rule"
   tag "stig_id": "PGS9-00-008600"
-  tag "cci": "CCI-001464"
+  tag "cci": ["CCI-001464"]
   tag "nist": ["AU-14 (1)", "Rev_4"]
 
   tag "check": "As the database administrator (shown here as \"postgres\"), check

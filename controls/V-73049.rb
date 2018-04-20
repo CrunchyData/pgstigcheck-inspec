@@ -90,7 +90,7 @@ activity."
   tag "gid": "V-73049"
   tag "rid": "SV-87701r1_rule"
   tag "stig_id": "PGS9-00-011500"
-  tag "cci": "CCI-000764"
+  tag "cci": ["CCI-000764"]
   tag "nist": ["IA-2", "Rev_4"]
   tag "check": "Review PostgreSQL settings to determine whether organizational users
 are uniquely identified and authenticated when logging on/connecting to the system.

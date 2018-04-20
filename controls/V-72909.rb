@@ -60,7 +60,7 @@ control "V-72909" do
   tag "gid": "V-72909"
   tag "rid": "SV-87561r1_rule"
   tag "stig_id": "PGS9-00-003800"
-  tag "cci": "CCI-001844"
+  tag "cci": ["CCI-001844"]
   tag "nist": ["AU-3 (2)", "Rev_4"]
   tag "check": "On UNIX systems, PostgreSQL can be configured to use stderr,
   csvlog and syslog. To send logs to a centralized location, syslog should be

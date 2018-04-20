@@ -63,7 +63,7 @@ will be open to compromise and unauthorized modification."
   tag "gid": "V-72995"
   tag "rid": "SV-87647r1_rule"
   tag "stig_id": "PGS9-00-008300"
-  tag "cci": "CCI-001199"
+  tag "cci": ["CCI-001199"]
   tag "nist": ["SC-28", "Rev_4"]
 
   tag "check": "One possible way to encrypt data within PostgreSQL is to use the

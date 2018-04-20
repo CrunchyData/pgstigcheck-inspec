@@ -60,7 +60,7 @@ than for the network packet."
   tag "gid": "V-73031"
   tag "rid": "SV-87683r1_rule"
   tag "stig_id": "PGS9-00-010300"
-  tag "cci": "CCI-002470"
+  tag "cci": ["CCI-002470"]
   tag "nist": ["SC-23 (5)", "Rev_4"]
   tag "check": "As the database administrator (shown here as \"postgres\"), verify
 the following setting in postgresql.conf:

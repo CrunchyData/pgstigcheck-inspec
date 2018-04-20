@@ -43,7 +43,7 @@ control "V-72899" do
   tag "gid": "V-72899"
   tag "rid": "SV-87551r1_rule"
   tag "stig_id": "PGS9-00-003200"
-  tag "cci": "CCI-001499"
+  tag "cci": ["CCI-001499"]
   tag "nist": ["CM-5 (6)", "Rev_4"]
   tag "check": "Review procedures for controlling, granting access to, and
   tracking use of the PostgreSQL software installation account(s).

@@ -67,7 +67,7 @@ stored with the audit record, the record itself is of very limited use."
   tag "gid": "V-73033"
   tag "rid": "SV-87685r1_rule"
   tag "stig_id": "PGS9-00-010400"
-  tag "cci": "CCI-000130"
+  tag "cci": ["CCI-000130"]
   tag "nist": ["AU-3", "Rev_4"]
   tag "check": "As the database administrator (shown here as \"postgres\"), verify
 the current log_line_prefix setting in postgresql.conf:

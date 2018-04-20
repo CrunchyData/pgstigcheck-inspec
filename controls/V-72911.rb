@@ -90,7 +90,7 @@ control "V-72911" do
   tag "gid": "V-72911"
   tag "rid": "SV-87563r1_rule"
   tag "stig_id": "PGS9-00-004000"
-  tag "cci": "CCI-001084"
+  tag "cci": ["CCI-001084"]
   tag "nist": ["SC-3", "Rev_4"]
   tag "check": "Check PostgreSQL settings to determine whether objects or code
   implementing security functionality are located in a separate security domain,

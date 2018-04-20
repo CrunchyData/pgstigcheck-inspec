@@ -45,7 +45,7 @@ transmission."
   tag "gid": "V-72861"
   tag "rid": "SV-87513r1_rule"
   tag "stig_id": "PGS9-00-001100"
-  tag "cci": "CCI-002264"
+  tag "cci": ["CCI-002264"]
   tag "nist": ["AC-16 a", "Rev_4"]
   tag "check": "If security labeling is not required, this is not a finding.
   First, as the database administrator (shown here as \"postgres\"), run the

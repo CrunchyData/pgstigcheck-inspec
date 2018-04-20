@@ -39,7 +39,7 @@ control "V-72917" do
   tag "gid": "V-72917"
   tag "rid": "SV-87569r1_rule"
   tag "stig_id": "PGS9-00-004300"
-  tag "cci": "CCI-002617"
+  tag "cci": ["CCI-002617"]
   tag "nist": ["SI-2 (6)", "Rev_4"]
   tag "check": "To check software installed by packages, as the system
   administrator, run the following command:

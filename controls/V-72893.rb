@@ -40,7 +40,7 @@ control "V-72893" do
   tag "gid": "V-72893"
   tag "rid": "SV-87545r1_rule"
   tag "stig_id": "PGS9-00-002700"
-  tag "cci": "CCI-001858"
+  tag "cci": ["CCI-001858"]
   tag "nist": ["AU-5 (2)", "Rev_4"]
   tag "check": "Review the system documentation to determine which audit failure
   events require real-time alerts.

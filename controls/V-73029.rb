@@ -77,7 +77,7 @@ actions."
   tag "gid": "V-73029"
   tag "rid": "SV-87681r1_rule"
   tag "stig_id": "PGS9-00-010200"
-  tag "cci": "CCI-000186"
+  tag "cci": ["CCI-000186"]
   tag "nist": ["IA-5 (2) (b)", "Rev_4"]
   tag "check": "First, as the database administrator (shown here as \"postgres\"),
 verify the following settings:

@@ -49,7 +49,7 @@ control "V-72903" do
   tag "gid": "V-72903"
   tag "rid": "SV-87555r1_rule"
   tag "stig_id": "PGS9-00-003500"
-  tag "cci": "CCI-000135"
+  tag "cci": ["CCI-000135"]
   tag "nist": ["AU-3 (1)", "Rev_4"]
   tag "check": "Review the system documentation to identify what additional
   information the organization has determined necessary.

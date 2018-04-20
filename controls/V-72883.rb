@@ -83,7 +83,7 @@ control "V-72883" do
   tag "gid": "V-72883"
   tag "rid": "SV-87535r1_rule"
   tag "stig_id": "PGS9-00-002200"
-  tag "cci": "CCI-002165"
+  tag "cci": ["CCI-002165"]
   tag "nist": ["AC-3 (4)", "Rev_4"]
   tag "check": "Review system documentation to identify the required
   discretionary access control (DAC).

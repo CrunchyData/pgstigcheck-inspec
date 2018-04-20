@@ -33,7 +33,7 @@ authorization decisions."
   tag "gid": "V-73055"
   tag "rid": "SV-87707r1_rule"
   tag "stig_id": "PGS9-00-011800"
-  tag "cci": "CCI-000187"
+  tag "cci": ["CCI-000187"]
   tag "nist": ["IA-5 (2) (c)", "Rev_4"]
   tag "check": "The cn (Common Name) attribute of the certificate will be compared
 to the requested database user name, and if they match the login will be allowed.

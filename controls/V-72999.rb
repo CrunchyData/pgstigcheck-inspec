@@ -80,7 +80,7 @@ inadvertently made available to the user."
   tag "gid": "V-72999"
   tag "rid": "SV-87651r1_rule"
   tag "stig_id": "PGS9-00-008500"
-  tag "cci": "CCI-001082"
+  tag "cci": ["CCI-001082"]
   tag "nist": ["SC-2", "Rev_4"]
 
   tag "check": "Check PostgreSQL settings and vendor documentation to verify that

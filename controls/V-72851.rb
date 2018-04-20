@@ -86,7 +86,7 @@ control "V-72851" do
   tag "gid": "V-72851"
   tag "rid": "SV-87503r1_rule"
   tag "stig_id": "PGS9-00-000600"
-  tag "cci": "CCI-001312"
+  tag "cci": ["CCI-001312"]
   tag "nist": ["SI-11 a", "Rev_4"]
   tag "check": "As the database administrator, run the following SQL:
 

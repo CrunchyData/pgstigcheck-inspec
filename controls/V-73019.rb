@@ -63,7 +63,7 @@ a standard, shared account."
   tag "gid": "V-73019"
   tag "rid": "SV-87671r1_rule"
   tag "stig_id": "PGS9-00-009700"
-  tag "cci": "CCI-000166"
+  tag "cci": ["CCI-000166"]
   tag "nist": ["AU-10", "Rev_4"]
   tag "check": "First, as the database administrator, review the current
 log_line_prefix settings by running the following SQL:

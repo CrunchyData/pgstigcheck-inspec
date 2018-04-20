@@ -54,7 +54,7 @@ control "V-72871" do
   tag "gid": "V-72871"
   tag "rid": "SV-87523r1_rule"
   tag "stig_id": "PGS9-00-001800"
-  tag "cci": "CCI-001310"
+  tag "cci": ["CCI-001310"]
   tag "nist": ["SI-10", "Rev_4"]
   tag "check": "Review PostgreSQL code (trigger procedures, functions),
   application code, settings, column and field definitions, and constraints to

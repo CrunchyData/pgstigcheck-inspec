@@ -47,7 +47,7 @@ control "V-72877" do
   tag "gid": "V-72877"
   tag "rid": "SV-87529r1_rule"
   tag "stig_id": "PGS9-00-002100"
-  tag "cci": "CCI-001849"
+  tag "cci": ["CCI-001849"]
   tag "nist": ["AU-4", "Rev_4"]
   tag "check": "Investigate whether there have been any incidents where
   PostgreSQL ran out of audit log space since the last time the space was

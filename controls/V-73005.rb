@@ -65,7 +65,7 @@ capacity thresholds; or identifying an improperly configured application."
   tag "gid": "V-73005"
   tag "rid": "SV-87657r1_rule"
   tag "stig_id": "PGS9-00-008800"
-  tag "cci": "CCI-000133"
+  tag "cci": ["CCI-000133"]
   tag "nist": ["AU-3", "Rev_4"]
 
   tag "check": "Check PostgreSQL settings and existing audit records to verify

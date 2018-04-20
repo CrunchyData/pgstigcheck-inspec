@@ -70,7 +70,7 @@ hijacked."
   tag "gid": "V-73037"
   tag "rid": "SV-87689r1_rule"
   tag "stig_id": "PGS9-00-010600"
-  tag "cci": "CCI-001185"
+  tag "cci": ["CCI-001185"]
   tag "nist": ["SC-23 (1)", "Rev_4"]
   tag "check": "As the database administrator (shown here as \"postgres\"), run the
 following SQL:

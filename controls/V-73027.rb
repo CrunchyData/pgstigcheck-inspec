@@ -54,7 +54,7 @@ escalation and role changes."
   tag "gid": "V-73027"
   tag "rid": "SV-87679r1_rule"
   tag "stig_id": "PGS9-00-010100"
-  tag "cci": "CCI-002038"
+  tag "cci": ["CCI-002038"]
   tag "nist": ["IA-11", "Rev_4"]
   tag "check": "Determine all situations where a user must re-authenticate. Check if
 the mechanisms that handle such situations use the following SQL:

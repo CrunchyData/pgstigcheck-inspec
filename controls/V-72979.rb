@@ -72,7 +72,7 @@ control "V-72979" do
   tag "gid": "V-72979"
   tag "rid": "SV-87631r1_rule"
   tag "stig_id": "PGS9-00-007000"
-  tag "cci": "CCI-000185"
+  tag "cci": ["CCI-000185"]
   tag "nist": ["IA-5 (2) (a)", "Rev_4"]
   tag "check": "Note: The following instructions use the PGDATA environment
   variable. See supplementary content APPENDIX-F for instructions on configuring

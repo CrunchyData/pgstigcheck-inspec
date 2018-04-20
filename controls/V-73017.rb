@@ -69,7 +69,7 @@ upgrades and modifications."
   tag "gid": "V-73017"
   tag "rid": "SV-87669r1_rule"
   tag "stig_id": "PGS9-00-009600"
-  tag "cci": "CCI-001813"
+  tag "cci": ["CCI-001813"]
   tag "nist": ["CM-5 (1)", "Rev_4"]
   tag "check": "To list all the permissions of individual roles, as the database
 administrator (shown here as \"postgres\"), run the following SQL:

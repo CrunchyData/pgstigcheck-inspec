@@ -37,7 +37,7 @@ control "V-72989" do
   tag "gid": "V-72989"
   tag "rid": "SV-87641r1_rule"
   tag "stig_id": "PGS9-00-008000"
-  tag "cci": "CCI-002450"
+  tag "cci": ["CCI-002450"]
   tag "nist": ["SC-13", "Rev_4"]
 
   tag "check": "First, as the system administrator, run the following to see if FIPS

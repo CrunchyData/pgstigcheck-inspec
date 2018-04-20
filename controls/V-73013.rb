@@ -49,7 +49,7 @@ PostgreSQL, a third-party product, or custom application code."
   tag "gid": "V-73013"
   tag "rid": "SV-87665r1_rule"
   tag "stig_id": "PGS9-00-009400"
-  tag "cci": "CCI-002263"
+  tag "cci": ["CCI-002263"]
   tag "nist": ["AC-16 a", "Rev_4"]
   tag "check": "If security labeling is not required, this is not a finding.
 

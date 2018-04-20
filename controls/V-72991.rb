@@ -60,7 +60,7 @@ requirement addresses the compatibility of PostgreSQL with the encryption device
   tag "gid": "V-72991"
   tag "rid": "SV-87643r1_rule"
   tag "stig_id": "PGS9-00-008100"
-  tag "cci": "CCI-002450"
+  tag "cci": ["CCI-002450"]
   tag "nist": ["SC-13", "Rev_4"]
 
   tag "check": "If PostgreSQL is deployed in an unclassified environment, this is

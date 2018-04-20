@@ -47,7 +47,7 @@ data owner, or organization requires additional assurance."
   tag "gid": "V-73051"
   tag "rid": "SV-87703r1_rule"
   tag "stig_id": "PGS9-00-011600"
-  tag "cci": "CCI-002361"
+  tag "cci": ["CCI-002361"]
   tag "nist": ["AC-12", "Rev_4"]
   tag "check": "Review system documentation to obtain the organization's definition
 of circumstances requiring automatic session termination. If the documentation

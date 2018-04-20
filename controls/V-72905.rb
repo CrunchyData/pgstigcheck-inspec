@@ -66,7 +66,7 @@ control "V-72905" do
   tag "gid": "V-72905"
   tag "rid": "SV-87557r1_rule"
   tag "stig_id": "PGS9-00-003600"
-  tag "cci": "CCI-002233"
+  tag "cci": ["CCI-002233"]
   tag "nist": ["AC-6 (8)", "Rev_4"]
   tag "check": "Functions in PostgreSQL can be created with the SECURITY
   DEFINER option. When SECURITY DEFINER functions are executed by a user, said
