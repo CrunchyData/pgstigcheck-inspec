@@ -48,7 +48,7 @@ permissions."
   tag "gid": "V-73011"
   tag "rid": "SV-87663r1_rule"
   tag "stig_id": "PGS9-00-009200"
-  tag "cci": "CCI-000381"
+  tag "cci": ["CCI-000381"]
   tag "nist": ["CM-7 a", "Rev_4"]
   tag "check": "To list all installed packages, as the system administrator, run the
 following:

@@ -104,7 +104,7 @@ control "V-72859" do
   tag "gid": "V-72859"
   tag "rid": "SV-87511r1_rule"
   tag "stig_id": "PGS9-00-000900"
-  tag "cci": "CCI-000213"
+  tag "cci": ["CCI-000213"]
   tag "nist": ["AC-3", "Rev_4"]
   tag "check": "From the system security plan or equivalent documentation,
   determine the appropriate permissions on database objects for each kind

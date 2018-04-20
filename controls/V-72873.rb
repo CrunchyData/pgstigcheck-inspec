@@ -53,7 +53,7 @@ control "V-72873" do
   tag "gid": "V-72873"
   tag "rid": "SV-87525r1_rule"
   tag "stig_id": "PGS9-00-001900"
-  tag "cci": "CCI-001310"
+  tag "cci": ["CCI-001310"]
   tag "nist": ["SI-10", "Rev_4"]
   tag "check": "Review PostgreSQL source code (trigger procedures, functions)
   and application source code, to identify cases of dynamic code execution. Any

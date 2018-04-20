@@ -77,7 +77,7 @@ control "V-72863" do
   tag "gid": "V-72863"
   tag "rid": "SV-87515r1_rule"
   tag "stig_id": "PGS9-00-001200"
-  tag "cci": "CCI-000054"
+  tag "cci": ["CCI-000054"]
   tag "nist": ["AC-10", "Rev_4"]
   tag "check": 'To check the total amount of connections allowed by the database,
                 as the database administrator, run the following SQL:

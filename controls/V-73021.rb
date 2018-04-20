@@ -55,7 +55,7 @@ requirement, however, deals specifically with PostgreSQL."
   tag "gid": "V-73021"
   tag "rid": "SV-87673r1_rule"
   tag "stig_id": "PGS9-00-009800"
-  tag "cci": "CCI-001462"
+  tag "cci": ["CCI-001462"]
   tag "nist": ["AU-14 (2)", "Rev_4"]
   tag "check": "First, as the database administrator (shown here as \"postgres\"),
 verify pgaudit is installed by running the following SQL:

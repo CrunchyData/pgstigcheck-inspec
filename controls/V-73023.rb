@@ -41,7 +41,7 @@ The appropriate support staff include, at a minimum, the ISSO and the DBA/SA."
   tag "gid": "V-73023"
   tag "rid": "SV-87675r1_rule"
   tag "stig_id": "PGS9-00-009900"
-  tag "cci": "CCI-001855"
+  tag "cci": ["CCI-001855"]
   tag "nist": ["AU-5 (1)", "Rev_4"]
   tag "check": "Review system configuration.
 

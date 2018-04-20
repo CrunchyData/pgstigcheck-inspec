@@ -55,7 +55,7 @@ uri: http://iase.disa.mil
   tag "gid": "V-72845"
   tag "rid": "SV-87497r1_rule"
   tag "stig_id": "PGS9-00-000300"
-  tag "cci": "CCI-002605"
+  tag "cci": ["CCI-002605"]
   tag "nist": ["SI-2 c", "Rev_4"]
 
   tag "check": "If new packages are available for PostgreSQL, they can be

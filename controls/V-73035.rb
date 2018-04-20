@@ -65,7 +65,7 @@ the information resides."
   tag "gid": "V-73035"
   tag "rid": "SV-87687r1_rule"
   tag "stig_id": "PGS9-00-010500"
-  tag "cci": "CCI-002476"
+  tag "cci": ["CCI-002476"]
   tag "nist": ["SC-28 (1)", "Rev_4"]
   tag "check": "To check if pgcrypto is installed on PostgreSQL, as a database
 administrator (shown here as \"postgres\"), run the following command:

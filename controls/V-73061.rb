@@ -72,7 +72,7 @@ control "V-73061" do
   tag "gid": "V-73061"
   tag "rid": "SV-87713r1_rule"
   tag "stig_id": "PGS9-00-012200"
-  tag "cci": "CCI-001494"
+  tag "cci": ["CCI-001494"]
   tag "nist": ["AU-9", "Rev_4"]
 
   tag "check": "All configurations for auditing and logging can be found in the

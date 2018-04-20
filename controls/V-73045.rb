@@ -40,7 +40,7 @@ to the centralized system."
   tag "gid": "V-73045"
   tag "rid": "SV-87697r1_rule"
   tag "stig_id": "PGS9-00-011300"
-  tag "cci": "CCI-001851"
+  tag "cci": ["CCI-001851"]
   tag "nist": ["AU-4 (1)", "Rev_4"]
   tag "check": "First, as the database administrator (shown here as \"postgres\"),
 ensure PostgreSQL uses syslog by running the following SQL:

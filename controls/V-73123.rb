@@ -59,7 +59,7 @@ control "V-73123" do
   tag "gid": "V-73123"
   tag "rid": "SV-87775r1_rule"
   tag "stig_id": "PGS9-00-007100"
-  tag "cci": "CCI-000132"
+  tag "cci": ["CCI-000132"]
   tag "nist": ["AU-3", "Rev_4"]
 
   tag "check": "Note: The following instructions use the PGDATA environment variable.

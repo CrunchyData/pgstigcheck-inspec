@@ -54,7 +54,7 @@ control "V-72919" do
   tag "gid": "V-72919"
   tag "rid": "SV-87571r1_rule"
   tag "stig_id": "PGS9-00-004400"
-  tag "cci": "CCI-000172"
+  tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
   tag "check": "As the database administrator (shown here as \"postgres\"), run
   the following SQL:

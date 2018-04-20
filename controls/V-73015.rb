@@ -57,7 +57,7 @@ internally or externally to PostgreSQL."
   tag "gid": "V-73015"
   tag "rid": "SV-87667r1_rule"
   tag "stig_id": "PGS9-00-009500"
-  tag "cci": "CCI-000196"
+  tag "cci": ["CCI-000196"]
   tag "nist": ["IA-5 (1) (c)", "Rev_4"]
   tag "check": "To check if password encryption is enabled, as the database
 administrator (shown here as \"postgres\"), run the following SQL:

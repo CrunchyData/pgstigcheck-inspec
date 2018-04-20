@@ -54,7 +54,7 @@ PG_HOST = attribute(
   tag "gid": "V-72973"
   tag "rid": "SV-87625r1_rule"
   tag "stig_id": "PGS9-00-006700"
-  tag "cci": "CCI-000172"
+  tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
   tag "check": "If category tracking is not required in the database, this is
   not applicable.

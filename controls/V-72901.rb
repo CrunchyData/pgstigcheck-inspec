@@ -54,7 +54,7 @@ control "V-72901" do
   tag "gid": "V-72901"
   tag "rid": "SV-87553r1_rule"
   tag "stig_id": "PGS9-00-003300"
-  tag "cci": "CCI-001499"
+  tag "cci": ["CCI-001499"]
   tag "nist": ["CM-5 (6)", "Rev_4"]
   tag "check": "Review the PostgreSQL software library directory and any
   subdirectories.

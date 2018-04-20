@@ -78,7 +78,7 @@ control "V-72953" do
   tag "gid": "V-72953"
   tag "rid": "SV-87605r1_rule"
   tag "stig_id": "PGS9-00-005800"
-  tag "cci": "CCI-000172"
+  tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
   tag "check": "First, as the database administrator, verify pgaudit is enabled
   by running the following SQL:

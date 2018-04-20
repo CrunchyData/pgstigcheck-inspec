@@ -59,7 +59,7 @@ actions are changed, for example, near real time, within minutes, or within hour
   tag "gid": "V-73025"
   tag "rid": "SV-87677r1_rule"
   tag "stig_id": "PGS9-00-010000"
-  tag "cci": "CCI-001914"
+  tag "cci": ["CCI-001914"]
   tag "nist": ["AU-12 (3)", "Rev_4"]
   tag "check": "First, as the database administrator, check if pgaudit is present in
 shared_preload_libraries:

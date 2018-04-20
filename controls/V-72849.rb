@@ -53,7 +53,7 @@ control "V-72849" do
   tag "gid": "V-72849"
   tag "rid": "SV-87501r1_rule"
   tag "stig_id": "PGS9-00-000500"
-  tag "cci": "CCI-000015"
+  tag "cci": ["CCI-000015"]
   tag "nist": ["AC-2 (1)", "Rev_4"]
 
   tag "check": "Note: The following instructions use the PGDATA environment

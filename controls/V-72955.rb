@@ -57,7 +57,7 @@ control "V-72955" do
   tag "gid": "V-72955"
   tag "rid": "SV-87607r1_rule"
   tag "stig_id": "PGS9-00-005900"
-  tag "cci": "CCI-000172"
+  tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
   tag "check": "First, as the database administrator (shown here as
   \"postgres\"), run the following SQL:

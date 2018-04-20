@@ -74,7 +74,7 @@ control "V-72891" do
   tag "gid": "V-72891"
   tag "rid": "SV-87543r1_rule"
   tag "stig_id": "PGS9-00-002600"
-  tag "cci": "CCI-000171"
+  tag "cci": ["CCI-000171"]
   tag "nist": ["AU-12 b", "Rev_4"]
   tag "check": "Note: The following instructions use the PGDATA environment
   variable. See supplementary content APPENDIX-F for instructions on configuring

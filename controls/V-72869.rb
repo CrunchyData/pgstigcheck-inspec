@@ -44,7 +44,7 @@ control "V-72869" do
   tag "gid": "V-72869"
   tag "rid": "SV-87521r1_rule"
   tag "stig_id": "PGS9-00-001700"
-  tag "cci": "CCI-002262"
+  tag "cci": ["CCI-002262"]
   tag "nist": ["AC-16 a", "Rev_4"]
   tag "check": "If security labeling is not required, this is not a finding.
   First, as the database administrator (shown here as \"postgres\"), run the

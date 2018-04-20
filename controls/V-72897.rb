@@ -68,7 +68,7 @@ control "V-72897" do
   tag "gid": "V-72897"
   tag "rid": "SV-87549r1_rule"
   tag "stig_id": "PGS9-00-003100"
-  tag "cci": "CCI-001499"
+  tag "cci": ["CCI-001499"]
   tag "nist": ["CM-5 (6)", "Rev_4"]
   tag "check": "Review system documentation to identify accounts authorized to
   own database objects. Review accounts that own objects in the database(s).

@@ -47,7 +47,7 @@ modules must be validated and certified by NIST as FIPS-compliant."
   tag "gid": "V-72993"
   tag "rid": "SV-87645r1_rule"
   tag "stig_id": "PGS9-00-008200"
-  tag "cci": "CCI-002450"
+  tag "cci": ["CCI-002450"]
   tag "nist": ["SC-13", "Rev_4"]
 
   tag "check": "First, as the system administrator, run the following to see if FIPS

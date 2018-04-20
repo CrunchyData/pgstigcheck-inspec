@@ -113,7 +113,7 @@ control "V-73063" do
   tag "gid": "V-73063"
   tag "rid": "SV-87715r1_rule"
   tag "stig_id": "PGS9-00-012300"
-  tag "cci": "CCI-000803"
+  tag "cci": ["CCI-000803"]
   tag "nist": ["IA-7", "Rev_4"]
 
   tag "check": "As the system administrator, run the following:

@@ -66,7 +66,7 @@ the information resides."
   tag "gid": "V-73003"
   tag "rid": "SV-87655r1_rule"
   tag "stig_id": "PGS9-00-008700"
-  tag "cci": "CCI-002475"
+  tag "cci": ["CCI-002475"]
   tag "nist": ["SC-28 (1)", "Rev_4"]
 
   tag "check": "Review the system documentation to determine whether the

@@ -59,7 +59,7 @@ control "V-72961" do
   tag "gid": "V-72961"
   tag "rid": "SV-87613r1_rule"
   tag "stig_id": "PGS9-00-006200"
-  tag "cci": "CCI-000172"
+  tag "cci": ["CCI-000172"]
   tag "nist": ["AU-12 c", "Rev_4"]
   tag "check": "First, as the database administrator, verify that
   log_connections and log_disconnections are enabled by running the following

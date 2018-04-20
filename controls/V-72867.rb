@@ -68,7 +68,7 @@ control "V-72867" do
   tag "gid": "V-72867"
   tag "rid": "SV-87519r1_rule"
   tag "stig_id": "PGS9-00-001400"
-  tag "cci": "CCI-000804"
+  tag "cci": ["CCI-000804"]
   tag "nist": ["IA-8", "Rev_4"]
   tag "check": "PostgreSQL uniquely identifies and authenticates PostgreSQL
   users through the use of DBMS roles.

@@ -64,7 +64,7 @@ record, the record itself is of very limited use."
   tag "gid": "V-73041"
   tag "rid": "SV-87693r1_rule"
   tag "stig_id": "PGS9-00-011100"
-  tag "cci": "CCI-000131"
+  tag "cci": ["CCI-000131"]
   tag "nist": ["AU-3", "Rev_4"]
   tag "check": "As the database administrator (usually postgres, run the following
 SQL:
