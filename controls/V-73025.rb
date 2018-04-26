@@ -19,6 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_VER = attribute(
+  'pg_ver',
+  description: "The version of the postgres process",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
@@ -96,10 +102,10 @@ pgaudit.log = 'role'
 Now, as the system administrator, reload the server with the new configuration:
 
 # SYSTEMD SERVER ONLY
-$ sudo systemctl reload postgresql-9.5
+$ sudo systemctl reload postgresql-PG_VER
 
 # INITD SERVER ONLY
-$ sudo service postgresql-9.5 reload
+$ sudo service postgresql-PG_VER reload
 
 ### Example: Set An Auditing Role And Grant Privileges
 
@@ -127,10 +133,10 @@ pgaudit.role = 'auditor'
 Now, as the system administrator, reload the server with the new configuration:
 
 # SYSTEMD SERVER ONLY
-$ sudo systemctl reload postgresql-9.5
+$ sudo systemctl reload postgresql-PG_VER
 
 # INITD SERVER ONLY
-$ sudo service postgresql-9.5 reload
+$ sudo service postgresql-PG_VER reload
 
 Next in PostgreSQL create a new role:
 

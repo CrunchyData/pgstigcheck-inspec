@@ -19,6 +19,11 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+PG_VER = attribute(
+  'pg_ver',
+  description: "The version of the postgres process",
+)
+
 PG_OWNER = attribute(
   'pg_owner',
   description: "The system user of the postgres process",
@@ -113,10 +118,10 @@ ssl_key_file = \"/some/protected/directory/server.key\"
 Now, as the system administrator, restart the server with the new configuration:
 
 # SYSTEMD SERVER ONLY
-$ sudo systemctl restartpostgresql-9.5
+$ sudo systemctl restart postgresql-PG_VER
 
 # INITD SERVER ONLY
-$ sudo service postgresql-9.5 restart
+$ sudo service postgresql-PG_VER restart
 
 For more information on configuring PostgreSQL to use SSL, see supplementary content
 APPENDIX-G."

@@ -19,6 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_VER = attribute(
+  'pg_ver',
+  description: "The version of the postgres process",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
@@ -64,19 +70,19 @@ control "V-72919" do
   tag "fix": "Note: The following instructions use the PGDATA environment
   variable. See supplementary content APPENDIX-F for instructions on configuring
   PGDATA.
-  Using `pgaudit` the DBMS (PostgreSQL) can be configured to audit these
+  Using pgaudit the DBMS (PostgreSQL) can be configured to audit these
   requests. See supplementary content `APPENDIX-B` for documentation on
-  installing `pgaudit`.
-  With `pgaudit` installed the following configurations can be made:
+  installing pgaudit.
+  With pgaudit installed the following configurations can be made:
   $ sudo su - postgres
   $ vi ${PGDATA?}/postgresql.conf
   Add the following parameters (or edit existing parameters):
   pgaudit.log = 'ddl, write, role'
   Now, as the system administrator, reload the server with the new configuration:
   # SYSTEMD SERVER ONLY
-  $ sudo systemctl reload postgresql-9.5
+  $ sudo systemctl reload postgresql-PG_VER
   # INITD SERVER ONLY
-  $ sudo service postgresql-9.5 reload"
+  $ sudo service postgresql-PG_VER reload"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 

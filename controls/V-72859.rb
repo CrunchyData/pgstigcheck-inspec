@@ -19,6 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_VER = attribute(
+  'pg_ver',
+  description: "The version of the postgres process",
+)
+
 PG_OWNER = attribute(
   'pg_owner',
   description: "The system user of the postgres process",
@@ -238,10 +244,10 @@ https://www.postgresql.org/docs/current/static/sql-grant.html
   After changes to pg_hba.conf, reload the server:
 
   # SYSTEMD SERVER ONLY
-  $ sudo systemctl reload postgresql-9.5
+  $ sudo systemctl reload postgresql-PG_VER
 
   # INITD SERVER ONLY
-  $ sudo service postgresql-9.5 reload"
+  $ sudo service postgresql-PG_VER reload"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 

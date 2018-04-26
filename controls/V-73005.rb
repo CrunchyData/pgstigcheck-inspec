@@ -19,6 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_VER = attribute(
+  'pg_ver',
+  description: "The version of the postgres process",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
@@ -73,7 +79,7 @@ information specific to the source (origin) of the event is being captured and
 stored with audit records.
 
 As the database administrator (usually postgres, check the current log_line_prefix
-and \"log_hostname\" setting by running the following SQL:
+and log_hostname setting by running the following SQL:
 
 $ sudo su - postgres
 $ psql -c \"SHOW log_line_prefix\"
@@ -124,10 +130,10 @@ log_hostname = on
 Now, as the system administrator, reload the server with the new configuration:
 
 # SYSTEMD SERVER ONLY
-$ sudo systemctl reload postgresql-9.5
+$ sudo systemctl reload postgresql-PG_VER
 
 # INITD SERVER ONLY
-$ sudo service postgresql-9.5 reload"
+$ sudo service postgresql-PG_VER reload"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 

@@ -19,6 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_VER = attribute(
+  'pg_ver',
+  description: "The version of the postgres process",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
@@ -104,12 +110,11 @@ control "V-72851" do
   Now reload the server with the new configuration (this just reloads settings
   currently in memory, will not cause an interruption):
 
-  $ sudo su - postgres
   # SYSTEMD SERVER ONLY
-  $ systemctl reload postgresql-9.5
+  $ sudo systemctl reload postgresql-PG_VER
 
   # INITD SERVER ONLY
-  $ service postgresql-9.5 reload "
+  $ sudo service postgresql-PG_VER reload "
 
   default = postgres_conf(PG_CONF_FILE)
   override = postgres_conf(PG_USER_DEFINED_CONF)

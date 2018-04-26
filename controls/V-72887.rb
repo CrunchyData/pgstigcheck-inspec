@@ -19,6 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_VER = attribute(
+  'pg_ver',
+  description: "The version of the postgres process",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
@@ -85,9 +91,9 @@ control "V-72887" do
   log_timezone='UTC'
   Next, restart the database:
   # SYSTEMD SERVER ONLY
-  $ sudo systemctl restart postgresql-9.5
+  $ sudo systemctl restart postgresql-PG_VER
   # INITD SERVER ONLY
-  $ sudo service postgresql-9.5 restart"
+  $ sudo service postgresql-PG_VER restart"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 

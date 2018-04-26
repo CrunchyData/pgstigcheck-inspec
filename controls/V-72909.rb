@@ -19,6 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_VER = attribute(
+  'pg_ver',
+  description: "The version of the postgres process",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
@@ -87,16 +93,16 @@ control "V-72909" do
   Note: Consult the organization on how syslog facilities are defined in the
   syslog daemon configuration.
   $ sudo su - postgres
-  $ vi 'log_destination' ${PGDATA?}/postgresql.conf
+  $ vi ${PGDATA?}/postgresql.conf
   log_destination = 'syslog'
   syslog_facility = 'LOCAL0'
   syslog_ident = 'postgres'
   Now, as the system administrator, reload the server with the new
   configuration:
   # SYSTEMD SERVER ONLY
-  $ sudo systemctl reload postgresql-9.5
+  $ sudo systemctl reload postgresql-PG_VER
   # INITD SERVER ONLY
-  $ sudo service postgresql-9.5 reload"
+  $ sudo service postgresql-PG_VER reload"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 

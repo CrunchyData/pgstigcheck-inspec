@@ -19,6 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_VER = attribute(
+  'pg_ver',
+  description: "The version of the postgres process",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
@@ -59,14 +65,14 @@ control "V-72953" do
   REVOKE
   There may also be Data Manipulation Language (DML) statements that, subject to
   context, should be regarded as privileged. Possible examples in SQL include:
-  TRUNCATE TABLE;DELETE, or DELETE affecting more than n rows, for some n, or
-  DELETE without a WHERE clause;
+  TRUNCATE TABLE, DELETE, or DELETE affecting more than n rows, for some n, or
+  DELETE without a WHERE clause.
   UPDATE or UPDATE affecting more than n rows, for some n, or UPDATE without a
-  WHERE clause;
-  any SELECT, INSERT, UPDATE, or DELETE to an application-defined security table
-  executed by other than a security principal.
-  Depending on the capabilities of PostgreSQL and the design of the database and
-  associated applications, audit logging may be achieved by means of DBMS
+  WHERE clause.
+  Any SELECT, INSERT, UPDATE, or DELETE to an application-defined security
+  table executed by other than a security principal.
+  Depending on the capabilities of PostgreSQL and the design of the database
+  and associated applications, audit logging may be achieved by means of DBMS
   auditing features, database triggers, other mechanisms, or a combination of
   these.
   Note: That it is particularly important to audit, and tightly control, any
@@ -101,9 +107,9 @@ control "V-72953" do
   pgaudit.log='ddl, role, read, write'
   Now, as the system administrator, reload the server with the new configuration:
   # SYSTEMD SERVER ONLY
-  $ sudo systemctl reload postgresql-9.5
+  $ sudo systemctl reload postgresql-PG_VER
   # INITD SERVER ONLY
-  $ sudo service postgresql-9.5 reload"
+  $ sudo service postgresql-PG_VER reload"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 
