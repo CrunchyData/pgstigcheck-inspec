@@ -20,7 +20,7 @@ uri: http://iase.disa.mil
 -----------------
 =end
 PG_VERSION = attribute(
-  'pg_version',
+  'pg_versionsion',
   description: "The version of postgres",
 )
 
