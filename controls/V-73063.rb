@@ -75,7 +75,7 @@ PG_SUPERUSERS = attribute(
 )
 
 PG_VERSION = attribute(
-  'pg_versionsion',
+  'pg_version',
   description: "The version of postgres",
 )
 
