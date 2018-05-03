@@ -106,10 +106,10 @@ tcp_keepalives_count = 10
 Now, as the system administrator, restart the server with the new configuration:
 
 # SYSTEMD SERVER ONLY
-$ sudo systemctl restart postgresql-PG_VER
+$ sudo systemctl restart postgresql-${PG_VER}
 
 # INITD SERVER ONLY
-$ sudo service postgresql-PG_VER restart"
+$ sudo service postgresql-${PG_VER} restart"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 

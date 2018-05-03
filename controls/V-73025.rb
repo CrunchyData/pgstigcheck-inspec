@@ -102,10 +102,10 @@ pgaudit.log = 'role'
 Now, as the system administrator, reload the server with the new configuration:
 
 # SYSTEMD SERVER ONLY
-$ sudo systemctl reload postgresql-PG_VER
+$ sudo systemctl reload postgresql-${PG_VER}
 
 # INITD SERVER ONLY
-$ sudo service postgresql-PG_VER reload
+$ sudo service postgresql-${PG_VER} reload
 
 ### Example: Set An Auditing Role And Grant Privileges
 
@@ -133,10 +133,10 @@ pgaudit.role = 'auditor'
 Now, as the system administrator, reload the server with the new configuration:
 
 # SYSTEMD SERVER ONLY
-$ sudo systemctl reload postgresql-PG_VER
+$ sudo systemctl reload postgresql-${PG_VER}
 
 # INITD SERVER ONLY
-$ sudo service postgresql-PG_VER reload
+$ sudo service postgresql-${PG_VER} reload
 
 Next in PostgreSQL create a new role:
 

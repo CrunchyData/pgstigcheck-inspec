@@ -114,10 +114,10 @@ log_line_prefix = '< %m %a %u %d %r %p %m >'
 Now, as the system administrator, reload the server with the new configuration:
 
 # SYSTEMD SERVER ONLY
-$ sudo systemctl reload postgresql-PG_VER
+$ sudo systemctl reload postgresql-${PG_VER}
 
 # INITD SERVER ONLY
-$ sudo service postgresql-PG_VER reload
+$ sudo service postgresql-${PG_VER} reload
 
 Use accounts assigned to individual users. Where the application connects to
 PostgreSQL using a standard, shared account, ensure that it also captures the

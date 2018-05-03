@@ -110,9 +110,9 @@ control "V-72841" do
 
   $ sudo su - postgres
   # SYSTEMD SERVER ONLY
-  $ sudo systemctl restart postgresql-PG_VER
+  $ sudo systemctl restart postgresql-${PG_VER}
   # INITD SERVER ONLY
-  $ sudo service postgresql-PG_VER restart
+  $ sudo service postgresql-${PG_VER} restart
 
   Note: psql uses the default port 5432 by default. This can be changed by
   specifying the port with psql or by setting the PGPORT environment variable:

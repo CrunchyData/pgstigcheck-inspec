@@ -116,10 +116,10 @@ control "V-72863" do
       Next, restart the database:
 
       # SYSTEMD SERVER ONLY
-      $ sudo systemctl restart postgresql-PG_VER
+      $ sudo systemctl restart postgresql-${PG_VER}
 
       # INITD SERVER ONLY
-      $ sudo service postgresql-PG_VER restart
+      $ sudo service postgresql-${PG_VER} restart
 
       To limit the amount of connections allowed by a specific role,
       as the database administrator, run the following SQL:

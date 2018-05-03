@@ -96,10 +96,10 @@ syslog_ident = 'postgres'
 Now, as the system administrator, reload the server with the new configuration:
 
 # SYSTEMD SERVER ONLY
-$ sudo systemctl reload postgresql-PG_VER
+$ sudo systemctl reload postgresql-${PG_VER}
 
 # INITD SERVER ONLY
-$ sudo service postgresql-PG_VER reload"
+$ sudo service postgresql-${PG_VER} reload"
 
   only_if { false }
 

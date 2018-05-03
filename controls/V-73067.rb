@@ -115,10 +115,10 @@ control "V-73067" do
       configuration:
 
       # SYSTEMD SERVER ONLY
-      $ sudo systemctl reload postgresql-PG_VER
+      $ sudo systemctl reload postgresql-${PG_VER}
 
       # INITD SERVER ONLY
-      $ sudo service postgresql-PG_VER reload"
+      $ sudo service postgresql-${PG_VER} reload"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 

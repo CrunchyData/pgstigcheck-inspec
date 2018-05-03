@@ -91,9 +91,9 @@ control "V-72887" do
   log_timezone='UTC'
   Next, restart the database:
   # SYSTEMD SERVER ONLY
-  $ sudo systemctl restart postgresql-PG_VER
+  $ sudo systemctl restart postgresql-${PG_VER}
   # INITD SERVER ONLY
-  $ sudo service postgresql-PG_VER restart"
+  $ sudo service postgresql-${PG_VER} restart"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 

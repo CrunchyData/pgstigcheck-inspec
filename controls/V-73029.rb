@@ -118,10 +118,10 @@ ssl_key_file = \"/some/protected/directory/server.key\"
 Now, as the system administrator, restart the server with the new configuration:
 
 # SYSTEMD SERVER ONLY
-$ sudo systemctl restart postgresql-PG_VER
+$ sudo systemctl restart postgresql-${PG_VER}
 
 # INITD SERVER ONLY
-$ sudo service postgresql-PG_VER restart
+$ sudo service postgresql-${PG_VER} restart
 
 For more information on configuring PostgreSQL to use SSL, see supplementary content
 APPENDIX-G."

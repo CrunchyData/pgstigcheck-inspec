@@ -111,10 +111,10 @@ control "V-72851" do
   currently in memory, will not cause an interruption):
 
   # SYSTEMD SERVER ONLY
-  $ sudo systemctl reload postgresql-PG_VER
+  $ sudo systemctl reload postgresql-${PG_VER}
 
   # INITD SERVER ONLY
-  $ sudo service postgresql-PG_VER reload "
+  $ sudo service postgresql-${PG_VER} reload "
 
   default = postgres_conf(PG_CONF_FILE)
   override = postgres_conf(PG_USER_DEFINED_CONF)

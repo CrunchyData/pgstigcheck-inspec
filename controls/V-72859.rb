@@ -244,10 +244,10 @@ https://www.postgresql.org/docs/current/static/sql-grant.html
   After changes to pg_hba.conf, reload the server:
 
   # SYSTEMD SERVER ONLY
-  $ sudo systemctl reload postgresql-PG_VER
+  $ sudo systemctl reload postgresql-${PG_VER}
 
   # INITD SERVER ONLY
-  $ sudo service postgresql-PG_VER reload"
+  $ sudo service postgresql-${PG_VER} reload"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 
