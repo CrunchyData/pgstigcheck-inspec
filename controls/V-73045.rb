@@ -22,7 +22,7 @@ uri: http://iase.disa.mil
 
 PG_VER = attribute(
   'pg_version',
-  description: "The version of the postgres process",
+  description: "The version of the PostgreSQL process which is being inspected (tested)",
 )
 
 control "V-73045" do

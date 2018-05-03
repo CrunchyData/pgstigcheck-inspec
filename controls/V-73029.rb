@@ -21,7 +21,7 @@ uri: http://iase.disa.mil
 =end
 PG_VER = attribute(
   'pg_version',
-  description: "The version of the postgres process",
+  description: "The version of the PostgreSQL process which is being inspected (tested)",
 )
 
 PG_OWNER = attribute(
