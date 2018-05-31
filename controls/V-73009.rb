@@ -19,6 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_SUPERUSERS = attribute(
+  'pg_superusers',
+  description: 'Authorized superuser accounts',
+)
+
 PG_CONF_FILE= attribute(
   'pg_conf_file',
   description: 'define path for the postgresql configuration file',
@@ -57,6 +63,11 @@ PG_DB = attribute(
     'pg_db',
     description: "the database to run the command from",
     default: 'stig_test_db')
+
+APPROVED_EXT = attribute(
+  'approved_ext',
+  description: "the list of approaved postgresql extentions that the database may enable",
+  default: ['pgcrypto'])
 
 control "V-73009" do
   title "Access to external executables must be disabled or restricted."
@@ -126,15 +137,39 @@ end
 
 # @todo fix stdout, SSP roles should states which ones SHOULD have superuser, others should not? need datafile to test against the DB.
 
-  describe command("PGPASSWORD='#{PG_DBA_PASSWORD}' psql -U #{PG_DBA} -d #{PG_DB} -h #{PG_HOST} -A -t -c \"\\du\"") do
-    its('stdout.strip') { should match 'error' }
+  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  roles_sql = 'SELECT r.rolname FROM pg_catalog.pg_roles r;'
+  roles_query = sql.query(roles_sql, [PG_DB])
+  roles = roles_query.lines
+
+  roles.each do |role|
+    unless PG_SUPERUSERS.include?(role)
+      superuser_sql = "SELECT r.rolsuper FROM pg_catalog.pg_roles r "\
+        "WHERE r.rolname = '#{role}';"
+
+      describe sql.query(superuser_sql, [PG_DB]) do
+        its('output') { should_not eq 't' }
+      end
+    end
   end
+
+  #describe command("PGPASSWORD='#{PG_DBA_PASSWORD}' psql -U #{PG_DBA} -d #{PG_DB} -h #{PG_HOST} -A -t -c \"\\du\"") do
+  #  its('stdout.strip') { should match 'error' }
+  #end
 
 # @todo how do I check to see if any extensions are installed that are not approved?  fix stdout value?
 
-  describe command("PGPASSWORD='#{PG_DBA_PASSWORD}' psql -U #{PG_DBA} -d #{PG_DB} -h #{PG_HOST} -A -t -c -c \"SELECT * FROM pg_available_extensions WHERE installed_version IS NOT
-  NULL\"") do
-    its('stdout.strip') { should match 'error' }
+#  describe command("PGPASSWORD='#{PG_DBA_PASSWORD}' psql -U #{PG_DBA} -d #{PG_DB} -h #{PG_HOST} -A -t -c \"SELECT * FROM pg_available_extensions WHERE installed_version IS NOT
+#  NULL\"") do
+#    its('stdout.strip') { should match 'error' }
+#  end
+
+  describe.one do
+    APPROVED_EXT.each do |extention|
+      describe command("PGPASSWORD='#{PG_DBA_PASSWORD}' psql -U #{PG_DBA} -d #{PG_DB} -h #{PG_HOST} -A -t -c \"SELECT * FROM pg_available_extensions WHERE installed_version IS NOT NULL\" | cut -d'|' -f 1") do
+        its('stdout.strip') { should match extention }
+      end
+    end
   end
 
 end

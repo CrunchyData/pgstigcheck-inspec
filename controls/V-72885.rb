@@ -49,6 +49,17 @@ PG_HOST = attribute(
   default: '127.0.0.1'
 )
 
+PG_LOG_DIR = attribute(
+   'pg_log_dir',
+   description: 'define path for the postgreql log directory',
+   default: '/var/lib/pgsql/9.5/data/pg_log'
+)
+
+PG_OWNER = attribute(
+  'pg_owner',
+  description: "The system user of the postgres process",
+)
+
 only_if do
   command('psql').exist?
 end

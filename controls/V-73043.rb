@@ -91,8 +91,8 @@ As the system administrator, verify the permissions of pgsql shared objects and
 compiled binaries:
 
 $ ls -la /usr/pgsql-9.5/bin/
-$ ls -la /usr/pgsql-9.5/share
-$ ls -la /usr/pgsql-9.5/include
+$ ls -la /usr/pgsql-9.5/share/
+$ ls -la /usr/pgsql-9.5/include/
 
 If any of these are not owned by root:root, this is a finding."
 
@@ -103,7 +103,7 @@ $ sudo chmod 700 ${PGDATA?}
 
 As the system administrator, change the permissions of pgsql:
 
-$ sudo chown -R root:root /usr/pgsql-9.5/share/contrib/pgaudit"
+$ sudo chown -R root:root /usr/pgsql-9.5/share/contrib/"
 
 # @todo should the permissions of stig-postgresql.conf, pg_ident and pg_hba be '0600'
 
@@ -137,9 +137,9 @@ $ sudo chown -R root:root /usr/pgsql-9.5/share/contrib/pgaudit"
     end
   end
 
-  describe directory("/usr/pgsql-#{postgres.version}/share/contrib/pgaudit") do
-    # only_if { directory("/usr/pgsql-#{PG_VER}/share/contrib/pgaudit").exist? }
-    it { should be_grouped_into PG_GROUP }
-    it { should be_owned_by PG_OWNER }
+  describe directory("/usr/pgsql-#{postgres.version}/share/contrib") do
+    # only_if { directory("/usr/pgsql-#{PG_VER}/share/contrib").exist? }
+    it { should be_grouped_into 'root' }
+    it { should be_owned_by 'root' }
   end
 end

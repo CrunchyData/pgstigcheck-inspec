@@ -20,6 +20,11 @@ uri: http://iase.disa.mil
 -----------------
 =end
 
+PG_OWNER = attribute(
+  'pg_owner',
+  description: "The system user of the postgres process",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the database',
@@ -112,18 +117,17 @@ control "V-72855" do
   $ sudo su - postgres
   $ psql -c \"ALTER ROLE rolename WITH NOSUPERUSER\""
 
-# @todo draft code below, how do we test for manual checks?
+  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 
-  dbs = nil
-  db = nil
+  functions_sql = "SELECT * FROM (SELECT n.nspname as Schema, p.proname as Name, pg_catalog.pg_get_function_result(p.oid) as ResultDataType, pg_catalog.pg_get_function_arguments(p.oid) as ArgumentDataTypes, pg_catalog.pg_get_userbyid(p.proowner) as Owner, CASE WHEN prosecdef THEN 'definer' ELSE 'invoker' END AS Security, pg_catalog.array_to_string(p.proacl, E'\n') AS AccessPrivileges FROM pg_catalog.pg_proc p LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace LEFT JOIN pg_catalog.pg_language l ON l.oid = p.prolang WHERE pg_catalog.pg_function_is_visible(p.oid) AND n.nspname <> 'pg_catalog' AND n.nspname <> 'information_schema') x where x.Owner <> '#{PG_OWNER}';"
+  sql_result = sql.query(functions_sql, [PG_DB])
 
-  if !("#{PG_DB}".to_s.empty?)
-    db = ["#{PG_DB}"]
-    dbs = db.map { |x| "-d #{x}" }.join(' ')
+  describe sql_result do
+    its('output') { should eq '' }
   end
 
-  describe command("PGPASSWORD='#{PG_DBA_PASSWORD}' psql -U #{PG_DBA} #{dbs} -h #{PG_HOST} -p #{PG_PORT} -A -t -c \"\\df+\"") do
-    its('stdout') { should match /5432/ }
-  end
+  #describe command("PGPASSWORD='#{PG_DBA_PASSWORD}' psql -U #{PG_DBA} #{dbs} -h #{PG_HOST} -p #{PG_PORT} -A -t -c \"\\df+\"") do
+  #  its('stdout') { should match /| postgres |/ }
+  #end
 
 end

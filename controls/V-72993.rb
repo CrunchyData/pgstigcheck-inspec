@@ -69,6 +69,6 @@ For more information on configuring PostgreSQL to use SSL, see supplementary con
 APPENDIX-G."
 
   describe kernel_parameter('crypto.fips_enabled') do
-    its('value') { should eq '1' }
+    its('value') { should cmp 1 }
   end
 end
