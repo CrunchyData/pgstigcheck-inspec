@@ -26,7 +26,7 @@ PG_VERSION = attribute(
 
 PG_SHARED_DIRS = attribute(
   'pg_shared_dirs',
-  description: 'defines the locations of the postgresql shared library directories',
+  description: 'defines the locations of the postgresql software (binaries and libraries) directories',
 )
 
 control "V-72901" do
@@ -63,7 +63,7 @@ control "V-72901" do
   applications, including third-party applications that use the PostgreSQL, this
   is a finding.
   Only applications that are required for the functioning and administration,
-  not use, of the PostgreSQL should be located in the same disk directory as
+  not use, of the PostgreSQL software library should be located in the same disk directory as
   the PostgreSQL software libraries.
   If other applications are located in the same directory as PostgreSQL, this
   is a finding."

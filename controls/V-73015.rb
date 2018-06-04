@@ -19,6 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_VER = attribute(
+  'pg_version',
+  description: "The version of the PostgreSQL process which is being inspected (tested)",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
@@ -90,10 +96,10 @@ the password_encryption configuration parameter.)
 As the system administrator, restart the server with the new configuration:
 
 # SYSTEMD SERVER ONLY
-$ sudo systemctl restart postgresql-9.5
+$ sudo systemctl restart postgresql-${PG_VER}
 
 # INITD SERVER ONLY
-$ sudo service postgresql-9.5 restart"
+$ sudo service postgresql-${PG_VER} restart"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 
@@ -107,5 +113,5 @@ $ sudo service postgresql-9.5 restart"
   describe sql.query(passwords_sql, [PG_DB]) do
     its('output') { should eq '' }
   end
-  
+
 end

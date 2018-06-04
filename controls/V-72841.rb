@@ -20,6 +20,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_VER = attribute(
+  'pg_version',
+  description: "The version of the PostgreSQL process which is being inspected (tested)",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
@@ -73,7 +79,7 @@ control "V-72841" do
         This can allow unauthorized access to the database and through the
         database to other components of the information system."
   impact 0.5
-  
+
   tag "severity": "medium"
   tag "gtitle": "SRG-APP-000142-DB-000094"
   tag "gid": "V-72841"
@@ -96,7 +102,6 @@ control "V-72841" do
   To change the listening port of the database, as the database administrator,
   change the following setting in postgresql.conf:
 
-  $ sudo su - postgres
   $ vi $PGDATA/postgresql.conf
 
   Change the port parameter to the desired port.
@@ -105,9 +110,9 @@ control "V-72841" do
 
   $ sudo su - postgres
   # SYSTEMD SERVER ONLY
-  $ systemctl restart postgresql-9.5
+  $ sudo systemctl restart postgresql-${PG_VER}
   # INITD SERVER ONLY
-  $ service postgresql-9.5 restart
+  $ sudo service postgresql-${PG_VER} restart
 
   Note: psql uses the default port 5432 by default. This can be changed by
   specifying the port with psql or by setting the PGPORT environment variable:

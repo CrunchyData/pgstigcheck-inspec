@@ -19,6 +19,11 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+PG_VER = attribute(
+  'pg_version',
+  description: "The version of the PostgreSQL process which is being inspected (tested)",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
@@ -54,7 +59,7 @@ control "V-73067" do
         INSERT
         UPDATE
         DELETE
-        EXECUT."
+        EXECUTE."
 
   impact 0.5
   tag "severity": "medium"
@@ -78,7 +83,7 @@ control "V-73067" do
 
       $ psql -c \"SHOW pgaudit.log\"
 
-      If the output does not contain read and write, this is a finding."
+      If the output does not contain role, read, write, and ddl, this is a finding."
 
   tag "fix": "Note: The following instructions use the PGDATA environment variable.
       See supplementary content APPENDIX-F for instructions on configuring PGDATA.
@@ -110,10 +115,10 @@ control "V-73067" do
       configuration:
 
       # SYSTEMD SERVER ONLY
-      $ sudo systemctl reload postgresql-9.5
+      $ sudo systemctl reload postgresql-${PG_VER}
 
       # INITD SERVER ONLY
-      $ sudo service postgresql-9.5 reload"
+      $ sudo service postgresql-${PG_VER} reload"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 

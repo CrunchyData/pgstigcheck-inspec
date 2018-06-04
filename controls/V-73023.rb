@@ -20,6 +20,11 @@ uri: http://iase.disa.mil
 -----------------
 =end
 
+PG_VER = attribute(
+  'pg_version',
+  description: "The version of the PostgreSQL process which is being inspected (tested)",
+)
+
 control "V-73023" do
   title "The system must provide a warning to appropriate support staff when
 allocated audit record storage volume reaches 75% of maximum audit record storage
@@ -60,7 +65,7 @@ a script.
 
 #!/bin/bash
 
-PGDATA=/var/lib/psql/9.5/data
+PGDATA=/var/lib/psql/PG_VER/data
 CURRENT=$(df ${PGDATA?} | grep / | awk '{ print $5}' | sed 's/%//g')
 THRESHOLD=75
 
@@ -73,5 +78,5 @@ fi
 Schedule this script in cron to run around the clock."
 
   only_if { false }
-  
+
 end
