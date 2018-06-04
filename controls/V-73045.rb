@@ -20,6 +20,11 @@ uri: http://iase.disa.mil
 -----------------
 =end
 
+PG_VER = attribute(
+  'pg_version',
+  description: "The version of the PostgreSQL process which is being inspected (tested)",
+)
+
 control "V-73045" do
   title "PostgreSQL must off-load audit data to a separate log management facility;
 this must be continuous and in near real time for systems with a network connection
@@ -91,10 +96,10 @@ syslog_ident = 'postgres'
 Now, as the system administrator, reload the server with the new configuration:
 
 # SYSTEMD SERVER ONLY
-$ sudo systemctl reload postgresql-9.5
+$ sudo systemctl reload postgresql-${PG_VER}
 
 # INITD SERVER ONLY
-$ sudo service postgresql-9.5 reload"
+$ sudo service postgresql-${PG_VER} reload"
 
   only_if { false }
 

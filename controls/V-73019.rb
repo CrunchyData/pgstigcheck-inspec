@@ -19,6 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_VER = attribute(
+  'pg_version',
+  description: "The version of the PostgreSQL process which is being inspected (tested)",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
@@ -74,7 +80,7 @@ $ psql -c \"SHOW log_line_prefix\"
 If log_line_prefix does not contain at least '< %m %a %u %d %r %p %m >', this is a
 finding.
 
-Next, review the current shared_preload_libraries' settings by running the following
+Next, review the current shared_preload_libraries settings by running the following
 SQL:
 
 $ psql -c \"SHOW shared_preload_libraries\"
@@ -108,10 +114,10 @@ log_line_prefix = '< %m %a %u %d %r %p %m >'
 Now, as the system administrator, reload the server with the new configuration:
 
 # SYSTEMD SERVER ONLY
-$ sudo systemctl reload postgresql-9.5
+$ sudo systemctl reload postgresql-${PG_VER}
 
 # INITD SERVER ONLY
-$ sudo service postgresql-9.5 reload
+$ sudo service postgresql-${PG_VER} reload
 
 Use accounts assigned to individual users. Where the application connects to
 PostgreSQL using a standard, shared account, ensure that it also captures the

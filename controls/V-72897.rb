@@ -89,7 +89,7 @@ control "V-72897" do
   #### Schema Owner
   To create a schema owned by the user bob, run the following SQL:
   $ sudo su - postgres
-  $ psql -c \"CREATE SCHEMA test AUTHORIZATION bob
+  $ psql -c \"CREATE SCHEMA test AUTHORIZATION bob\"
   To alter the ownership of an existing object to be owned by the user bob,
   run the following SQL:
   $ sudo su - postgres

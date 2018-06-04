@@ -64,7 +64,7 @@ Examples follow.
 ### Change a role to nologin and disconnect the user
 
 ALTER ROLE '<username>' NOLOGIN;
-SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE username='<username>';
+SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE usename='<username>';
 
 ### Disconnecting users during a specific time range
 See supplementary content APPENDIX-A for a bash script for this example.

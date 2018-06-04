@@ -76,7 +76,7 @@ control "V-72905" do
   $ sudo su - postgres
   $ psql -c \"SELECT nspname, proname, proargtypes, prosecdef, rolname,
   proconfig FROM pg_proc p JOIN pg_namespace n ON p.pronamespace = n.oid JOIN
-  pg_authid a ON a.oid = p.proowner WHERE prosecdef OR NOT proconfig IS NULL;\"
+  pg_authid a ON a.oid = p.proowner WHERE prosecdef OR NOT proconfig IS NULL\"
   In the query results, a prosecdef value of \"t\" on a row indicates that that
   function uses privilege elevation.
   If elevation of PostgreSQL privileges is utilized but not documented, this is
@@ -91,7 +91,7 @@ control "V-72905" do
   To change a SECURITY DEFINER function to SECURITY INVOKER, as the database
   administrator (shown here as \"postgres\"), run the following SQL:\
   $ sudo su - postgres
-  $ psql -c \"ALTER FUNCTION <function_name> SECURITY INVOKER;\""
+  $ psql -c \"ALTER FUNCTION <function_name> SECURITY INVOKER\""
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 

@@ -19,6 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_VER = attribute(
+  'pg_version',
+  description: "The version of the PostgreSQL process which is being inspected (tested)",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
@@ -89,7 +95,7 @@ control "V-72979" do
   Next, verify that hostssl entries in pg_hba.conf have \"cert\" and
   \"clientcert=1\" enabled:
   $ sudo su - postgres
-  $ grep hostssl ${PGDATA?}/postgresql.conf
+  $ grep hostssl ${PGDATA?}/pg_hba.conf
   If hostssl entries does not contain cert or clientcert=1, this is a finding.
   If certificates are not being validated by performing RFC 5280-compliant
   certification path validation, this is a finding."
@@ -118,9 +124,9 @@ control "V-72979" do
   hostssl <database> <user> <address> cert clientcert=1
   Now, as the system administrator, reload the server with the new configuration:
   # SYSTEMD SERVER ONLY
-  $ sudo systemctl reload postgresql-9.5
+  $ sudo systemctl reload postgresql-${PG_VER}
   # INITD SERVER ONLY
-  $ sudo service postgresql-9.5 reload"
+  $ sudo service postgresql-${PG_VER} reload"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 
