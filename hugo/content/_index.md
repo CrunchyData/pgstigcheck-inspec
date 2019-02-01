@@ -171,3 +171,17 @@ inspec exec postgresql-stig-inspec --attrs attributes.yml -i <your ssh private k
 ```sh
 inspec exec postgresql-stig-inspec --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> | ./tools/ansi2html.sh --bg=dark > inspec-report.html
 ```
+
+## Sponsors
+
+![Crunchy Data](/images/crunchy_logo.png)
+
+[Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgmonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
+
+## Legal Notices
+
+Copyright © 2019 Crunchy Data Solutions, Inc.
+
+CRUNCHY DATA SOLUTIONS, INC. PROVIDES THIS GUIDE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF NON INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+Crunchy, Crunchy Data Solutions, Inc. and the Crunchy Hippo Logo are trademarks of Crunchy Data Solutions, Inc.

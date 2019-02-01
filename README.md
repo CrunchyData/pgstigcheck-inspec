@@ -4,7 +4,7 @@ PostgreSQL STIG Compliance Validator (pgStigCheck) for InSpec is an open source 
 
 Developed in order to reduce the time it takes to secure authority to operate (ATO) certification for cloud services, pgStickCheck technology leverages open source software to provide automated compliance testing in real time.  pgStigCheck uses the [InSpec](https://github.com/chef/inspec), which provides an open source compliance, security and policy testing framework that dynamically extracts system configuration information.
 
-# PostgreSQL STIG Overview
+## PostgreSQL STIG Overview
 
 The [PostgreSQL Security Technical Implementation Guide](https://www.crunchydata.com/postgres-stig/PGSQL-STIG-9.5+.pdf) (STIG) by the United States Defense Information Systems Agency (DISA) offers security-conscious enterprises a comprehensive guide for the configuration and operation of open source PostgreSQL.
 
@@ -24,30 +24,30 @@ The PostgreSQL STIG provides guidance on the configuration of PostgreSQL to addr
 - Administration
 - Protection against SQL Injection
 
-# Getting Started
+## Getting Started
 
-## Requirements
+### Requirements
 
 To run the PostgreSQL STIG Compliance Validator, there are specific requirements on both the database host as will as the STIG valudation host.
 
-### Database Host
-- PostgreSQL 9.5+ cluster running on *nix host
+#### Database Host
+- PostgreSQL 9.5+ cluster running on \*nix host
 - Remote access to PostgreSQL Server
 - lsof
 - netstat
 
-### STIG Validation Execution Host
+#### STIG Validation Execution Host
 - Linux VM or Host
 - sudo access to install packages
 
-### Required software on STIG Validation Execution Host
+#### Required software on STIG Validation Execution Host
 - git
 - ssh
 - ruby using rvm
 - [InSpec](https://github.com/chef/inspec)
 
-## Setup Environment on STIG Validation Execution Host
-### Install ruby using rvm
+### Setup Environment on STIG Validation Execution Host
+#### Install ruby using rvm
 ```sh
 $ curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
 $ curl -L get.rvm.io | bash -s stable
@@ -55,46 +55,46 @@ $ rvm install 2.4.0
 $ rvm use 2.4 --default
 ```
 
-### Install the needed gems  
+#### Install the needed gems  
 ```sh
 gem install inspec
 ```
 
-### Ensure your InSpec version is at least 1.31.x
+#### Ensure your InSpec version is at least 1.31.x
 ```sh
 inspec --version
 ```
 
-## Setting attributes.yml
+### Setting attributes.yml
 
-### OS Group, User and Password
+#### OS Group, User and Password
 ```yaml
 pg_owner: 'postgres'
 pg_group: 'postgres'
 pg_owner_password: '<my secret password>'
 ```
-### DBA User and Password
+#### DBA User and Password
 ```yaml
 pg_dba: '<dba username'
 pg_dba_password: '<my dba password>'
 ```
-### Normal DB User and Password
+#### Normal DB User and Password
 ```yaml
 pg_user: '<username>'
 pg_user_password: '<my password>'
 ```
-### DB Host and Port
+#### DB Host and Port
 ```yaml
 pg_host: '127.0.0.1'
 pg_port: '5432'
 ```
-### DB Name and Test table
+#### DB Name and Test table
 ```yaml
 pg_db: 'test_db'
 pg_table: 'test_table'
 ```
 
-### Misc settings
+#### Misc settings
 ```yaml
 login_user: '<user on remote DB server>'
 login_host: '<DB Host IP>'
@@ -142,10 +142,10 @@ pg_timezone: 'UTC'
 ```
 
 
-## Validating Your PostgreSQL Instance
+### Validating Your PostgreSQL Instance
 (See: https://www.inspec.io/docs/reference/cli/)
 
-### Execute a single Control in the Profile
+#### Execute a single Control in the Profile
 **Note**: replace the profile's directory name - e.g. - `postgresql-stig-insepc` with `.` if you are in the profile's root directory.
 ```sh
 inspec exec postgresql-stig-inspec/controls/V-72845.rb --attrs attributes.yml -i <your ssh private key>  -t ssh://<user>@<db host>:<port>
@@ -155,19 +155,33 @@ or use the `--controls` flag
 inspec exec postgresql-stig-inspec --controls=V-72845 V-72861 --attrs attributes.yml  -i <your ssh private key>  -t ssh://<user>@<db host>:<port>
 ```
 
-### Execute a Single Control and save results as HTML
+#### Execute a Single Control and save results as HTML
 ```sh
 inspec exec postgresql-stig-insepc --controls=V-72845 --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> | ./tools/ansi2html.sh --bg=dark > inspec-report.html
 ```
 
 > When executing all the Controls, InSpec will generate warning ```already initialized constant #<Class:0x000000.......>::<Attribuet Name>```, it is safe to ignore it. We are working with InSpec upstream to get it fixed.
 
-### Execute All Controls in the Profile
+#### Execute All Controls in the Profile
 ```sh
 inspec exec postgresql-stig-inspec --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres"  -t ssh://<user>@<db host>:<port>
 ```
 
-### Execute all the Controls in the Profile and save results as HTML
+#### Execute all the Controls in the Profile and save results as HTML
 ```sh
 inspec exec postgresql-stig-inspec --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> | ./tools/ansi2html.sh --bg=dark > inspec-report.html
 ```
+
+## Sponsors
+
+![Crunchy Data](hugo/static/images/crunchy_logo.png)
+
+[Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgmonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
+
+## Legal Notices
+
+Copyright © 2019 Crunchy Data Solutions, Inc.
+
+CRUNCHY DATA SOLUTIONS, INC. PROVIDES THIS GUIDE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF NON INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+Crunchy, Crunchy Data Solutions, Inc. and the Crunchy Hippo Logo are trademarks of Crunchy Data Solutions, Inc.
