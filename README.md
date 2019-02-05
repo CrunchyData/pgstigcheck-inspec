@@ -174,9 +174,11 @@ inspec exec postgresql-stig-inspec --attrs attributes.yml -i <your ssh private k
 
 ## Sponsors
 
-![Crunchy Data](hugo/static/images/crunchy_logo.png)
+[![Crunchy Data](/hugo/static/images/crunchy_logo.png)](https://www.crunchydata.com/)
 
-[Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgmonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
+[Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgSTIGcheck-inspec and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
+
+---
 
 ## Legal Notices
 
