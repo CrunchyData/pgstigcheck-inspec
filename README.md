@@ -50,9 +50,12 @@ To run the PostgreSQL STIG Compliance Validator, there are specific requirements
 #### Install ruby using rvm
 ```sh
 $ curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+$ curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
 $ curl -L get.rvm.io | bash -s stable
 $ rvm install 2.4.0
-$ rvm use 2.4 --default
+$ rvm use 2.4.0 --default
+
+$ source ${HOME}/.rvm/scripts/rvm
 ```
 
 #### Install the needed gems  
