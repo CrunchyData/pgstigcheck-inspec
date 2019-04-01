@@ -50,9 +50,12 @@ To run the PostgreSQL STIG Compliance Validator, there are specific requirements
 #### Install ruby using rvm
 ```sh
 $ curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+$ curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
 $ curl -L get.rvm.io | bash -s stable
 $ rvm install 2.4.0
-$ rvm use 2.4 --default
+$ rvm use 2.4.0 --default
+
+$ source ${HOME}/.rvm/scripts/rvm
 ```
 
 #### Install the needed gems  
@@ -146,28 +149,42 @@ pg_timezone: 'UTC'
 (See: https://www.inspec.io/docs/reference/cli/)
 
 #### Execute a single Control in the Profile
-**Note**: replace the profile's directory name - e.g. - `postgresql-stig-insepc` with `.` if you are in the profile's root directory.
+**Note**: replace the profile's directory name - e.g. - `pgstigcheck-inspec` with `.` if you are in the profile's root directory.
 ```sh
-inspec exec postgresql-stig-inspec/controls/V-72845.rb --attrs attributes.yml -i <your ssh private key>  -t ssh://<user>@<db host>:<port>
+inspec exec pgstigcheck-inspec/controls/V-72845.rb --attrs attributes.yml -i <your ssh private key>  -t ssh://<user>@<db host>:<port>
 ```
 or use the `--controls` flag
 ```sh
-inspec exec postgresql-stig-inspec --controls=V-72845 V-72861 --attrs attributes.yml  -i <your ssh private key>  -t ssh://<user>@<db host>:<port>
+inspec exec pgstigcheck-inspec --controls=V-72845 V-72861 --attrs attributes.yml  -i <your ssh private key>  -t ssh://<user>@<db host>:<port>
 ```
 
 #### Execute a Single Control and save results as HTML
 ```sh
-inspec exec postgresql-stig-insepc --controls=V-72845 --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> | ./tools/ansi2html.sh --bg=dark > inspec-report.html
+inspec exec pgstigcheck-inspec --controls=V-72845 --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> | ./tools/ansi2html.sh --bg=dark > inspec-report.html
 ```
 
 > When executing all the Controls, InSpec will generate warning ```already initialized constant #<Class:0x000000.......>::<Attribuet Name>```, it is safe to ignore it. We are working with InSpec upstream to get it fixed.
 
 #### Execute All Controls in the Profile
 ```sh
-inspec exec postgresql-stig-inspec --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres"  -t ssh://<user>@<db host>:<port>
+inspec exec pgstigcheck-inspec --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres"  -t ssh://<user>@<db host>:<port>
 ```
 
 #### Execute all the Controls in the Profile and save results as HTML
 ```sh
 inspec exec postgresql-stig-inspec --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> | ./tools/ansi2html.sh --bg=dark > inspec-report.html
 ```
+
+## Sponsors
+
+[![Crunchy Data](/images/crunchy_logo.png)](https://www.crunchydata.com/)
+
+[Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgSTIGcheck-inspec and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
+
+## Legal Notices
+
+Copyright © 2019 Crunchy Data Solutions, Inc.
+
+CRUNCHY DATA SOLUTIONS, INC. PROVIDES THIS GUIDE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF NON INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+Crunchy, Crunchy Data Solutions, Inc. and the Crunchy Hippo Logo are trademarks of Crunchy Data Solutions, Inc.
