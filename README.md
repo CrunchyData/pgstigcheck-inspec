@@ -43,7 +43,7 @@ To run the PostgreSQL STIG Compliance Validator, there are specific requirements
 #### Required software on STIG Validation Execution Host
 - git
 - ssh
-- [InSpec](https://github.com/chef/inspec)
+- [InSpec](https://www.chef.io/products/chef-inspec/)
 
 ### Setup Environment on STIG Validation Execution Host
 #### Install InSpec
