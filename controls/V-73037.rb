@@ -19,22 +19,22 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
-PG_DBA = attribute(
+pg_dba = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
 )
 
-PG_DBA_PASSWORD = attribute(
+pg_dba_password = attribute(
   'pg_dba_password',
   description: 'The password for the postgres DBA user',
 )
 
-PG_DB = attribute(
+pg_db = attribute(
   'pg_db',
   description: 'The database used for tests',
 )
 
-PG_HOST = attribute(
+pg_host = attribute(
   'pg_host',
   description: 'The hostname or IP address used to connect to the database',
 )
@@ -105,21 +105,21 @@ $ sudo systemctl restart postgresql-9.5
 # INITD SERVER ONLY
 $ sudo service postgresql-9.5 restart"
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  describe sql.query('SHOW tcp_keepalives_idle;', [PG_DB]) do
+  describe sql.query('SHOW tcp_keepalives_idle;', [pg_db]) do
     its('output') { should_not cmp 0 }
   end
 
-  describe sql.query('SHOW tcp_keepalives_interval;', [PG_DB]) do
+  describe sql.query('SHOW tcp_keepalives_interval;', [pg_db]) do
     its('output') { should_not cmp 0 }
   end
 
-  describe sql.query('SHOW tcp_keepalives_count;', [PG_DB]) do
+  describe sql.query('SHOW tcp_keepalives_count;', [pg_db]) do
     its('output') { should_not cmp 0 }
   end
 
-  describe sql.query('SHOW statement_timeout;', [PG_DB]) do
+  describe sql.query('SHOW statement_timeout;', [pg_db]) do
     its('output') { should_not cmp 0 }
   end
 end

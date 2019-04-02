@@ -20,27 +20,27 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
-PG_DBA = attribute(
+pg_dba = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
 )
 
-PG_DBA_PASSWORD = attribute(
+pg_dba_password = attribute(
   'pg_dba_password',
   description: 'The password for the postgres DBA user',
 )
 
-PG_DB = attribute(
+pg_db = attribute(
   'pg_db',
   description: 'The database used for tests',
 )
 
-PG_HOST = attribute(
+pg_host = attribute(
   'pg_host',
   description: 'The hostname or IP address used to connect to the database',
 )
 
-PG_PORT = attribute(
+pg_port = attribute(
   'pg_port',
   description: 'The port used to connect to the database',
 )
@@ -73,7 +73,7 @@ control "V-72841" do
         This can allow unauthorized access to the database and through the
         database to other components of the information system."
   impact 0.5
-  
+
   tag "severity": "medium"
   tag "gtitle": "SRG-APP-000142-DB-000094"
   tag "gid": "V-72841"
@@ -115,13 +115,13 @@ control "V-72841" do
   $ psql -p 5432 -c \"SHOW port\"
   $ export PGPORT=5432"
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  describe sql.query('SHOW port;', [PG_DB]) do
-    its('output') { should eq PG_PORT }
+  describe sql.query('SHOW port;', [pg_db]) do
+    its('output') { should eq pg_port }
   end
 
-  describe port(PG_PORT) do
+  describe port(pg_port) do
     it { should be_listening }
     its('processes') { should include 'postgres' }
   end

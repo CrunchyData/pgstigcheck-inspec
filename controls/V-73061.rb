@@ -19,32 +19,32 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
-PG_DBA = attribute(
+pg_dba = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
 )
 
-PG_DBA_PASSWORD = attribute(
+pg_dba_password = attribute(
   'pg_dba_password',
   description: 'The password for the postgres DBA user',
 )
 
-PG_DB = attribute(
+pg_db = attribute(
   'pg_db',
   description: 'The database used for tests',
 )
 
-PG_HOST = attribute(
+pg_host = attribute(
   'pg_host',
   description: 'The hostname or IP address used to connect to the database',
 )
 
-PG_DATA_DIR = attribute(
+pg_data_dir = attribute(
   'pg_data_dir',
   description: 'The postgres data directory',
 )
 
-PG_CONF_FILE = attribute(
+pg_conf_file = attribute(
   'pg_conf_file',
   description: 'The postgres configuration file',
 )
@@ -119,18 +119,18 @@ control "V-73061" do
       $ chown postgres:postgres ${PGDATA?}/*.conf
       $ chmod 0600 ${PGDATA?}/*.conf"
 
-  describe file(PG_CONF_FILE) do
+  describe file(pg_conf_file) do
     it { should be_file }
     its('mode') { should cmp '0600' }
   end
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  log_destination_query = sql.query('SHOW log_destination;', [PG_DB])
+  log_destination_query = sql.query('SHOW log_destination;', [pg_db])
   log_destination = log_destination_query.output
 
   if log_destination =~ /stderr/i
-    describe sql.query('SHOW log_file_mode;', [PG_DB]) do
+    describe sql.query('SHOW log_file_mode;', [pg_db]) do
       its('output') { should cmp '0600' }
     end
   end

@@ -19,22 +19,22 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
-PG_DBA = attribute(
+pg_dba = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
 )
 
-PG_DBA_PASSWORD = attribute(
+pg_dba_password = attribute(
   'pg_dba_password',
   description: 'The password for the postgres DBA user',
 )
 
-PG_DB = attribute(
+pg_db = attribute(
   'pg_db',
   description: 'The database used for tests',
 )
 
-PG_HOST = attribute(
+pg_host = attribute(
   'pg_host',
   description: 'The hostname or IP address used to connect to the database',
 )
@@ -106,9 +106,9 @@ APPENDIX-G.
 
 Deploy NSA-approved encrypting devices to protect the server on the network."
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  describe sql.query('SHOW ssl;', [PG_DB]) do
+  describe sql.query('SHOW ssl;', [pg_db]) do
     its('output') { should match /on|true/i }
   end
 end

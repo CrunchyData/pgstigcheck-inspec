@@ -19,48 +19,48 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
-PG_OWNER = attribute(
+pg_owner = attribute(
   'pg_owner',
   description: "The system user of the postgres process",
 )
 
-PG_DBA = attribute(
+pg_dba = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
 )
 
-PG_DBA_PASSWORD = attribute(
+pg_dba_password = attribute(
   'pg_dba_password',
   description: 'The password for the postgres DBA user',
 )
 
-PG_DB = attribute(
+pg_db = attribute(
   'pg_db',
   description: 'The database used for tests',
 )
 
-PG_HOST = attribute(
+pg_host = attribute(
   'pg_host',
   description: 'The hostname or IP address used to connect to the database',
 )
 
-PG_USERS = attribute(
+pg_users = attribute(
   'pg_users',
   description: 'Authorized accounts',
   default: 'postgres',
 )
 
-PG_DATA_DIR = attribute(
+pg_data_dir = attribute(
   'pg_data_dir',
   description: 'The postgres data directory',
 )
 
-PG_HBA_CONF_FILE = attribute(
+pg_hba_conf_file = attribute(
   'pg_hba_conf_file',
   description: 'The postgres hba configuration file',
 )
 
-PG_REPLICAS = attribute(
+pg_replicas = attribute(
   'pg_replicas',
   description: 'List of postgres replicas in CIDR notation',
 )
@@ -143,29 +143,29 @@ host test_db bob 192.168.0.0/16 md5
 For more information on pg_hba.conf, see the official documentation:
 https://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html"
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  authorized_roles = PG_USERS
+  authorized_roles = pg_users
 
   roles_sql = 'SELECT r.rolname FROM pg_catalog.pg_roles r;'
 
-  describe sql.query(roles_sql, [PG_DB]) do
+  describe sql.query(roles_sql, [pg_db]) do
     its('lines.sort') { should cmp authorized_roles.sort }
   end
 
-  describe postgres_hba_conf(PG_HBA_CONF_FILE).where { type == 'local' } do
-    its('user.uniq') { should cmp PG_OWNER }
+  describe postgres_hba_conf(pg_hba_conf_file).where { type == 'local' } do
+    its('user.uniq') { should cmp pg_owner }
     its('auth_method.uniq') { should_not include 'trust'}
   end
 
-  describe postgres_hba_conf(PG_HBA_CONF_FILE).where { database == 'replication' } do
+  describe postgres_hba_conf(pg_hba_conf_file).where { database == 'replication' } do
     its('type.uniq') { should cmp 'host' }
-    its('address.uniq.sort') { should cmp PG_REPLICAS.sort }
+    its('address.uniq.sort') { should cmp pg_replicas.sort }
     its('user.uniq') { should cmp 'replication' }
     its('auth_method.uniq') { should cmp 'md5' }
   end
 
-  describe postgres_hba_conf(PG_HBA_CONF_FILE).where { type == 'host' } do
+  describe postgres_hba_conf(pg_hba_conf_file).where { type == 'host' } do
     its('auth_method.uniq') { should cmp 'md5'}
   end
 end

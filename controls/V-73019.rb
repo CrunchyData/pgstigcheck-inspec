@@ -19,22 +19,22 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
-PG_DBA = attribute(
+pg_dba = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
 )
 
-PG_DBA_PASSWORD = attribute(
+pg_dba_password = attribute(
   'pg_dba_password',
   description: 'The password for the postgres DBA user',
 )
 
-PG_DB = attribute(
+pg_db = attribute(
   'pg_db',
   description: 'The database used for tests',
 )
 
-PG_HOST = attribute(
+pg_host = attribute(
   'pg_host',
   description: 'The hostname or IP address used to connect to the database',
 )
@@ -117,17 +117,17 @@ Use accounts assigned to individual users. Where the application connects to
 PostgreSQL using a standard, shared account, ensure that it also captures the
 individual user identification and passes it to PostgreSQL."
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
   log_line_prefix_escapes = %w(%m %u %d %p %r %a)
 
   log_line_prefix_escapes.each do |escape|
-    describe sql.query('SHOW log_line_prefix;', [PG_DB]) do
+    describe sql.query('SHOW log_line_prefix;', [pg_db]) do
       its('output') { should include escape }
     end
   end
 
-  describe sql.query('SHOW shared_preload_libraries;', [PG_DB]) do
+  describe sql.query('SHOW shared_preload_libraries;', [pg_db]) do
     its('output') { should include 'pgaudit' }
   end
 end

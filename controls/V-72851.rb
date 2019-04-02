@@ -19,37 +19,37 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
-PG_DBA = attribute(
+pg_dba = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
 )
 
-PG_DBA_PASSWORD = attribute(
+pg_dba_password = attribute(
   'pg_dba_password',
   description: 'The password for the postgres DBA user',
 )
 
-PG_DB = attribute(
+pg_db = attribute(
   'pg_db',
   description: 'The database used for tests',
 )
 
-PG_HOST = attribute(
+pg_host = attribute(
   'pg_host',
   description: 'The hostname or IP address used to connect to the database',
 )
 
-PG_DATA_DIR = attribute(
+pg_data_dir = attribute(
   'pg_data_dir',
   description: 'The postgres data directory',
 )
 
-PG_CONF_FILE = attribute(
+pg_conf_file = attribute(
   'pg_conf_file',
   description: 'The postgres configuration file',
 )
 
-PG_USER_DEFINED_CONF = attribute(
+pg_user_defined_conf = attribute(
   'pg_user_defined_conf',
   description: 'An additional postgres configuration file used to override default values',
 )
@@ -111,11 +111,11 @@ control "V-72851" do
   # INITD SERVER ONLY
   $ service postgresql-9.5 reload "
 
-  default = postgres_conf(PG_CONF_FILE)
-  override = postgres_conf(PG_USER_DEFINED_CONF)
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  default = postgres_conf(pg_conf_file)
+  override = postgres_conf(pg_user_defined_conf)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  describe sql.query('SHOW client_min_messages;', [PG_DB]) do
+  describe sql.query('SHOW client_min_messages;', [pg_db]) do
    its('output') { should match /^error$/i }
   end
 

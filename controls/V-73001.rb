@@ -19,22 +19,22 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
-PG_DBA = attribute(
+pg_dba = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
 )
 
-PG_DBA_PASSWORD = attribute(
+pg_dba_password = attribute(
   'pg_dba_password',
   description: 'The password for the postgres DBA user',
 )
 
-PG_DB = attribute(
+pg_db = attribute(
   'pg_db',
   description: 'The database used for tests',
 )
 
-PG_HOST = attribute(
+pg_host = attribute(
   'pg_host',
   description: 'The hostname or IP address used to connect to the database',
 )
@@ -76,13 +76,13 @@ instructions on enabling logging.
 For session logging we suggest using pgaudit. For instructions on how to setup
 pgaudit, see supplementary content APPENDIX-B."
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  describe sql.query('SHOW shared_preload_libraries;', [PG_DB]) do
+  describe sql.query('SHOW shared_preload_libraries;', [pg_db]) do
     its('output') { should include 'pgaudit' }
   end
 
-  describe sql.query('SHOW log_destination;', [PG_DB]) do
+  describe sql.query('SHOW log_destination;', [pg_db]) do
     its('output') { should match /stderr|syslog/i }
   end
 end

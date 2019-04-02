@@ -19,22 +19,22 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
-PG_DBA = attribute(
+pg_dba = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
 )
 
-PG_DBA_PASSWORD = attribute(
+pg_dba_password = attribute(
   'pg_dba_password',
   description: 'The password for the postgres DBA user',
 )
 
-PG_DB = attribute(
+pg_db = attribute(
   'pg_db',
   description: 'The database used for tests',
 )
 
-PG_HOST = attribute(
+pg_host = attribute(
   'pg_host',
   description: 'The hostname or IP address used to connect to the database',
 )
@@ -98,13 +98,13 @@ control "V-72909" do
   # INITD SERVER ONLY
   $ sudo service postgresql-9.5 reload"
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  describe sql.query('SHOW log_destination;', [PG_DB]) do
+  describe sql.query('SHOW log_destination;', [pg_db]) do
     its('output') { should match /syslog/i }
   end
 
-  describe sql.query('SHOW syslog_facility;', [PG_DB]) do
+  describe sql.query('SHOW syslog_facility;', [pg_db]) do
     its('output') { should match /local[0-7]/i }
   end
 end

@@ -19,12 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
-PG_DATA_DIR = attribute(
+pg_data_dir = attribute(
   'pg_data_dir',
   description: 'The postgres data directory',
 )
 
-PG_HBA_CONF_FILE = attribute(
+pg_hba_conf_file = attribute(
   'pg_hba_conf_file',
   description: 'The postgres hba configuration file',
 )
@@ -71,7 +71,7 @@ control "V-72857" do
   $ vi ${PGDATA?}/pg_hba.conf
   host all all .example.com md5"
 
-  describe postgres_hba_conf(PG_HBA_CONF_FILE) do
+  describe postgres_hba_conf(pg_hba_conf_file) do
     its('auth_method') { should_not include 'password' }
   end
 end

@@ -19,27 +19,27 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
-PG_DBA = attribute(
+pg_dba = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
 )
 
-PG_DBA_PASSWORD = attribute(
+pg_dba_password = attribute(
   'pg_dba_password',
   description: 'The password for the postgres DBA user',
 )
 
-PG_DB = attribute(
+pg_db = attribute(
   'pg_db',
   description: 'The database used for tests',
 )
 
-PG_HOST = attribute(
+pg_host = attribute(
   'pg_host',
   description: 'The hostname or IP address used to connect to the database',
 )
 
-PG_TIMEZONE = attribute(
+pg_timezone = attribute(
   'pg_timezone',
   description: 'PostgreSQL timezone',
 )
@@ -89,9 +89,9 @@ control "V-72887" do
   # INITD SERVER ONLY
   $ sudo service postgresql-9.5 restart"
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  describe sql.query('SHOW log_timezone;', [PG_DB]) do
-    its('output') { should eq PG_TIMEZONE }
+  describe sql.query('SHOW log_timezone;', [pg_db]) do
+    its('output') { should eq pg_timezone }
   end
 end

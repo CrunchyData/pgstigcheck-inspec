@@ -19,22 +19,22 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
-PG_DBA = attribute(
+pg_dba = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
 )
 
-PG_DBA_PASSWORD = attribute(
+pg_dba_password = attribute(
   'pg_dba_password',
   description: 'The password for the postgres DBA user',
 )
 
-PG_DB = attribute(
+pg_db = attribute(
   'pg_db',
   description: 'The database used for tests',
 )
 
-PG_HOST = attribute(
+pg_host = attribute(
   'pg_host',
   description: 'The hostname or IP address used to connect to the database',
 )
@@ -136,20 +136,20 @@ $ sudo systemctl reload postgresql-9.5
 # INITD SERVER ONLY
 $ sudo service postgresql-9.5 reload"
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
   log_line_prefix_escapes = %w(%m %u %d %s)
   log_line_prefix_escapes.each do |escape|
-    describe sql.query('SHOW log_line_prefix;', [PG_DB]) do
+    describe sql.query('SHOW log_line_prefix;', [pg_db]) do
       its('output') { should include escape }
     end
   end
 
-  describe sql.query('SHOW log_connections;', [PG_DB]) do
+  describe sql.query('SHOW log_connections;', [pg_db]) do
     its('output') { should_not match /off|false/i }
   end
 
-  describe sql.query('SHOW log_disconnections;', [PG_DB]) do
+  describe sql.query('SHOW log_disconnections;', [pg_db]) do
     its('output') { should_not match /off|false/i }
   end
 end

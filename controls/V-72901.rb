@@ -19,12 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
-PG_VERSION = attribute(
+pg_version = attribute(
   'pg_version',
   description: "The version of postgres",
 )
 
-PG_SHARED_DIRS = attribute(
+pg_shared_dirs = attribute(
   'pg_shared_dirs',
   description: 'defines the locations of the postgresql shared library directories',
 )
@@ -72,7 +72,7 @@ control "V-72901" do
   other application software that currently shares the PostgreSQL software
   library directory."
 
-  PG_SHARED_DIRS.each do |dir|
+  pg_shared_dirs.each do |dir|
     describe directory(dir) do
       it { should be_directory }
       it { should be_owned_by 'root' }

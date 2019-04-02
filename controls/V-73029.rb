@@ -19,32 +19,32 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
-PG_OWNER = attribute(
+pg_owner = attribute(
   'pg_owner',
   description: "The system user of the postgres process",
 )
 
-PG_DBA = attribute(
+pg_dba = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
 )
 
-PG_DBA_PASSWORD = attribute(
+pg_dba_password = attribute(
   'pg_dba_password',
   description: 'The password for the postgres DBA user',
 )
 
-PG_DB = attribute(
+pg_db = attribute(
   'pg_db',
   description: 'The database used for tests',
 )
 
-PG_HOST = attribute(
+pg_host = attribute(
   'pg_host',
   description: 'The hostname or IP address used to connect to the database',
 )
 
-PG_DATA_DIR = attribute(
+pg_data_dir = attribute(
   'pg_data_dir',
   description: 'The postgres data directory',
 )
@@ -121,12 +121,12 @@ $ sudo service postgresql-9.5 restart
 For more information on configuring PostgreSQL to use SSL, see supplementary content
 APPENDIX-G."
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
   settings = %w(ssl_cert_file ssl_key_file ssl_ca_file ssl_crl_file)
 
   settings.each do |setting|
-    file_query = sql.query("SHOW #{setting};", [PG_DB])
+    file_query = sql.query("SHOW #{setting};", [pg_db])
     file = file_query.output
 
     if file.empty?
@@ -148,9 +148,9 @@ APPENDIX-G."
         ext = 'crl'
       end
 
-      file = "#{PG_DATA_DIR}/#{name}.#{ext}"
+      file = "#{pg_data_dir}/#{name}.#{ext}"
     elsif File.dirname(file) == '.'
-      file = "#{PG_DATA_DIR}/#{file}"
+      file = "#{pg_data_dir}/#{file}"
     end
 
     describe file(file) do
@@ -160,7 +160,7 @@ APPENDIX-G."
     directory = File.dirname(file)
 
     describe directory(directory) do
-      its('owner') { should match /root|#{PG_OWNER}/ }
+      its('owner') { should match /root|#{pg_owner}/ }
       its('mode') { should cmp '0700' }
     end
   end
