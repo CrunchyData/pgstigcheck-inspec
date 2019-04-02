@@ -96,7 +96,7 @@ $ psql -c \"ALTER ROLE <role_name> NOSUPERUSER\"
 
 Use REVOKE to remove privileges from databases and schemas:
 
-$ psql -c \"REVOKE ALL PRIVILEGES ON <table> FROM <role_name>;"
+$ psql -c \"REVOKE ALL PRIVILEGES ON <table> FROM <role_name>"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 

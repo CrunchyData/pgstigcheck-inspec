@@ -23,7 +23,7 @@ uri: http://iase.disa.mil
 control "V-73057" do
   title "Database contents must be protected from unauthorized and unintended
 information transfer by enforcement of a data-transfer policy."
-  desc  "Applications, including PostgreSQLs, must prevent unauthorized and
+  desc  "Applications, including PostgreSQL, must prevent unauthorized and
 unintended information transfer via shared system resources.
 
 Data used for the development and testing of applications often involves copying

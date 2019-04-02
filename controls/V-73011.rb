@@ -31,7 +31,7 @@ functions).
 It is detrimental for software products to provide, or install by default,
 functionality exceeding requirements or mission objectives.
 
-PostgreSQLs must adhere to the principles of least functionality by providing only
+PostgreSQL must adhere to the principles of least functionality by providing only
 essential capabilities.
 
 Unused, unnecessary PostgreSQL components increase the attack vector for PostgreSQL

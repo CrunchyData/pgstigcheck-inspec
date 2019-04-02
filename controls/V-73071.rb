@@ -38,7 +38,7 @@ control "V-73071" do
   tag "nist": ["IA-7", "Rev_4"]
 
   tag "check": "If the deployment incorporates a custom build of the operating
-      system and Postgres guaranteeing the use of FIPS 140-2 compliant OpenSSL,
+      system and PostgreSQL guaranteeing the use of FIPS 140-2 compliant OpenSSL,
       this is not a finding.
 
       If PostgreSQL is not installed on Red Hat Enterprise Linux (RHEL),

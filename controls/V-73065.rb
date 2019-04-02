@@ -19,6 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_VER = attribute(
+  'pg_version',
+  description: "The version of the PostgreSQL process which is being inspected (tested)",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
@@ -97,10 +103,10 @@ control "V-73065" do
       configuration:
 
       # SYSTEMD SERVER ONLY
-      $ sudo systemctl reload postgresql-9.5
+      $ sudo systemctl reload postgresql-${PG_VER}
 
       # INITD SERVER ONLY
-      $ sudo service postgresql-9.5 reload"
+      $ sudo service postgresql-${PG_VER} reload"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 
