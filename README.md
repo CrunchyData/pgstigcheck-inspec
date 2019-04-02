@@ -43,24 +43,15 @@ To run the PostgreSQL STIG Compliance Validator, there are specific requirements
 #### Required software on STIG Validation Execution Host
 - git
 - ssh
-- ruby using rvm
-- [InSpec](https://github.com/chef/inspec)
+- [InSpec](https://www.chef.io/products/chef-inspec/)
 
 ### Setup Environment on STIG Validation Execution Host
-#### Install ruby using rvm
-```sh
-$ curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
-$ curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
-$ curl -L get.rvm.io | bash -s stable
-$ rvm install 2.4.0
-$ rvm use 2.4.0 --default
+#### Install InSpec
+Goto https://downloads.chef.io/inspec/stable and copy download link
+> ex: https://packages.chef.io/files/stable/inspec/3.9.0/el/7/inspec-3.9.0-1.el7.x86_64.rpm
 
-$ source ${HOME}/.rvm/scripts/rvm
-```
-
-#### Install the needed gems  
 ```sh
-gem install inspec
+sudo yum insall https://packages.chef.io/files/stable/inspec/3.9.0/el/7/inspec-3.9.0-1.el7.x86_64.rpm
 ```
 
 #### Ensure your InSpec version is at least 1.31.x
