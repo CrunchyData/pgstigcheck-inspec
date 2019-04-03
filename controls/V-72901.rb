@@ -1,33 +1,7 @@
 # encoding: utf-8
-#
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-PG_VERSION = attribute(
-  'pg_version',
-  description: "The version of postgres",
-)
-
-PG_SHARED_DIRS = attribute(
-  'pg_shared_dirs',
-  description: 'defines the locations of the postgresql shared library directories',
-)
+pg_version = attribute('pg_version')
+pg_shared_dirs = attribute('pg_shared_dirs')
 
 control "V-72901" do
   title "Database software, including PostgreSQL configuration files, must be
@@ -72,7 +46,7 @@ control "V-72901" do
   other application software that currently shares the PostgreSQL software
   library directory."
 
-  PG_SHARED_DIRS.each do |dir|
+  pg_shared_dirs.each do |dir|
     describe directory(dir) do
       it { should be_directory }
       it { should be_owned_by 'root' }

@@ -1,26 +1,6 @@
 # encoding: utf-8
-#
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-
-control "V-72861" do
+control 'V-72861' do
   title "PostgreSQL must associate organization-defined types of security labels
   having organization-defined security label values with information in
 transmission."
@@ -40,13 +20,13 @@ transmission."
   If the security labels are lost when the data is stored, there is the risk of
   a data compromise."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000314-DB-000310"
-  tag "gid": "V-72861"
-  tag "rid": "SV-87513r1_rule"
-  tag "stig_id": "PGS9-00-001100"
-  tag "cci": ["CCI-002264"]
-  tag "nist": ["AC-16 a", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000314-DB-000310'
+  tag "gid": 'V-72861'
+  tag "rid": 'SV-87513r1_rule'
+  tag "stig_id": 'PGS9-00-001100'
+  tag "cci": ['CCI-002264']
+  tag "nist": ['AC-16 a', 'Rev_4']
   tag "check": "If security labeling is not required, this is not a finding.
   First, as the database administrator (shown here as \"postgres\"), run the
   following SQL against each table that requires security labels:

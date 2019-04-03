@@ -1,51 +1,12 @@
 # encoding: utf-8
-#
-# :xccdf2inspec: v. 1.1.0
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
+pg_dba = attribute('pg_dba')
+pg_dba_password = attribute('pg_dba_password')
+pg_db = attribute('pg_db')
+pg_host = attribute('pg_host')
+pg_port = attribute('pg_port')
 
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-PG_DBA = attribute(
-  'pg_dba',
-  description: 'The postgres DBA user to access the test database',
-)
-
-PG_DBA_PASSWORD = attribute(
-  'pg_dba_password',
-  description: 'The password for the postgres DBA user',
-)
-
-PG_DB = attribute(
-  'pg_db',
-  description: 'The database used for tests',
-)
-
-PG_HOST = attribute(
-  'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
-)
-
-PG_PORT = attribute(
-  'pg_port',
-  description: 'The port used to connect to the database',
-)
-
-control "V-72841" do
+control 'V-72841' do
   title "PostgreSQL must be configured to prohibit or restrict the use of
         organization-defined functions, ports, protocols, and/or services, as
         defined in the PPSM CAL and vulnerability assessments."
@@ -73,14 +34,14 @@ control "V-72841" do
         This can allow unauthorized access to the database and through the
         database to other components of the information system."
   impact 0.5
-  
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000142-DB-000094"
-  tag "gid": "V-72841"
-  tag "rid": "SV-87493r1_rule"
-  tag "stig_id": "PGS9-00-000100"
-  tag "cci": ["CCI-000382","CCI-001762"]
-  tag "nist": ["CM-7 b", "CM-7 (1) (b)", "Rev_4"]
+
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000142-DB-000094'
+  tag "gid": 'V-72841'
+  tag "rid": 'SV-87493r1_rule'
+  tag "stig_id": 'PGS9-00-000100'
+  tag "cci": ['CCI-000382', 'CCI-001762']
+  tag "nist": ['CM-7 b', 'CM-7 (1) (b)', 'Rev_4']
 
   tag "check": "As the database administrator, run the following SQL:
 
@@ -115,13 +76,13 @@ control "V-72841" do
   $ psql -p 5432 -c \"SHOW port\"
   $ export PGPORT=5432"
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  describe sql.query('SHOW port;', [PG_DB]) do
-    its('output') { should eq PG_PORT }
+  describe sql.query('SHOW port;', [pg_db]) do
+    its('output') { should eq pg_port }
   end
 
-  describe port(PG_PORT) do
+  describe port(pg_port) do
     it { should be_listening }
     its('processes') { should include 'postgres' }
   end

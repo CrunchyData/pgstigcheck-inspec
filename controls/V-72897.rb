@@ -1,53 +1,11 @@
 # encoding: utf-8
-#
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-PG_OWNER = attribute(
-  'pg_owner',
-  description: "The system user of the postgres process",
-)
-
-PG_DBA = attribute(
-  'pg_dba',
-  description: 'The postgres DBA user to access the test database',
-)
-
-PG_DBA_PASSWORD = attribute(
-  'pg_dba_password',
-  description: 'The password for the postgres DBA user',
-)
-
-PG_DB = attribute(
-  'pg_db',
-  description: 'The database used for tests',
-)
-
-PG_HOST = attribute(
-  'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
-)
-
-PG_SUPERUSERS = attribute(
-  'pg_superusers',
-  description: 'Authorized superuser accounts',
-)
+pg_owner = attribute('pg_owner')
+pg_dba = attribute('pg_dba')
+pg_dba_password = attribute('pg_dba_password')
+pg_db = attribute('pg_db')
+pg_host = attribute('pg_host')
+pg_superusers = attribute('pg_superusers')
 
 control "V-72897" do
   title "Database objects (including but not limited to tables, indexes,
@@ -95,13 +53,13 @@ control "V-72897" do
   $ sudo su - postgres
   $ psql -c \"ALTER SCHEMA test OWNER TO bob\""
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  authorized_owners = PG_SUPERUSERS
+  authorized_owners = pg_superusers
 
 
-  databases_sql = "SELECT datname FROM pg_catalog.pg_database where datname = '#{PG_DB}';"
-  databases_query = sql.query(databases_sql, [PG_DB])
+  databases_sql = "SELECT datname FROM pg_catalog.pg_database where datname = '#{pg_db}';"
+  databases_query = sql.query(databases_sql, [pg_db])
   databases = databases_query.lines
   types = %w(t s v) # tables, sequences views
 
@@ -112,12 +70,12 @@ control "V-72897" do
     if database == 'postgres'
       schemas_sql = "SELECT n.nspname, pg_catalog.pg_get_userbyid(n.nspowner) "\
         "FROM pg_catalog.pg_namespace n "\
-        "WHERE pg_catalog.pg_get_userbyid(n.nspowner) <> '#{PG_OWNER}';"
+        "WHERE pg_catalog.pg_get_userbyid(n.nspowner) <> '#{pg_owner}';"
       functions_sql = "SELECT n.nspname, p.proname, "\
         "pg_catalog.pg_get_userbyid(n.nspowner) "\
         "FROM pg_catalog.pg_proc p "\
         "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace "\
-        "WHERE pg_catalog.pg_get_userbyid(n.nspowner) <> '#{PG_OWNER}';"
+        "WHERE pg_catalog.pg_get_userbyid(n.nspowner) <> '#{pg_owner}';"
     else
       schemas_sql = "SELECT n.nspname, pg_catalog.pg_get_userbyid(n.nspowner) "\
         "FROM pg_catalog.pg_namespace n "\
@@ -169,7 +127,7 @@ control "V-72897" do
           "pg_catalog.pg_get_userbyid(n.nspowner) FROM pg_catalog.pg_class c "\
           "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace "\
           "WHERE c.relkind IN ('#{type}','s','') "\
-          "AND pg_catalog.pg_get_userbyid(n.nspowner) <> '#{PG_OWNER}' "
+          "AND pg_catalog.pg_get_userbyid(n.nspowner) <> '#{pg_owner}' "
           "AND n.nspname !~ '^pg_toast';"
       else
         objects_sql = "SELECT n.nspname, c.relname, c.relkind, "\

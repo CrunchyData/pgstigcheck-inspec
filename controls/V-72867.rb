@@ -1,48 +1,10 @@
 # encoding: utf-8
-#
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-PG_DBA = attribute(
-  'pg_dba',
-  description: 'The postgres DBA user to access the test database',
-)
-
-PG_DBA_PASSWORD = attribute(
-  'pg_dba_password',
-  description: 'The password for the postgres DBA user',
-)
-
-PG_DB = attribute(
-  'pg_db',
-  description: 'The database used for tests',
-)
-
-PG_HOST = attribute(
-  'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
-)
-
-PG_SUPERUSERS = attribute(
-  'pg_superusers',
-  description: 'Authorized superuser accounts',
-)
+pg_dba = attribute('pg_dba')
+pg_dba_password = attribute('pg_dba_password')
+pg_db = attribute('pg_db')
+pg_host = attribute('pg_host')
+pg_superusers = attribute('pg_superusers')
 
 control "V-72867" do
   title "PostgreSQL must uniquely identify and authenticate non-organizational
@@ -88,12 +50,12 @@ control "V-72867" do
   For the complete list of permissions allowed by roles, see the official
   documentation: https://www.postgresql.org/docs/current/static/sql-createrole.html"
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  authorized_roles = PG_SUPERUSERS
+  authorized_roles = pg_superusers
 
   roles_sql = 'SELECT r.rolname FROM pg_catalog.pg_roles r where r.rolsuper;'
-  describe sql.query(roles_sql, [PG_DB]) do
+  describe sql.query(roles_sql, [pg_db]) do
     its('lines.sort') { should cmp authorized_roles.sort }
   end
 end

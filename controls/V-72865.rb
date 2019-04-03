@@ -1,63 +1,13 @@
 # encoding: utf-8
-#
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-PG_OWNER = attribute(
-  'pg_owner',
-  description: "The system user of the postgres process",
-)
-
-PG_GROUP = attribute(
-  'pg_group',
-  description: "The system group of the postgres process",
-)
-
-PG_DBA = attribute(
-  'pg_dba',
-  description: 'The postgres DBA user to access the test database',
-)
-
-PG_DBA_PASSWORD = attribute(
-  'pg_dba_password',
-  description: 'The password for the postgres DBA user',
-)
-
-PG_DB = attribute(
-  'pg_db',
-  description: 'The database used for tests',
-)
-
-PG_HOST = attribute(
-  'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
-)
-
-PG_DATA_DIR = attribute(
-  'pg_data_dir',
-  description: 'The postgres data directory',
-)
-
-PG_SUPERUSERS = attribute(
-  'pg_superusers',
-  description: 'Authorized superuser accounts',
-)
+pg_owner = attribute('pg_owner')
+pg_owner = attribute('pg_group')
+pg_dba = attribute('pg_dba')
+pg_dba_password = attribute('pg_dba_password')
+pg_db = attribute('pg_db')
+pg_host = attribute('pg_host')
+pg_data_dir = attribute('pg_data_dir')
+pg_superusers = attribute('pg_superusers')
 
 control "V-72865" do
   # @todo update the title of this control to something sane
@@ -116,9 +66,9 @@ control "V-72865" do
                 ALTER ROLE bob NOINHERIT;
                 REVOKE SELECT ON some_function FROM bob;"
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  authorized_owners = PG_SUPERUSERS
+  authorized_owners = pg_superusers
   owners = authorized_owners.join('|')
 
   object_granted_privileges = 'arwdDxtU'
@@ -138,7 +88,7 @@ control "V-72865" do
     "WHERE c.relkind IN ('r', 'v', 'm', 'S', 'f');"
 
   databases_sql = 'SELECT datname FROM pg_catalog.pg_database where not datistemplate;'
-  databases_query = sql.query(databases_sql, [PG_DB])
+  databases_query = sql.query(databases_sql, [pg_db])
   databases = databases_query.lines
 
   databases.each do |database|
@@ -173,9 +123,9 @@ control "V-72865" do
     end
   end
 
-  describe directory(PG_DATA_DIR) do
+  describe directory(pg_data_dir) do
     it { should be_directory }
-    it { should be_owned_by PG_OWNER }
+    it { should be_owned_by pg_owner }
     its('mode') { should cmp '0700' }
   end
 end

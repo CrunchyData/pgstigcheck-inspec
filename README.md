@@ -16,13 +16,13 @@ While the PostgreSQL STIG was developed to provide technical guidance to "lock d
 
 The PostgreSQL STIG provides guidance on the configuration of PostgreSQL to address requirements associated with:
 
-- Authentication
-- Access Controls
-- Data encryption at rest and over the wire
-- Auditing
-- Logging
-- Administration
-- Protection against SQL Injection
+-   Authentication
+-   Access Controls
+-   Data encryption at rest and over the wire
+-   Auditing
+-   Logging
+-   Administration
+-   Protection against SQL Injection
 
 ## Getting Started
 
@@ -31,64 +31,117 @@ The PostgreSQL STIG provides guidance on the configuration of PostgreSQL to addr
 To run the PostgreSQL STIG Compliance Validator, there are specific requirements on both the database host as will as the STIG valudation host.
 
 #### Database Host
-- PostgreSQL 9.5+ cluster running on \*nix host
-- Remote access to PostgreSQL Server
-- lsof
-- netstat
+
+-   PostgreSQL 9.5+ cluster running on \*nix host
+-   Remote access to PostgreSQL Server
+-   lsof
+-   netstat
 
 #### STIG Validation Execution Host
-- Linux VM or Host
-- sudo access to install packages
+
+-   Linux VM or Host
+-   sudo access to install packages
 
 #### Required software on STIG Validation Execution Host
-- git
-- ssh
-- [InSpec](https://www.chef.io/products/chef-inspec/)
+
+-   git
+-   ssh
+-   [InSpec](https://www.chef.io/products/chef-inspec/)
 
 ### Setup Environment on STIG Validation Execution Host
+
 #### Install InSpec
-Goto https://downloads.chef.io/inspec/stable and copy download link
-> ex: https://packages.chef.io/files/stable/inspec/3.9.0/el/7/inspec-3.9.0-1.el7.x86_64.rpm
+
+Goto <https://downloads.chef.io/inspec/stable> and copy download link
+
+For example:
+
+-   <https://packages.chef.io/files/stable/inspec/3.9.0/el/7/inspec-3.9.0-1.el7.x86_64.rpm>
 
 ```sh
 sudo yum insall https://packages.chef.io/files/stable/inspec/3.9.0/el/7/inspec-3.9.0-1.el7.x86_64.rpm
 ```
 
-#### Ensure your InSpec version is at least 1.31.x
+#### Ensure your InSpec version is at least 3.x or higher
+
 ```sh
 inspec --version
 ```
 
-### Setting attributes.yml
+### Setting & Reviewing the Core Profile Attributes
 
-#### OS Group, User and Password
+The `core` or `shared` attributes are set in the `inspec.yml` file in the profile. This stores the default values for the
+shared attributes that the profile uses to examine your system.
+
+These attributes _should not be edited directly_!
+
+If you need to over-ride the default values for the core attributes to better match your system under evaluttaion, please:
+
+1.  Review the attributes and their defaults in the `inspec.yml` and note the ones that you need to enhance.
+2.  Create a `system` or `instance` specific `attributes.yml` - such as `attributes.mysystem.yml` and over-ride the attributes with this file.
+3.  When you run the profile, you can load your updated attributes using the `--attrs` flag on the `inspec exec` command (see below)
+
+### Sensitive Attributes (aka `passwords`, `system accounts` and `owners` in your Postgres database )
+
+It is _**NOT RECOMMENDED**_ that you store sentive information - such as passwords - in plain text yaml files, so the profile is able to use `environment vairables` that are set on the \*`inspec runner` - aka the host you are running the `inspec exec` command from.
+
+You _will need to set these environment variables_ or you _could_ set them in your `attributes.mysystem.yml` but we _would prefer_ you set them via your `environment` as it is a better practice.
+
+#### Set the following `environment varables` before you run the profile:
+
+-   PG_OWNER
+-   PG_OWNER_GRP
+-   PG_OWNER_PWD
+-   PG_DBA
+-   PG_DBA_PWD
+-   PG_USER
+-   PG_USER_PWD
+-   PG_HOST
+-   PG_PORT
+-   LOGIN_USER
+-   LOGIN_HOST
+-   PG_SYSLOG_OWNER
+
+### Examles for your `attributes.mysystem.yml`
+
+#### OS Group, User
+
 ```yaml
 pg_owner: 'postgres'
 pg_group: 'postgres'
-pg_owner_password: '<my secret password>'
+# password set via `env_var`
 ```
-#### DBA User and Password
+
+#### DBA User
+
 ```yaml
-pg_dba: '<dba username'
-pg_dba_password: '<my dba password>'
+pg_dba: 'dba'
+# password set via `env_var`
 ```
-#### Normal DB User and Password
+
+#### Normal DB User
+
 ```yaml
 pg_user: '<username>'
-pg_user_password: '<my password>'
+# password set via `env_var`
 ```
+
 #### DB Host and Port
+
 ```yaml
 pg_host: '127.0.0.1'
 pg_port: '5432'
 ```
+
 #### DB Name and Test table
+
 ```yaml
 pg_db: 'test_db'
 pg_table: 'test_table'
 ```
 
 #### Misc settings
+
 ```yaml
 login_user: '<user on remote DB server>'
 login_host: '<DB Host IP>'
@@ -111,11 +164,11 @@ pg_shared_dirs: [
 pg_conf_mode: '0600'
 pg_ssl: 'on'
 pg_log_dest: 'syslog'
-pg_syslog_facility: ['local0']
+pg_syslog_facility: ['local0
 pg_syslog_owner: 'postgres'
 
-pgaudit_log_items: ['ddl','role','read','write']
-pgaudit_log_line_items: ['%m','%u','%c']
+pgaudit_log_items: ['ddl','role','read','write
+pgaudit_log_line_items: ['%m','%u','%c
 
 pg_superusers: [
   'postgres',
@@ -132,39 +185,65 @@ pg_replicas: [
 pg_max_connections: '100'
 
 pg_timezone: 'UTC'
-
 ```
-
 
 ### Validating Your PostgreSQL Instance
-(See: https://www.inspec.io/docs/reference/cli/)
+
+(See: <https://www.inspec.io/docs/reference/cli/>)
 
 #### Execute a single Control in the Profile
+
 **Note**: replace the profile's directory name - e.g. - `pgstigcheck-inspec` with `.` if you are in the profile's root directory.
+
 ```sh
-inspec exec pgstigcheck-inspec/controls/V-72845.rb --attrs attributes.yml -i <your ssh private key>  -t ssh://<user>@<db host>:<port>
+inspec exec pgstigcheck-inspec/controls/V-72845.rb --attrs attributes.mysystem.yml -i <your ssh private key> -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
 ```
+
 or use the `--controls` flag
+
 ```sh
-inspec exec pgstigcheck-inspec --controls=V-72845 V-72861 --attrs attributes.yml  -i <your ssh private key>  -t ssh://<user>@<db host>:<port>
+inspec exec pgstigcheck-inspec --controls=V-72845 V-72861 --attrs attributes.mysystem.yml  -i <your ssh private key>  -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
 ```
 
 #### Execute a Single Control and save results as HTML
+
 ```sh
-inspec exec pgstigcheck-inspec --controls=V-72845 --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> | ./tools/ansi2html.sh --bg=dark > inspec-report.html
+inspec exec pgstigcheck-inspec --controls=V-72845 --attrs attributes.mysystem.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> --reporter cli html:myresults.html
 ```
 
-> When executing all the Controls, InSpec will generate warning ```already initialized constant #<Class:0x000000.......>::<Attribuet Name>```, it is safe to ignore it. We are working with InSpec upstream to get it fixed.
+> When executing all the Controls, InSpec will generate warning `already initialized constant #<Class:0x000000.......>::<Attribuet Name>`, it is safe to ignore it. We are working with InSpec upstream to get it fixed.
 
 #### Execute All Controls in the Profile
+
 ```sh
-inspec exec pgstigcheck-inspec --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres"  -t ssh://<user>@<db host>:<port>
+inspec exec pgstigcheck-inspec --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres"  -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
 ```
 
 #### Execute all the Controls in the Profile and save results as HTML
+
 ```sh
-inspec exec pgstigcheck-inspec --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> | pgstigcheck-inspec/tools/ansi2html.sh --bg=dark > inspec-report.html
+inspec exec pgstigcheck-inspec --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> --reporter cli html:myresults.html
 ```
+
+### Reviewing your results
+
+You can review your results from above in many ways, as you saw your results came back in mutliple outputs - on the cli and in either `json` or `html`.
+
+You can learn more about the differnt [InSpec Reporters](https://www.inspec.io/docs/reference/reporters/) that you have avalable to you.
+
+#### Pro Tip
+
+The `--reporters` flags **must _always_** be at the end of your `inspec exec` cli command as they can user either `=` or `spaces` and so they must be at the end of the command.
+
+If you used the examples above, you should have a `myresults.json` or `myresults.hml` which you can review.
+
+**NOTE**: The `myresults.html` - aka the InSpec HTML Reporter is a working html file report but its output is very `technical` and is not recomended for **security review** or **accrediation discussions**. Use the `JSON` InSpec Reporter output and the MITRE [Heimdall-Lite](http://mitre.github.io/heimdall-lite) .
+
+The **recommended** review format for for **security review** or **accrediation discussions** or the Security Engineer is the `JSON` results format using the InSpec `JSON` reporter and the MITRE open-souce `heimdall-lite` viewer. You can use heimdall-lite any-time anywhere from: <http://mitre.github.io/heimdall-lite/>. Heimdall-Lite is a Single Page Client Side JavaScript app that runs completely in your browser and was desinged to help make reviewing, sorting and sharing your InSpec results easier.
+
+You can also download the `.html` files via a simple `save as` from your browser should you need to use `heimdall-lite` in a disconnected setting.
+
+You can find out more about the InSpec Tools and Open Source applications at <http://inspec.mitre.org>.
 
 ## Sponsors
 
@@ -172,7 +251,7 @@ inspec exec pgstigcheck-inspec --attrs attributes.yml -i <your ssh private key> 
 
 [Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgSTIGcheck-inspec and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
 
----
+* * *
 
 ## Legal Notices
 

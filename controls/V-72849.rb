@@ -1,30 +1,10 @@
 # encoding: utf-8
-#
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-
-control "V-72849" do
+control 'V-72849' do
   title "PostgreSQL must integrate with an organization-level
   authentication/access mechanism providing account management and automation
   for all users, groups, roles, and any other principals."
-  desc  "Enterprise environments make account management for applications and
+  desc "Enterprise environments make account management for applications and
   databases challenging and complex. A manual process for account management
   functions adds the risk of a potential oversight or other error. Managing
   accounts for the same person in multiple places is inefficient and prone to
@@ -48,13 +28,13 @@ control "V-72849" do
   overall mechanism supporting an organization's automated account management
   requirements."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000023-DB-000001"
-  tag "gid": "V-72849"
-  tag "rid": "SV-87501r1_rule"
-  tag "stig_id": "PGS9-00-000500"
-  tag "cci": ["CCI-000015"]
-  tag "nist": ["AC-2 (1)", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000023-DB-000001'
+  tag "gid": 'V-72849'
+  tag "rid": 'SV-87501r1_rule'
+  tag "stig_id": 'PGS9-00-000500'
+  tag "cci": ['CCI-000015']
+  tag "nist": ['AC-2 (1)', 'Rev_4']
 
   tag "check": "Note: The following instructions use the PGDATA environment
   variable. See supplementary content APPENDIX-F for instructions on configuring
@@ -90,5 +70,4 @@ control "V-72849" do
   need for it and obtain approval, as appropriate."
 
   only_if { false }
-
 end

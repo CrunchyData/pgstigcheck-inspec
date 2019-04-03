@@ -1,35 +1,9 @@
 # encoding: utf-8
-#
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
+pg_data_dir = attribute('pg_data_dir')
+pg_hba_conf_file = attribute('pg_hba_conf_file')
 
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-PG_DATA_DIR = attribute(
-  'pg_data_dir',
-  description: 'The postgres data directory',
-)
-
-PG_HBA_CONF_FILE = attribute(
-  'pg_hba_conf_file',
-  description: 'The postgres hba configuration file',
-)
-
-control "V-72857" do
+control 'V-72857' do
   title "If passwords are used for authentication, PostgreSQL must transmit only
          encrypted representations of passwords."
   desc  "The DoD standard for authentication is DoD-approved PKI certificates.
@@ -44,13 +18,13 @@ control "V-72857" do
         vulnerable to discovery by unauthorized users. Disclosure of passwords
         may easily lead to unauthorized access to the database."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000172-DB-000075"
-  tag "gid": "V-72857"
-  tag "rid": "SV-87509r1_rule"
-  tag "stig_id": "PGS9-00-000800"
-  tag "cci": ["CCI-000197"]
-  tag "nist": ["IA-5 (1) (c)", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000172-DB-000075'
+  tag "gid": 'V-72857'
+  tag "rid": 'SV-87509r1_rule'
+  tag "stig_id": 'PGS9-00-000800'
+  tag "cci": ['CCI-000197']
+  tag "nist": ['IA-5 (1) (c)', 'Rev_4']
   tag "check": "Note: The following instructions use the PGDATA environment
   variable. See supplementary content APPENDIX-F for instructions on configuring
   PGDATA.  As the database administrator (shown here as \"postgres\"), review
@@ -71,7 +45,7 @@ control "V-72857" do
   $ vi ${PGDATA?}/pg_hba.conf
   host all all .example.com md5"
 
-  describe postgres_hba_conf(PG_HBA_CONF_FILE) do
+  describe postgres_hba_conf(pg_hba_conf_file) do
     its('auth_method') { should_not include 'password' }
   end
 end

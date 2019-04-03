@@ -1,24 +1,4 @@
 # encoding: utf-8
-#
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
 
 control "V-72871" do
   title "PostgreSQL must check the validity of all data inputs except those
@@ -83,9 +63,9 @@ control "V-72871" do
   columns and tables that require them for data integrity.
 
   Use prepared statements when taking user input.
-  
+
   Do not allow general users direct console access to PostgreSQL."
 
   only_if { false }
-  
+
 end
