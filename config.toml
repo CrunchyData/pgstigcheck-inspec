@@ -10,7 +10,7 @@ theme = "crunchy-hugo-theme"
 
 pygmentsCodeFences = true
 pygmentsStyle = "monokailight"
-publishDir = ""
+publishDir = "public"
 
 defaultContentLanguage = "current"
 defaultContentLanguageInSubdir= true
