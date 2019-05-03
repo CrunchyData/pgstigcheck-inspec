@@ -1,0 +1,20 @@
+# theme.toml template for a Hugo theme
+name = "Crunchy Hugo Theme"
+license = "MIT"
+licenselink = "https://github.com/CrunchyData/crunchy-hugo-theme/blob/master/LICENSE.md"
+description = "Documentation theme for Hugo using the Crunchy Data styles"
+homepage = "https://github.com/CrunchyData/crunchy-hugo-theme"
+repo = "https://github.com/CrunchyData/crunchy-hugo-theme"
+tags = ["documentation", "menu","slide","search"]
+features = ["documentation","menu","nested sections","search","slide", "attachments"]
+min_version = 0.32
+
+[author]
+  name = "Crunchy Data Solutions, Inc."
+  homepage = "http://www.crunchydata.com"
+
+[original]
+  name = "dockDock"
+  homepage = "https://github.com/vjeantet/hugo-theme-docdock"
+  repo = "https://github.com/vjeantet/hugo-theme-docdock"
+  licenselink = "https://github.com/vjeantet/hugo-theme-docdock/blob/master/LICENSE.md"
