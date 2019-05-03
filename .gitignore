@@ -1,0 +1,29 @@
+# Hugo default output directory
+404.html
+categories/
+css/
+favicon.png
+fonts/
+images/
+index.html
+index.json
+index.xml
+js/
+?? mermaid/
+revealjs/
+scss/
+sitemap.xml
+tags/
+theme-flex/
+mermaid/
+/public
+
+## OS Files
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# OSX
+.DS_Store

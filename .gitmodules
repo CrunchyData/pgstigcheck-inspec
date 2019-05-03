@@ -1,0 +1,3 @@
+[submodule "themes/crunchy-hugo-theme"]
+	path = themes/crunchy-hugo-theme
+	url = https://github.com/crunchydata/crunchy-hugo-theme
