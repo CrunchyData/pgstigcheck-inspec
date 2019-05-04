@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 pg_owner = attribute('pg_owner')
 pg_owner = attribute('pg_group')
 pg_dba = attribute('pg_dba')
@@ -9,62 +7,62 @@ pg_host = attribute('pg_host')
 pg_data_dir = attribute('pg_data_dir')
 pg_superusers = attribute('pg_superusers')
 
-control "V-72865" do
+control 'V-72865' do
   # @todo update the title of this control to something sane
-    title "The role(s)/group(s) used to modify database structure (including but
-          not necessarily limited to tables, indexes, storage, etc.) and logic
-          modules (functions, trigger procedures, links to software external to
-          PostgreSQL, etc.) must be restricted to authorized users."
-    desc  "If PostgreSQL were to allow any user to make changes to database
-          structure or logic, those changes might be implemented without
-          undergoing the appropriate testing and approvals that are part of a
-          robust change management process.
+  title "The role(s)/group(s) used to modify database structure (including but
+        not necessarily limited to tables, indexes, storage, etc.) and logic
+        modules (functions, trigger procedures, links to software external to
+        PostgreSQL, etc.) must be restricted to authorized users."
+  desc  "If PostgreSQL were to allow any user to make changes to database
+        structure or logic, those changes might be implemented without
+        undergoing the appropriate testing and approvals that are part of a
+        robust change management process.
 
-          Accordingly, only qualified and authorized individuals must be allowed
-          to obtain access to information system components for purposes of
-          initiating changes, including upgrades and modifications.
+        Accordingly, only qualified and authorized individuals must be allowed
+        to obtain access to information system components for purposes of
+        initiating changes, including upgrades and modifications.
 
-          Unmanaged changes that occur to the database software libraries or
-          configuration can lead to unauthorized or compromised installations."
-    impact 0.5
-    tag "severity": "medium"
-    tag "gtitle": "SRG-APP-000133-DB-000362"
-    tag "gid": "V-72865"
-    tag "rid": "SV-87517r1_rule"
-    tag "stig_id": "PGS9-00-001300"
-    tag "cci": ["CCI-001499"]
-    tag "nist": ["CM-5 (6)", "Rev_4"]
-    tag "check": "Note: The following instructions use the PGDATA environment
-                  variable. See supplementary content APPENDIX-F for instructions
-                  on configuring PGDATA.
+        Unmanaged changes that occur to the database software libraries or
+        configuration can lead to unauthorized or compromised installations."
+  impact 0.5
 
-                  As the database administrator (shown here as \"postgres\"),
-                  list all users and their permissions by running the following
-                  SQL:
+  tag "gtitle": 'SRG-APP-000133-DB-000362'
+  tag "gid": 'V-72865'
+  tag "rid": 'SV-87517r1_rule'
+  tag "stig_id": 'PGS9-00-001300'
+  tag "cci": ['CCI-001499']
+  tag "nist": ['CM-5 (6)', 'Rev_4']
+  tag "check": "Note: The following instructions use the PGDATA environment
+                variable. See supplementary content APPENDIX-F for instructions
+                on configuring PGDATA.
 
-                  $ sudo su - postgres
-                  $ psql -c \"\\dp *.*\"
+                As the database administrator (shown here as \"postgres\"),
+                list all users and their permissions by running the following
+                SQL:
 
-                  Verify that all objects have the correct privileges. If they do
-                  not, this is a finding.
+                $ sudo su - postgres
+                $ psql -c \"\\dp *.*\"
 
-                  Next, as the database administrator (shown here as \"postgres\"),
-                  verify the permissions of the database directory on the
-                  filesystem:
+                Verify that all objects have the correct privileges. If they do
+                not, this is a finding.
 
-                  $ ls -la ${PGDATA?}
+                Next, as the database administrator (shown here as \"postgres\"),
+                verify the permissions of the database directory on the
+                filesystem:
 
-                  If permissions of the database directory are not limited to an
-                  authorized user account, this is a finding."
+                $ ls -la ${PGDATA?}
 
-    tag "fix": "As the database administrator, revoke any permissions from a role
-                that are deemed unnecessary by running the following SQL:
+                If permissions of the database directory are not limited to an
+                authorized user account, this is a finding."
 
-                ALTER ROLE bob NOCREATEDB;
-                ALTER ROLE bob NOCREATEROLE;
-                ALTER ROLE bob NOSUPERUSER;
-                ALTER ROLE bob NOINHERIT;
-                REVOKE SELECT ON some_function FROM bob;"
+  tag "fix": "As the database administrator, revoke any permissions from a role
+              that are deemed unnecessary by running the following SQL:
+
+              ALTER ROLE bob NOCREATEDB;
+              ALTER ROLE bob NOCREATEROLE;
+              ALTER ROLE bob NOSUPERUSER;
+              ALTER ROLE bob NOINHERIT;
+              REVOKE SELECT ON some_function FROM bob;"
 
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
@@ -82,9 +80,9 @@ control "V-72865" do
   pg_settings_acl_regex = Regexp.new(pg_settings_acl)
 
   tested = []
-  objects_sql = "SELECT n.nspname, c.relname, c.relkind "\
-    "FROM pg_catalog.pg_class c "\
-    "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace "\
+  objects_sql = 'SELECT n.nspname, c.relname, c.relkind '\
+    'FROM pg_catalog.pg_class c '\
+    'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace '\
     "WHERE c.relkind IN ('r', 'v', 'm', 'S', 'f');"
 
   databases_sql = 'SELECT datname FROM pg_catalog.pg_database where not datistemplate;'
@@ -93,33 +91,33 @@ control "V-72865" do
 
   databases.each do |database|
     rows = sql.query(objects_sql, [database])
-    if rows.methods.include?(:output) # Handle connection disabled on database
-      objects = rows.lines
+    next unless rows.methods.include?(:output) # Handle connection disabled on database
 
-      objects.each do |obj|
-        unless tested.include?(obj)
-          schema, object, type = obj.split('|')
-          relacl_sql = "SELECT pg_catalog.array_to_string(c.relacl, E','), "\
-            "n.nspname, c.relname, c.relkind FROM pg_catalog.pg_class c "\
-            "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace "\
-            "WHERE n.nspname = '#{schema}' AND c.relname = '#{object}' "\
-            "AND c.relkind = '#{type}';"
+    objects = rows.lines
 
-          sql_result=sql.query(relacl_sql, [database])
+    objects.each do |obj|
+      next if tested.include?(obj)
 
-          describe.one do
-            describe sql_result do
-              its('output') { should match object_acl_regex }
-            end
+      schema, object, type = obj.split('|')
+      relacl_sql = "SELECT pg_catalog.array_to_string(c.relacl, E','), "\
+        'n.nspname, c.relname, c.relkind FROM pg_catalog.pg_class c '\
+        'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace '\
+        "WHERE n.nspname = '#{schema}' AND c.relname = '#{object}' "\
+        "AND c.relkind = '#{type}';"
 
-            describe sql_result do
-              its('output') { should match pg_settings_acl_regex }
-            end
-          end
-          # TODO: Add test for column acl
-          tested.push(obj)
+      sql_result = sql.query(relacl_sql, [database])
+
+      describe.one do
+        describe sql_result do
+          its('output') { should match object_acl_regex }
+        end
+
+        describe sql_result do
+          its('output') { should match pg_settings_acl_regex }
         end
       end
+      # TODO: Add test for column acl
+      tested.push(obj)
     end
   end
 

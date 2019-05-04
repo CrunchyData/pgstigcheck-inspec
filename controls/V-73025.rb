@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-73025" do
+control 'V-73025' do
   title "PostgreSQL must provide the means for individuals in authorized roles to
 change the auditing to be performed on all application components, based on all
 selectable event criteria within organization-defined time thresholds."
@@ -20,13 +18,13 @@ auditing may be limited to a specific set of events to facilitate audit reductio
 analysis, and reporting. Organizations can establish time thresholds in which audit
 actions are changed, for example, near real time, within minutes, or within hours."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000353-DB-000324"
-  tag "gid": "V-73025"
-  tag "rid": "SV-87677r1_rule"
-  tag "stig_id": "PGS9-00-010000"
-  tag "cci": ["CCI-001914"]
-  tag "nist": ["AU-12 (3)", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000353-DB-000324'
+  tag "gid": 'V-73025'
+  tag "rid": 'SV-87677r1_rule'
+  tag "stig_id": 'PGS9-00-010000'
+  tag "cci": ['CCI-001914']
+  tag "nist": ['AU-12 (3)', 'Rev_4']
   tag "check": "First, as the database administrator, check if pgaudit is present in
 shared_preload_libraries:
 

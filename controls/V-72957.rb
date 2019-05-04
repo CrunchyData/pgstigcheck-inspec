@@ -1,14 +1,12 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-72957" do
+control 'V-72957' do
   title "PostgreSQL must be able to generate audit records when security objects
   are accessed."
-  desc  "Changes to the security configuration must be tracked.
+  desc "Changes to the security configuration must be tracked.
   This requirement applies to situations where security data is retrieved or
   modified via data manipulation operations, as opposed to via specialized
   security functionality.
@@ -24,13 +22,13 @@ control "V-72957" do
   ALTER
   DRO."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000492-DB-000332"
-  tag "gid": "V-72957"
-  tag "rid": "SV-87609r1_rule"
-  tag "stig_id": "PGS9-00-006000"
-  tag "cci": ["CCI-000172"]
-  tag "nist": ["AU-12 c", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000492-DB-000332'
+  tag "gid": 'V-72957'
+  tag "rid": 'SV-87609r1_rule'
+  tag "stig_id": 'PGS9-00-006000'
+  tag "cci": ['CCI-000172']
+  tag "nist": ['AU-12 c', 'Rev_4']
   tag "check": "First, as the database administrator, verify pgaudit is enabled
   by running the following SQL:
   $ sudo su - postgres
@@ -61,7 +59,7 @@ control "V-72957" do
     its('output') { should include 'pgaudit' }
   end
 
-  pgaudit_types = %w(ddl read role write)
+  pgaudit_types = %w{ddl read role write}
 
   pgaudit_types.each do |type|
     describe sql.query('SHOW pgaudit.log;', [pg_db]) do

@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-72987" do
+control 'V-72987' do
   title "PostgreSQL must produce audit records containing sufficient information
   to establish the identity of any user/subject or process associated with the
   event."
@@ -54,7 +52,7 @@ control "V-72987" do
 
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  log_line_prefix_escapes = %w(%m %u %d %p %r %a)
+  log_line_prefix_escapes = %w{%m %u %d %p %r %a}
 
   log_line_prefix_escapes.each do |escape|
     describe sql.query('SHOW log_line_prefix;', [pg_db]) do

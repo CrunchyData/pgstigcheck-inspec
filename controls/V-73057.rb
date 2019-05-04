@@ -1,6 +1,4 @@
-# encoding: utf-8
-
-control "V-73057" do
+control 'V-73057' do
   title "Database contents must be protected from unauthorized and unintended
 information transfer by enforcement of a data-transfer policy."
   desc  "Applications, including PostgreSQLs, must prevent unauthorized and
@@ -14,13 +12,13 @@ the copies may reside, and the rules for ensuring sensitive data are not exposed
 Copies of sensitive data must not be misplaced or left in a temporary location
 without the proper controls."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000243-DB-000128"
-  tag "gid": "V-73057"
-  tag "rid": "SV-87709r1_rule"
-  tag "stig_id": "PGS9-00-011900"
-  tag "cci": ["CCI-001090"]
-  tag "nist": ["SC-4", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000243-DB-000128'
+  tag "gid": 'V-73057'
+  tag "rid": 'SV-87709r1_rule'
+  tag "stig_id": 'PGS9-00-011900'
+  tag "cci": ['CCI-001090']
+  tag "nist": ['SC-4', 'Rev_4']
   tag "check": "Review the procedures for the refreshing of development/test data
 from production.
 
@@ -38,5 +36,4 @@ development/test systems to comply with the organization-defined data transfer
 policy, and to ensure copies of production data are not left in unsecured locations."
 
   only_if { false }
-
 end

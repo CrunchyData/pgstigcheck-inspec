@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-73067" do
+control 'V-73067' do
   title "PostgreSQL must generate audit records when successful accesses to
         objects occur."
   desc  "Without tracking all or selected types of access to all or selected
@@ -23,14 +21,13 @@ control "V-73067" do
         EXECUT."
 
   impact 0.5
-  tag "severity": "medium"
 
-  tag "gtitle": "SRG-APP-000507-DB-000356"
-  tag "gid": "V-73067"
-  tag "rid": "SV-87719r1_rule"
-  tag "stig_id": "PGS9-00-012600"
-  tag "cci": ["CCI-000172"]
-  tag "nist": ["AU-12 c", "Rev_4"]
+  tag "gtitle": 'SRG-APP-000507-DB-000356'
+  tag "gid": 'V-73067'
+  tag "rid": 'SV-87719r1_rule'
+  tag "stig_id": 'PGS9-00-012600'
+  tag "cci": ['CCI-000172']
+  tag "nist": ['AU-12 c', 'Rev_4']
 
   tag "check": "As the database administrator, verify pgaudit is enabled by
       running the following SQL:
@@ -87,7 +84,7 @@ control "V-73067" do
     its('output') { should include 'pgaudit' }
   end
 
-  pgaudit_types = ['read', 'write']
+  pgaudit_types = %w{read write}
 
   pgaudit_types.each do |type|
     describe sql.query('SHOW pgaudit.log;', [pg_db]) do

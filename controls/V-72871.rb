@@ -1,9 +1,7 @@
-# encoding: utf-8
-
-control "V-72871" do
+control 'V-72871' do
   title "PostgreSQL must check the validity of all data inputs except those
   specifically identified by the organization."
-  desc  "Invalid user input occurs when a user inserts data or characters into
+  desc "Invalid user input occurs when a user inserts data or characters into
   an application's data entry fields and the application is unprepared to
   process that data. This results in unanticipated application behavior,
   potentially leading to an application or information system compromise.
@@ -29,13 +27,13 @@ control "V-72871" do
   must attempt to obtain assurances from the development organization that this
   issue has been addressed, and must document what has been discovered."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000251-DB-000160"
-  tag "gid": "V-72871"
-  tag "rid": "SV-87523r1_rule"
-  tag "stig_id": "PGS9-00-001800"
-  tag "cci": ["CCI-001310"]
-  tag "nist": ["SI-10", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000251-DB-000160'
+  tag "gid": 'V-72871'
+  tag "rid": 'SV-87523r1_rule'
+  tag "stig_id": 'PGS9-00-001800'
+  tag "cci": ['CCI-001310']
+  tag "nist": ['SI-10', 'Rev_4']
   tag "check": "Review PostgreSQL code (trigger procedures, functions),
   application code, settings, column and field definitions, and constraints to
   determine whether the database is protected against invalid input.
@@ -67,5 +65,4 @@ control "V-72871" do
   Do not allow general users direct console access to PostgreSQL."
 
   only_if { false }
-
 end

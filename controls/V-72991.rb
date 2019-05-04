@@ -1,12 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-72991" do
-
+control 'V-72991' do
   title "PostgreSQL must use NSA-approved cryptography to protect classified
 information in accordance with the data owners requirements."
   desc  "Use of weak or untested encryption algorithms undermines the purposes of
@@ -21,13 +18,13 @@ regulations, and standards.
 NSA-approved cryptography for classified networks is hardware based. This
 requirement addresses the compatibility of PostgreSQL with the encryption devices."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000416-DB-000380"
-  tag "gid": "V-72991"
-  tag "rid": "SV-87643r1_rule"
-  tag "stig_id": "PGS9-00-008100"
-  tag "cci": ["CCI-002450"]
-  tag "nist": ["SC-13", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000416-DB-000380'
+  tag "gid": 'V-72991'
+  tag "rid": 'SV-87643r1_rule'
+  tag "stig_id": 'PGS9-00-008100'
+  tag "cci": ['CCI-002450']
+  tag "nist": ['SC-13', 'Rev_4']
 
   tag "check": "If PostgreSQL is deployed in an unclassified environment, this is
 not applicable (NA).

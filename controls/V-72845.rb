@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 control 'V-72845' do
   title "Security-relevant software updates to PostgreSQL must be installed
   within the time period directed by an authoritative source (e.g., IAVM, CTOs,
@@ -30,7 +28,7 @@ control 'V-72845' do
   specific time period will be defined by an authoritative source (e.g., IAVM,
   CTOs, DTMs, and STIGs)."
   impact 0.7
-  tag "severity": 'high'
+
   tag "gtitle": 'SRG-APP-000456-DB-000390'
   tag "gid": 'V-72845'
   tag "rid": 'SV-87497r1_rule'

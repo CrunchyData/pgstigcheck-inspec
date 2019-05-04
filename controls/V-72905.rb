@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-72905" do
+control 'V-72905' do
   title "Execution of software modules (to include functions and trigger
   procedures) with elevated privileges must be restricted to necessary cases
   only."
@@ -27,13 +25,13 @@ control "V-72905" do
   the DBA must attempt to obtain assurances from the development organization
   that this issue has been addressed, and must document what has been discovered."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000342-DB-000302"
-  tag "gid": "V-72905"
-  tag "rid": "SV-87557r1_rule"
-  tag "stig_id": "PGS9-00-003600"
-  tag "cci": ["CCI-002233"]
-  tag "nist": ["AC-6 (8)", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000342-DB-000302'
+  tag "gid": 'V-72905'
+  tag "rid": 'SV-87557r1_rule'
+  tag "stig_id": 'PGS9-00-003600'
+  tag "cci": ['CCI-002233']
+  tag "nist": ['AC-6 (8)', 'Rev_4']
   tag "check": "Functions in PostgreSQL can be created with the SECURITY
   DEFINER option. When SECURITY DEFINER functions are executed by a user, said
   function is run with the privileges of the user who created it.
@@ -61,8 +59,8 @@ control "V-72905" do
 
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  security_definer_sql = "SELECT nspname, proname, prosecdef "\
-    "FROM pg_proc p JOIN pg_namespace n ON p.pronamespace = n.oid "\
+  security_definer_sql = 'SELECT nspname, proname, prosecdef '\
+    'FROM pg_proc p JOIN pg_namespace n ON p.pronamespace = n.oid '\
     "JOIN pg_authid a ON a.oid = p.proowner WHERE prosecdef = 't';"
 
   databases_sql = "SELECT datname FROM pg_catalog.pg_database where datname = '#{pg_db}';"
@@ -71,10 +69,10 @@ control "V-72905" do
 
   databases.each do |database|
     connection_error = "FATAL:\\s+database \"#{database}\" is not currently "\
-      "accepting connections"
+      'accepting connections'
     connection_error_regex = Regexp.new(connection_error)
 
-    sql_result=sql.query(security_definer_sql, [database])
+    sql_result = sql.query(security_definer_sql, [database])
 
     describe.one do
       describe sql_result do

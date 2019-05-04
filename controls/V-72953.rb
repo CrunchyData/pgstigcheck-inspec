@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-72953" do
+control 'V-72953' do
   title "PostgreSQL must generate audit records for all privileged activities or
   other system-level access."
   desc  "Without tracking privileged activity, it would be difficult to
@@ -39,13 +37,13 @@ control "V-72953" do
   action that weakens the implementation of this requirement itself, since the
   objective is to have a complete audit trail of all administrative activity."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000504-DB-000354"
-  tag "gid": "V-72953"
-  tag "rid": "SV-87605r1_rule"
-  tag "stig_id": "PGS9-00-005800"
-  tag "cci": ["CCI-000172"]
-  tag "nist": ["AU-12 c", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000504-DB-000354'
+  tag "gid": 'V-72953'
+  tag "rid": 'SV-87605r1_rule'
+  tag "stig_id": 'PGS9-00-005800'
+  tag "cci": ['CCI-000172']
+  tag "nist": ['AU-12 c', 'Rev_4']
   tag "check": "First, as the database administrator, verify pgaudit is enabled
   by running the following SQL:
   $ sudo su - postgres
@@ -77,7 +75,7 @@ control "V-72953" do
     its('output') { should include 'pgaudit' }
   end
 
-  pgaudit_types = %w(ddl read role write)
+  pgaudit_types = %w{ddl read role write}
 
   pgaudit_types.each do |type|
     describe sql.query('SHOW pgaudit.log;', [pg_db]) do

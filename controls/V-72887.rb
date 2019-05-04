@@ -1,12 +1,10 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 pg_timezone = attribute('pg_timezone')
 
-control "V-72887" do
+control 'V-72887' do
   title "PostgreSQL must record time stamps, in audit records and application
   data, that can be mapped to Coordinated Universal Time (UTC, formerly GMT)."
   desc  "If time stamps are not consistently applied and there is no common time
@@ -15,13 +13,13 @@ control "V-72887" do
   commonly expressed in Coordinated Universal Time (UTC), a modern continuation
   of Greenwich Mean Time (GMT), or local time with an offset from UTC."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000374-DB-000322"
-  tag "gid": "V-72887"
-  tag "rid": "SV-87539r1_rule"
-  tag "stig_id": "PGS9-00-002400"
-  tag "cci": ["CCI-001890"]
-  tag "nist": ["AU-8 b", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000374-DB-000322'
+  tag "gid": 'V-72887'
+  tag "rid": 'SV-87539r1_rule'
+  tag "stig_id": 'PGS9-00-002400'
+  tag "cci": ['CCI-001890']
+  tag "nist": ['AU-8 b', 'Rev_4']
   tag "check": "Note: The following instructions use the PGDATA environment
   variable. See supplementary content APPENDIX-F for instructions on configuring
   PGDATA.

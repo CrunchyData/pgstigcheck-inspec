@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_owner = attribute('pg_owner')
 pg_dba_password = attribute('pg_dba_password')
@@ -8,7 +6,7 @@ pg_host = attribute('pg_host')
 pg_data_dir = attribute('pg_data_dir')
 pg_conf_file = attribute('pg_conf_file')
 
-control "V-73061" do
+control 'V-73061' do
   title "PostgreSQL must protect its audit configuration from unauthorized
         modification."
   desc  "Protecting audit data also includes identifying and protecting the tools
@@ -25,14 +23,13 @@ control "V-73061" do
         system activity and records. Audit tools include custom queries and
         report generators."
   impact 0.5
-  tag "severity": "medium"
 
-  tag "gtitle": "SRG-APP-000122-DB-000203"
-  tag "gid": "V-73061"
-  tag "rid": "SV-87713r1_rule"
-  tag "stig_id": "PGS9-00-012200"
-  tag "cci": ["CCI-001494"]
-  tag "nist": ["AU-9", "Rev_4"]
+  tag "gtitle": 'SRG-APP-000122-DB-000203'
+  tag "gid": 'V-73061'
+  tag "rid": 'SV-87713r1_rule'
+  tag "stig_id": 'PGS9-00-012200'
+  tag "cci": ['CCI-001494']
+  tag "nist": ['AU-9', 'Rev_4']
 
   tag "check": "All configurations for auditing and logging can be found in the
       postgresql.conf configuration file. By default, this file is owned by the
@@ -89,7 +86,7 @@ control "V-73061" do
   log_destination_query = sql.query('SHOW log_destination;', [pg_db])
   log_destination = log_destination_query.output
 
-  if log_destination =~ /stderr/i
+  if /stderr/i.match?(log_destination)
     describe sql.query('SHOW log_file_mode;', [pg_db]) do
       its('output') { should cmp '0600' }
     end

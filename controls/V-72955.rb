@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-72955" do
+control 'V-72955' do
   title "PostgreSQL must generate audit records when unsuccessful attempts to
   access categorized information (e.g., classification levels/security levels)
   occur."
@@ -18,13 +16,13 @@ control "V-72955" do
   and Information Systems, and FIPS Publication 200, Minimum Security
   Requirements for Federal Information and Information Systems."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000494-DB-000345"
-  tag "gid": "V-72955"
-  tag "rid": "SV-87607r1_rule"
-  tag "stig_id": "PGS9-00-005900"
-  tag "cci": ["CCI-000172"]
-  tag "nist": ["AU-12 c", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000494-DB-000345'
+  tag "gid": 'V-72955'
+  tag "rid": 'SV-87607r1_rule'
+  tag "stig_id": 'PGS9-00-005900'
+  tag "cci": ['CCI-000172']
+  tag "nist": ['AU-12 c', 'Rev_4']
   tag "check": "First, as the database administrator (shown here as
   \"postgres\"), run the following SQL:
   $ sudo su - postgres
@@ -48,7 +46,7 @@ control "V-72955" do
 
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  pgaudit_types = %w(ddl role write)
+  pgaudit_types = %w{ddl role write}
 
   pgaudit_types.each do |type|
     describe sql.query('SHOW pgaudit.log;', [pg_db]) do

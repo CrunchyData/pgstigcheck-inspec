@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-73065" do
+control 'V-73065' do
   title "Audit records must be generated when categorized information (e.g.,
         classification levels/security levels) is deleted."
   desc  "Changes in categorized information must be tracked. Without an audit
@@ -16,14 +14,13 @@ control "V-73065" do
         Information and Information Systems, and FIPS Publication 200, Minimum
         Security Requirements for Federal Information and Information Systems."
   impact 0.5
-  tag "severity": "medium"
 
-  tag "gtitle": "SRG-APP-000502-DB-000348"
-  tag "gid": "V-73065"
-  tag "rid": "SV-87717r1_rule"
-  tag "stig_id": "PGS9-00-012500"
-  tag "cci": ["CCI-000172"]
-  tag "nist": ["AU-12 c", "Rev_4"]
+  tag "gtitle": 'SRG-APP-000502-DB-000348'
+  tag "gid": 'V-73065'
+  tag "rid": 'SV-87717r1_rule'
+  tag "stig_id": 'PGS9-00-012500'
+  tag "cci": ['CCI-000172']
+  tag "nist": ['AU-12 c', 'Rev_4']
 
   tag "check": "As the database administrator, verify pgaudit is enabled by running
       the following SQL:
@@ -74,7 +71,7 @@ control "V-73065" do
     its('output') { should include 'pgaudit' }
   end
 
-  pgaudit_types = %w(ddl read role write)
+  pgaudit_types = %w{ddl read role write}
 
   pgaudit_types.each do |type|
     describe sql.query('SHOW pgaudit.log;', [pg_db]) do

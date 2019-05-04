@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-73069" do
+control 'V-73069' do
   title "PostgreSQL must generate audit records for all direct access to the
         database(s)."
   desc  "In this context, direct access is any query, command, or call to the
@@ -14,14 +12,13 @@ control "V-73069" do
         utility program. The intent is to capture all activity from administrative
         and non-standard sources."
   impact 0.5
-  tag "severity": "medium"
 
-  tag "gtitle": "SRG-APP-000508-DB-000358"
-  tag "gid": "V-73069"
-  tag "rid": "SV-87721r1_rule"
-  tag "stig_id": "PGS9-00-012700"
-  tag "cci": ["CCI-000172"]
-  tag "nist": ["AU-12 c", "Rev_4"]
+  tag "gtitle": 'SRG-APP-000508-DB-000358'
+  tag "gid": 'V-73069'
+  tag "rid": 'SV-87721r1_rule'
+  tag "stig_id": 'PGS9-00-012700'
+  tag "cci": ['CCI-000172']
+  tag "nist": ['AU-12 c', 'Rev_4']
 
   tag "check": "As the database administrator, verify pgaudit is enabled by running
       the following SQL:

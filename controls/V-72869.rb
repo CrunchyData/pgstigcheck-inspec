@@ -1,6 +1,4 @@
-# encoding: utf-8
-
-control "V-72869" do
+control 'V-72869' do
   title "PostgreSQL must associate organization-defined types of security labels
   having organization-defined security label values with information in storage."
   desc  "Without the association of security labels to information, there is no
@@ -19,13 +17,13 @@ control "V-72869" do
   the security labels are lost when the data is stored, there is the risk of a
   data compromise."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000311-DB-000308"
-  tag "gid": "V-72869"
-  tag "rid": "SV-87521r1_rule"
-  tag "stig_id": "PGS9-00-001700"
-  tag "cci": ["CCI-002262"]
-  tag "nist": ["AC-16 a", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000311-DB-000308'
+  tag "gid": 'V-72869'
+  tag "rid": 'SV-87521r1_rule'
+  tag "stig_id": 'PGS9-00-001700'
+  tag "cci": ['CCI-002262']
+  tag "nist": ['AC-16 a', 'Rev_4']
   tag "check": "If security labeling is not required, this is not a finding.
   First, as the database administrator (shown here as \"postgres\"), run the
   following SQL against each table that requires security labels:
@@ -53,5 +51,4 @@ control "V-72869" do
   of using RLS for Security Labels, see supplementary content APPENDIX-D."
 
   only_if { false }
-
 end

@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-73003" do
+control 'V-73003' do
   title "PostgreSQL must implement cryptographic mechanisms to prevent unauthorized
 modification of organization-defined information at rest (to include, at a minimum,
 PII and classified information) on organization-defined information system
@@ -27,13 +25,13 @@ The decision whether and what to encrypt rests with the data owner and is also
 influenced by the physical measures taken to secure the equipment and media on which
 the information resides."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000428-DB-000386"
-  tag "gid": "V-73003"
-  tag "rid": "SV-87655r1_rule"
-  tag "stig_id": "PGS9-00-008700"
-  tag "cci": ["CCI-002475"]
-  tag "nist": ["SC-28 (1)", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000428-DB-000386'
+  tag "gid": 'V-73003'
+  tag "rid": 'SV-87655r1_rule'
+  tag "stig_id": 'PGS9-00-008700'
+  tag "cci": ['CCI-002475']
+  tag "nist": ['SC-28 (1)', 'Rev_4']
 
   tag "check": "Review the system documentation to determine whether the
 organization has defined the information at rest that is to be protected from
@@ -81,5 +79,4 @@ gen_salt('md5')));"
   describe sql.query(pgcrypto_sql, [pg_db]) do
     its('output') { should_not eq '' }
   end
-
 end

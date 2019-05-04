@@ -1,6 +1,4 @@
-# encoding: utf-8
-
-control "V-73071" do
+control 'V-73071' do
   title "The DBMS must be configured on a platform that has a NIST certified
         FIPS 140-2 installation of OpenSSL."
   desc  "Postgres uses OpenSSL for the underlying encryption layer. Currently only
@@ -8,14 +6,13 @@ control "V-73071" do
         OpenSSL. For other operating systems, users must obtain or build their
         own FIPS 140-2 OpenSSL libraries."
   impact 0.7
-  tag "severity": "high"
 
-  tag "gtitle": "SRG-APP-000179-DB-000114"
-  tag "gid": "V-73071"
-  tag "rid": "SV-87723r1_rule"
-  tag "stig_id": "PGS9-00-012800"
-  tag "cci": ["CCI-000803"]
-  tag "nist": ["IA-7", "Rev_4"]
+  tag "gtitle": 'SRG-APP-000179-DB-000114'
+  tag "gid": 'V-73071'
+  tag "rid": 'SV-87723r1_rule'
+  tag "stig_id": 'PGS9-00-012800'
+  tag "cci": ['CCI-000803']
+  tag "nist": ['IA-7', 'Rev_4']
 
   tag "check": "If the deployment incorporates a custom build of the operating
       system and Postgres guaranteeing the use of FIPS 140-2 compliant OpenSSL,
@@ -47,5 +44,4 @@ control "V-73071" do
       used by the DBMS."
 
   only_if { false }
-
 end

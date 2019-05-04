@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 pg_owner = attribute('pg_owner')
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
@@ -10,7 +8,7 @@ pg_data_dir = attribute('pg_data_dir')
 pg_hba_conf_file = attribute('pg_hba_conf_file')
 pg_replicas = attribute('pg_replicas')
 
-control "V-73049" do
+control 'V-73049' do
   title "PostgreSQL must uniquely identify and authenticate organizational users (or
 processes acting on behalf of organizational users)."
   desc  "To assure accountability and prevent unauthenticated access, organizational
@@ -30,13 +28,13 @@ individual authentication. Organizations may rcmpuire unique identification of
 individuals using shared accounts, for detailed accountability of individual
 activity."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000148-DB-000103"
-  tag "gid": "V-73049"
-  tag "rid": "SV-87701r1_rule"
-  tag "stig_id": "PGS9-00-011500"
-  tag "cci": ["CCI-000764"]
-  tag "nist": ["IA-2", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000148-DB-000103'
+  tag "gid": 'V-73049'
+  tag "rid": 'SV-87701r1_rule'
+  tag "stig_id": 'PGS9-00-011500'
+  tag "cci": ['CCI-000764']
+  tag "nist": ['IA-2', 'Rev_4']
   tag "check": "Review PostgreSQL settings to determine whether organizational users
 are uniquely identified and authenticated when logging on/connecting to the system.
 
@@ -100,7 +98,7 @@ https://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html"
 
   describe postgres_hba_conf(pg_hba_conf_file).where { type == 'local' } do
     its('user.uniq') { should cmp pg_owner }
-    its('auth_method.uniq') { should_not include 'trust'}
+    its('auth_method.uniq') { should_not include 'trust' }
   end
 
   describe postgres_hba_conf(pg_hba_conf_file).where { database == 'replication' } do
@@ -111,6 +109,6 @@ https://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html"
   end
 
   describe postgres_hba_conf(pg_hba_conf_file).where { type == 'host' } do
-    its('auth_method.uniq') { should cmp 'md5'}
+    its('auth_method.uniq') { should cmp 'md5' }
   end
 end

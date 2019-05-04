@@ -1,12 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-73005" do
-
+control 'V-73005' do
   title "PostgreSQL must produce audit records containing sufficient information to
 establish the sources (origins) of the events."
   desc  "Information system auditing capability is critical for accurate forensic
@@ -26,13 +23,13 @@ provides a means of investigating an attack; recognizing resource utilization or
 capacity thresholds; or identifying an improperly configured application."
 
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000098-DB-000042"
-  tag "gid": "V-73005"
-  tag "rid": "SV-87657r1_rule"
-  tag "stig_id": "PGS9-00-008800"
-  tag "cci": ["CCI-000133"]
-  tag "nist": ["AU-3", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000098-DB-000042'
+  tag "gid": 'V-73005'
+  tag "rid": 'SV-87657r1_rule'
+  tag "stig_id": 'PGS9-00-008800'
+  tag "cci": ['CCI-000133']
+  tag "nist": ['AU-3', 'Rev_4']
 
   tag "check": "Check PostgreSQL settings and existing audit records to verify
 information specific to the source (origin) of the event is being captured and
@@ -97,7 +94,7 @@ $ sudo service postgresql-9.5 reload"
 
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  log_line_prefix_escapes = %w(%m %u %d %s)
+  log_line_prefix_escapes = %w{%m %u %d %s}
   log_line_prefix_escapes.each do |escape|
     describe sql.query('SHOW log_line_prefix;', [pg_db]) do
       its('output') { should include escape }

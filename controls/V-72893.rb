@@ -1,6 +1,4 @@
-# encoding: utf-8
-
-control "V-72893" do
+control 'V-72893' do
   title "PostgreSQL must provide an immediate real-time alert to appropriate
   support staff of all audit failure events requiring real-time alerts."
   desc  "It is critical for the appropriate personnel to be aware if a system
@@ -15,13 +13,13 @@ control "V-72893" do
   PostgreSQL, the OS, third-party software, custom code, or a combination of
   these. The term \"the system\" is used to encompass all of these."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000360-DB-000320"
-  tag "gid": "V-72893"
-  tag "rid": "SV-87545r1_rule"
-  tag "stig_id": "PGS9-00-002700"
-  tag "cci": ["CCI-001858"]
-  tag "nist": ["AU-5 (2)", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000360-DB-000320'
+  tag "gid": 'V-72893'
+  tag "rid": 'SV-87545r1_rule'
+  tag "stig_id": 'PGS9-00-002700'
+  tag "cci": ['CCI-001858']
+  tag "nist": ['AU-5 (2)', 'Rev_4']
   tag "check": "Review the system documentation to determine which audit failure
   events require real-time alerts.
   Review the system settings and code. If the real-time alerting that is
@@ -32,5 +30,4 @@ control "V-72893" do
   real-time alerting for audit failures in PostgreSQL."
 
   only_if { false }
-
 end

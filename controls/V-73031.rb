@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-73031" do
+control 'V-73031' do
   title "PostgreSQL must only accept end entity certificates issued by DoD PKI or
 DoD-approved PKI Certification Authorities (CAs) for the establishment of all
 encrypted sessions."
@@ -21,13 +19,13 @@ http://iase.disa.mil/pki-pke/interoperability.
 This requirement focuses on communications protection for PostgreSQL session rather
 than for the network packet."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000427-DB-000385"
-  tag "gid": "V-73031"
-  tag "rid": "SV-87683r1_rule"
-  tag "stig_id": "PGS9-00-010300"
-  tag "cci": ["CCI-002470"]
-  tag "nist": ["SC-23 (5)", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000427-DB-000385'
+  tag "gid": 'V-73031'
+  tag "rid": 'SV-87683r1_rule'
+  tag "stig_id": 'PGS9-00-010300'
+  tag "cci": ['CCI-002470']
+  tag "nist": ['SC-23 (5)', 'Rev_4']
   tag "check": "As the database administrator (shown here as \"postgres\"), verify
 the following setting in postgresql.conf:
 

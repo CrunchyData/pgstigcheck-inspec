@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-72931" do
+control 'V-72931' do
   title "PostgreSQL must generate audit records when unsuccessful attempts to
   delete categorized information (e.g., classification levels/security levels)
   occur."
@@ -18,13 +16,13 @@ control "V-72931" do
   Information Systems, and FIPS Publication 200, Minimum Security Requirements
   for Federal Information and Information Systems."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000502-DB-000349"
-  tag "gid": "V-72931"
-  tag "rid": "SV-87583r1_rule"
-  tag "stig_id": "PGS9-00-005000"
-  tag "cci": ["CCI-000172"]
-  tag "nist": ["AU-12 c", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000502-DB-000349'
+  tag "gid": 'V-72931'
+  tag "rid": 'SV-87583r1_rule'
+  tag "stig_id": 'PGS9-00-005000'
+  tag "cci": ['CCI-000172']
+  tag "nist": ['AU-12 c', 'Rev_4']
   tag "check": "First, as the database administrator, verify pgaudit is enabled
   by running the following SQL:
   $ sudo su - postgres
@@ -58,7 +56,7 @@ control "V-72931" do
     its('output') { should include 'pgaudit' }
   end
 
-  pgaudit_types = %w(ddl read role write)
+  pgaudit_types = %w{ddl read role write}
 
   pgaudit_types.each do |type|
     describe sql.query('SHOW pgaudit.log;', [pg_db]) do

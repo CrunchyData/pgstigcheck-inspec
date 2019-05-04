@@ -1,13 +1,11 @@
-# encoding: utf-8
-
 pg_version = attribute('pg_version')
 pg_shared_dirs = attribute('pg_shared_dirs')
 
-control "V-72901" do
+control 'V-72901' do
   title "Database software, including PostgreSQL configuration files, must be
   stored in dedicated directories separate from the host OS and other
   applications."
-  desc  "When dealing with change control issues, it should be noted, any
+  desc "When dealing with change control issues, it should be noted, any
   changes to the hardware, software, and/or firmware components of the
   information system and/or application can potentially have significant effects
   on the overall security of the system.
@@ -23,13 +21,13 @@ control "V-72901" do
   method that provides any level of separation of security context assists in
   the protection between applications."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000133-DB-000199"
-  tag "gid": "V-72901"
-  tag "rid": "SV-87553r1_rule"
-  tag "stig_id": "PGS9-00-003300"
-  tag "cci": ["CCI-001499"]
-  tag "nist": ["CM-5 (6)", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000133-DB-000199'
+  tag "gid": 'V-72901'
+  tag "rid": 'SV-87553r1_rule'
+  tag "stig_id": 'PGS9-00-003300'
+  tag "cci": ['CCI-001499']
+  tag "nist": ['CM-5 (6)', 'Rev_4']
   tag "check": "Review the PostgreSQL software library directory and any
   subdirectories.
   If any non-PostgreSQL software directories exist on the disk directory,

@@ -1,6 +1,4 @@
-# encoding: utf-8
-
-control "V-73063" do
+control 'V-73063' do
   title "PostgreSQL must use NIST FIPS 140-2 validated cryptographic modules for
         cryptographic operations."
   desc  "Use of weak or not validated cryptographic algorithms undermines the
@@ -23,14 +21,13 @@ control "V-73063" do
         NSA Type-X (where X=1, 2, 3, 4) products are NSA-certified, hardware-based
         encryption modules."
   impact 0.7
-  tag "severity": "high"
 
-  tag "gtitle": "SRG-APP-000179-DB-000114"
-  tag "gid": "V-73063"
-  tag "rid": "SV-87715r1_rule"
-  tag "stig_id": "PGS9-00-012300"
-  tag "cci": ["CCI-000803"]
-  tag "nist": ["IA-7", "Rev_4"]
+  tag "gtitle": 'SRG-APP-000179-DB-000114'
+  tag "gid": 'V-73063'
+  tag "rid": 'SV-87715r1_rule'
+  tag "stig_id": 'PGS9-00-012300'
+  tag "cci": ['CCI-000803']
+  tag "nist": ['IA-7', 'Rev_4']
 
   tag "check": "As the system administrator, run the following:
 

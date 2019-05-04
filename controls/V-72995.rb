@@ -1,12 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-72995" do
-
+control 'V-72995' do
   title "PostgreSQL must protect the confidentiality and integrity of all
 information at rest."
   desc  "This control is intended to address the confidentiality and integrity of
@@ -24,13 +21,13 @@ If the confidentiality and integrity of application data is not protected, the d
 will be open to compromise and unauthorized modification."
 
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000231-DB-000154"
-  tag "gid": "V-72995"
-  tag "rid": "SV-87647r1_rule"
-  tag "stig_id": "PGS9-00-008300"
-  tag "cci": ["CCI-001199"]
-  tag "nist": ["SC-28", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000231-DB-000154'
+  tag "gid": 'V-72995'
+  tag "rid": 'SV-87647r1_rule'
+  tag "stig_id": 'PGS9-00-008300'
+  tag "cci": ['CCI-001199']
+  tag "nist": ['SC-28', 'Rev_4']
 
   tag "check": "One possible way to encrypt data within PostgreSQL is to use the
 pgcrypto extension.

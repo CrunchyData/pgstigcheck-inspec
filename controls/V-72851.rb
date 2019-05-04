@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
@@ -34,7 +32,6 @@ control 'V-72851' do
         information, such as account numbers, social security numbers, and
         credit card numbers."
   impact 0.5
-  tag "severity": 'medium'
 
   tag "gtitle": 'SRG-APP-000266-DB-000162'
   tag "gid": 'V-72851'

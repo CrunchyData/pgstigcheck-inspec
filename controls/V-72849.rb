@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 control 'V-72849' do
   title "PostgreSQL must integrate with an organization-level
   authentication/access mechanism providing account management and automation
@@ -28,7 +26,7 @@ control 'V-72849' do
   overall mechanism supporting an organization's automated account management
   requirements."
   impact 0.5
-  tag "severity": 'medium'
+
   tag "gtitle": 'SRG-APP-000023-DB-000001'
   tag "gid": 'V-72849'
   tag "rid": 'SV-87501r1_rule'

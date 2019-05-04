@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-73041" do
+control 'V-73041' do
   title "PostgreSQL must produce audit records containing time stamps to establish
 when the events occurred."
   desc  "Information system auditing capability is critical for accurate forensic
@@ -25,13 +23,13 @@ specific actions were performed. This requires the date and time an audit record
 referring to. If date and time information is not recorded and stored with the audit
 record, the record itself is of very limited use."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000096-DB-000040"
-  tag "gid": "V-73041"
-  tag "rid": "SV-87693r1_rule"
-  tag "stig_id": "PGS9-00-011100"
-  tag "cci": ["CCI-000131"]
-  tag "nist": ["AU-3", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000096-DB-000040'
+  tag "gid": 'V-73041'
+  tag "rid": 'SV-87693r1_rule'
+  tag "stig_id": 'PGS9-00-011100'
+  tag "cci": ['CCI-000131']
+  tag "nist": ['AU-3', 'Rev_4']
   tag "check": "As the database administrator (usually postgres, run the following
 SQL:
 

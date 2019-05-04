@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-73019" do
+control 'V-73019' do
   title "PostgreSQL must protect against a user falsely repudiating having performed
 organization-defined actions."
   desc  "Non-repudiation of actions taken is required in order to maintain data
@@ -24,13 +22,13 @@ implementation also must ensure that applications pass individual user
 identification to PostgreSQL, even where the application connects to PostgreSQL with
 a standard, shared account."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000080-DB-000063"
-  tag "gid": "V-73019"
-  tag "rid": "SV-87671r1_rule"
-  tag "stig_id": "PGS9-00-009700"
-  tag "cci": ["CCI-000166"]
-  tag "nist": ["AU-10", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000080-DB-000063'
+  tag "gid": 'V-73019'
+  tag "rid": 'SV-87671r1_rule'
+  tag "stig_id": 'PGS9-00-009700'
+  tag "cci": ['CCI-000166']
+  tag "nist": ['AU-10', 'Rev_4']
   tag "check": "First, as the database administrator, review the current
 log_line_prefix settings by running the following SQL:
 
@@ -85,7 +83,7 @@ individual user identification and passes it to PostgreSQL."
 
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  log_line_prefix_escapes = %w(%m %u %d %p %r %a)
+  log_line_prefix_escapes = %w{%m %u %d %p %r %a}
 
   log_line_prefix_escapes.each do |escape|
     describe sql.query('SHOW log_line_prefix;', [pg_db]) do

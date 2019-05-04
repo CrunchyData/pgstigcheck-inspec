@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 pg_data_dir = attribute('pg_data_dir')
 pg_hba_conf_file = attribute('pg_hba_conf_file')
 
@@ -18,7 +16,7 @@ control 'V-72857' do
         vulnerable to discovery by unauthorized users. Disclosure of passwords
         may easily lead to unauthorized access to the database."
   impact 0.5
-  tag "severity": 'medium'
+
   tag "gtitle": 'SRG-APP-000172-DB-000075'
   tag "gid": 'V-72857'
   tag "rid": 'SV-87509r1_rule'

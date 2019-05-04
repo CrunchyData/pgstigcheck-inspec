@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-72959" do
+control 'V-72959' do
   title "PostgreSQL must generate audit records when privileges/permissions are
   deleted."
   desc  "Changes in the permissions, privileges, and roles granted to users and
@@ -16,13 +14,13 @@ control "V-72959" do
   In an SQL environment, deleting permissions is typically done via the REVOKE
   command."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000499-DB-000330"
-  tag "gid": "V-72959"
-  tag "rid": "SV-87611r1_rule"
-  tag "stig_id": "PGS9-00-006100"
-  tag "cci": ["CCI-000172"]
-  tag "nist": ["AU-12 c", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000499-DB-000330'
+  tag "gid": 'V-72959'
+  tag "rid": 'SV-87611r1_rule'
+  tag "stig_id": 'PGS9-00-006100'
+  tag "cci": ['CCI-000172']
+  tag "nist": ['AU-12 c', 'Rev_4']
   tag "check": "First, as the database administrator, verify pgaudit is enabled
   by running the following SQL:
   $ sudo su - postgres
@@ -54,7 +52,7 @@ control "V-72959" do
     its('output') { should include 'pgaudit' }
   end
 
-  pgaudit_types = %w(ddl read role write)
+  pgaudit_types = %w{ddl read role write}
 
   pgaudit_types.each do |type|
     describe sql.query('SHOW pgaudit.log;', [pg_db]) do

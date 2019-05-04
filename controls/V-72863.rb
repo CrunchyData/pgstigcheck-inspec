@@ -1,15 +1,13 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 pg_max_connections = attribute('pg_max_connections')
 
-control "V-72863" do
+control 'V-72863' do
   title "PostgreSQL must limit the number of concurrent sessions to an
   organization-defined number per user for all accounts and/or account types."
-  desc  "Database management includes the ability to control the number of users
+  desc "Database management includes the ability to control the number of users
   and user sessions utilizing PostgreSQL. Unlimited concurrent connections to
   PostgreSQL could allow a successful Denial of Service (DoS) attack by
   exhausting connection resources; and a system can also fail or be degraded by
@@ -34,13 +32,13 @@ control "V-72863" do
   (Sessions may also be referred to as connections or logons, which for the
   purposes of this requirement are synonyms.."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000001-DB-000031"
-  tag "gid": "V-72863"
-  tag "rid": "SV-87515r1_rule"
-  tag "stig_id": "PGS9-00-001200"
-  tag "cci": ["CCI-000054"]
-  tag "nist": ["AC-10", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000001-DB-000031'
+  tag "gid": 'V-72863'
+  tag "rid": 'SV-87515r1_rule'
+  tag "stig_id": 'PGS9-00-001200'
+  tag "cci": ['CCI-000054']
+  tag "nist": ['AC-10', 'Rev_4']
   tag "check": 'To check the total amount of connections allowed by the database,
                 as the database administrator, run the following SQL:
                 $ sudo su - postgres

@@ -1,27 +1,25 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-  control "V-72973" do
+control 'V-72973' do
   title "PostgreSQL must generate audit records when categorized information
   (e.g., classification levels/security levels) is modified."
-  desc  "Changes in categorized information must be tracked. Without an audit
+  desc "Changes in categorized information must be tracked. Without an audit
   trail, unauthorized access to protected data could go undetected.
   For detailed information on categorizing information, refer to FIPS
   Publication 199, Standards for Security Categorization of Federal Information
   and Information Systems, and FIPS Publication 200, Minimum Security
   Requirements for Federal Information and Information Systems."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000498-DB-000346"
-  tag "gid": "V-72973"
-  tag "rid": "SV-87625r1_rule"
-  tag "stig_id": "PGS9-00-006700"
-  tag "cci": ["CCI-000172"]
-  tag "nist": ["AU-12 c", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000498-DB-000346'
+  tag "gid": 'V-72973'
+  tag "rid": 'SV-87625r1_rule'
+  tag "stig_id": 'PGS9-00-006700'
+  tag "cci": ['CCI-000172']
+  tag "nist": ['AU-12 c', 'Rev_4']
   tag "check": "If category tracking is not required in the database, this is
   not applicable.
   First, as the database administrator, verify pgaudit is enabled by running the
@@ -56,7 +54,7 @@ pg_host = attribute('pg_host')
     its('output') { should include 'pgaudit' }
   end
 
-  pgaudit_types = %w(ddl read role write)
+  pgaudit_types = %w{ddl read role write}
 
   pgaudit_types.each do |type|
     describe sql.query('SHOW pgaudit.log;', [pg_db]) do

@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 pg_owner = attribute('pg_owner')
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
@@ -8,11 +6,10 @@ pg_host = attribute('pg_host')
 pg_data_dir = attribute('pg_data_dir')
 pg_superusers = attribute('pg_superusers')
 
-control "V-72891" do
-
+control 'V-72891' do
   title "PostgreSQL must allow only the ISSM (or individuals or roles appointed
   by the ISSM) to select which auditable events are to be audited."
-  desc  "Without the capability to restrict which roles and individuals can
+  desc "Without the capability to restrict which roles and individuals can
   select which events are audited, unauthorized personnel may be able to prevent
   or interfere with the auditing of critical events.
 
@@ -23,13 +20,13 @@ control "V-72891" do
   correlate, and investigate the events relating to an incident or identify those
   responsible for one."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000090-DB-000065"
-  tag "gid": "V-72891"
-  tag "rid": "SV-87543r1_rule"
-  tag "stig_id": "PGS9-00-002600"
-  tag "cci": ["CCI-000171"]
-  tag "nist": ["AU-12 b", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000090-DB-000065'
+  tag "gid": 'V-72891'
+  tag "rid": 'SV-87543r1_rule'
+  tag "stig_id": 'PGS9-00-002600'
+  tag "cci": ['CCI-000171']
+  tag "nist": ['AU-12 b', 'Rev_4']
   tag "check": "Note: The following instructions use the PGDATA environment
   variable. See supplementary content APPENDIX-F for instructions on configuring
   PGDATA.
@@ -71,13 +68,13 @@ control "V-72891" do
   roles = roles_query.lines
 
   roles.each do |role|
-    unless pg_superusers.include?(role)
-      superuser_sql = "SELECT r.rolsuper FROM pg_catalog.pg_roles r "\
-        "WHERE r.rolname = '#{role}';"
+    next if pg_superusers.include?(role)
 
-      describe sql.query(superuser_sql, [pg_db]) do
-        its('output') { should_not eq 't' }
-      end
+    superuser_sql = 'SELECT r.rolsuper FROM pg_catalog.pg_roles r '\
+      "WHERE r.rolname = '#{role}';"
+
+    describe sql.query(superuser_sql, [pg_db]) do
+      its('output') { should_not eq 't' }
     end
   end
 end

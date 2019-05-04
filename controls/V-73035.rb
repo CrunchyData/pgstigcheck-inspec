@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-73035" do
+control 'V-73035' do
   title "PostgreSQL must implement cryptographic mechanisms preventing the
 unauthorized disclosure of organization-defined information at rest on
 organization-defined information system components."
@@ -26,13 +24,13 @@ The decision whether and what to encrypt rests with the data owner and is also
 influenced by the physical measures taken to secure the equipment and media on which
 the information resides."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000429-DB-000387"
-  tag "gid": "V-73035"
-  tag "rid": "SV-87687r1_rule"
-  tag "stig_id": "PGS9-00-010500"
-  tag "cci": ["CCI-002476"]
-  tag "nist": ["SC-28 (1)", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000429-DB-000387'
+  tag "gid": 'V-73035'
+  tag "rid": 'SV-87687r1_rule'
+  tag "stig_id": 'PGS9-00-010500'
+  tag "cci": ['CCI-002476']
+  tag "nist": ['SC-28 (1)', 'Rev_4']
   tag "check": "To check if pgcrypto is installed on PostgreSQL, as a database
 administrator (shown here as \"postgres\"), run the following command:
 

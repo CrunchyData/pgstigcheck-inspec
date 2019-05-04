@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-72965" do
+control 'V-72965' do
   title "PostgreSQL must generate audit records when privileges/permissions are
   modified."
   desc  "Changes in the permissions, privileges, and roles granted to users and
@@ -16,13 +14,13 @@ control "V-72965" do
   In an SQL environment, modifying permissions is typically done via the GRANT
   and REVOKE commands."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000495-DB-000328"
-  tag "gid": "V-72965"
-  tag "rid": "SV-87617r1_rule"
-  tag "stig_id": "PGS9-00-006400"
-  tag "cci": ["CCI-000172"]
-  tag "nist": ["AU-12 c", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000495-DB-000328'
+  tag "gid": 'V-72965'
+  tag "rid": 'SV-87617r1_rule'
+  tag "stig_id": 'PGS9-00-006400'
+  tag "cci": ['CCI-000172']
+  tag "nist": ['AU-12 c', 'Rev_4']
   tag "check": "First, as the database administrator, verify pgaudit is enabled
   by running the following SQL:
   $ sudo su - postgres

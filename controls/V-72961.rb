@@ -1,14 +1,12 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-72961" do
+control 'V-72961' do
   title "PostgreSQL must generate audit records when concurrent
   logons/connections by the same user from different workstations occur."
-  desc  "For completeness of forensic analysis, it is necessary to track who
+  desc "For completeness of forensic analysis, it is necessary to track who
   logs on to PostgreSQL.
   Concurrent connections by the same user from multiple workstations may be
   valid use of the system; or such connections may be due to improper
@@ -20,13 +18,13 @@ control "V-72961" do
   voluntary and involuntary disconnections), then it is not mandatory to create
   additional log entries specifically for this.."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000506-DB-000353"
-  tag "gid": "V-72961"
-  tag "rid": "SV-87613r1_rule"
-  tag "stig_id": "PGS9-00-006200"
-  tag "cci": ["CCI-000172"]
-  tag "nist": ["AU-12 c", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000506-DB-000353'
+  tag "gid": 'V-72961'
+  tag "rid": 'SV-87613r1_rule'
+  tag "stig_id": 'PGS9-00-006200'
+  tag "cci": ['CCI-000172']
+  tag "nist": ['AU-12 c', 'Rev_4']
   tag "check": "First, as the database administrator, verify that
   log_connections and log_disconnections are enabled by running the following
   SQL:
@@ -73,7 +71,7 @@ control "V-72961" do
     its('output') { should_not match /off|false/i }
   end
 
-  log_line_prefix_escapes = %w(%m %u %d %c)
+  log_line_prefix_escapes = %w{%m %u %d %c}
 
   log_line_prefix_escapes.each do |escape|
     describe sql.query('SHOW log_line_prefix;', [pg_db]) do

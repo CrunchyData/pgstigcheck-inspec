@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-73021" do
+control 'V-73021' do
   title "PostgreSQL must provide the capability for authorized users to capture,
 record, and log all content related to a user session."
   desc  "Without the capability to capture, record, and log all content related to a
@@ -16,13 +14,13 @@ monitoring of a user's online session, involving other software components such 
 operating systems, web servers and front-end user applications. The current
 requirement, however, deals specifically with PostgreSQL."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000093-DB-000052"
-  tag "gid": "V-73021"
-  tag "rid": "SV-87673r1_rule"
-  tag "stig_id": "PGS9-00-009800"
-  tag "cci": ["CCI-001462"]
-  tag "nist": ["AU-14 (2)", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000093-DB-000052'
+  tag "gid": 'V-73021'
+  tag "rid": 'SV-87673r1_rule'
+  tag "stig_id": 'PGS9-00-009800'
+  tag "cci": ['CCI-001462']
+  tag "nist": ['AU-14 (2)', 'Rev_4']
   tag "check": "First, as the database administrator (shown here as \"postgres\"),
 verify pgaudit is installed by running the following SQL:
 
@@ -82,7 +80,7 @@ $ sudo service postgresql-9.5 reload"
     its('output') { should include 'pgaudit' }
   end
 
-  pgaudit_types = %w(ddl read role write)
+  pgaudit_types = %w{ddl read role write}
 
   pgaudit_types.each do |type|
     describe sql.query('SHOW pgaudit.log;', [pg_db]) do

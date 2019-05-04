@@ -1,6 +1,4 @@
-# encoding: utf-8
-
-control "V-72875" do
+control 'V-72875' do
   title "PostgreSQL and associated applications, when making use of dynamic code
   execution, must scan input data for invalid values that may indicate a code i
   njection attack."
@@ -54,13 +52,13 @@ control "V-72875" do
   Not only can the caller be subject to such vulnerabilities; it may itself be
   the attacker."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000251-DB-000392"
-  tag "gid": "V-72875"
-  tag "rid": "SV-87527r1_rule"
-  tag "stig_id": "PGS9-00-002000"
-  tag "cci": ["CCI-001310"]
-  tag "nist": ["SI-10", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000251-DB-000392'
+  tag "gid": 'V-72875'
+  tag "rid": 'SV-87527r1_rule'
+  tag "stig_id": 'PGS9-00-002000'
+  tag "cci": ['CCI-001310']
+  tag "nist": ['SI-10', 'Rev_4']
   tag "check": "Review PostgreSQL source code (trigger procedures, functions)
   and application source code to identify cases of dynamic code execution.
   If dynamic code execution is employed without protective measures against code
@@ -69,5 +67,4 @@ control "V-72875" do
   protections against code injection (IE: prepared statements)."
 
   only_if { false }
-
 end

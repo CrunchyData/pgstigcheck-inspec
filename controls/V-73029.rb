@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 pg_owner = attribute('pg_owner')
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
@@ -7,7 +5,7 @@ pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 pg_data_dir = attribute('pg_data_dir')
 
-control "V-73029" do
+control 'V-73029' do
   title "PostgreSQL must enforce authorized access to all PKI private keys
 stored/utilized by PostgreSQL."
   desc  "The DoD standard for authentication is DoD-approved PKI certificates. PKI
@@ -30,13 +28,13 @@ PostgreSQL's private keys, an attacker could gain access to the key(s) and use t
 to impersonate the database on the network or otherwise perform unauthorized
 actions."
   impact 0.7
-  tag "severity": "high"
-  tag "gtitle": "SRG-APP-000176-DB-000068"
-  tag "gid": "V-73029"
-  tag "rid": "SV-87681r1_rule"
-  tag "stig_id": "PGS9-00-010200"
-  tag "cci": ["CCI-000186"]
-  tag "nist": ["IA-5 (2) (b)", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000176-DB-000068'
+  tag "gid": 'V-73029'
+  tag "rid": 'SV-87681r1_rule'
+  tag "stig_id": 'PGS9-00-010200'
+  tag "cci": ['CCI-000186']
+  tag "nist": ['IA-5 (2) (b)', 'Rev_4']
   tag "check": "First, as the database administrator (shown here as \"postgres\"),
 verify the following settings:
 
@@ -81,7 +79,7 @@ APPENDIX-G."
 
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  settings = %w(ssl_cert_file ssl_key_file ssl_ca_file ssl_crl_file)
+  settings = %w{ssl_cert_file ssl_key_file ssl_ca_file ssl_crl_file}
 
   settings.each do |setting|
     file_query = sql.query("SHOW #{setting};", [pg_db])

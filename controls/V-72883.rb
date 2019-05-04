@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 pg_owner = attribute('pg_owner')
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
@@ -7,10 +5,10 @@ pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 pg_superusers = attribute('pg_superusers')
 
-control "V-72883" do
+control 'V-72883' do
   title "PostgreSQL must enforce discretionary access control policies, as
   defined by the data owner, over defined subjects and objects."
-  desc  "Discretionary Access Control (DAC) is based on the notion that
+  desc "Discretionary Access Control (DAC) is based on the notion that
   individual users are \"owners\" of objects and therefore have discretion over
   who should be authorized to access the object and in which mode (e.g., read or
   write). Ownership is usually acquired as a consequence of creating the object
@@ -36,13 +34,13 @@ control "V-72883" do
   dentity-based access control, that limitation is not required for this use of
   discretionary access control."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000328-DB-000301"
-  tag "gid": "V-72883"
-  tag "rid": "SV-87535r1_rule"
-  tag "stig_id": "PGS9-00-002200"
-  tag "cci": ["CCI-002165"]
-  tag "nist": ["AC-3 (4)", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000328-DB-000301'
+  tag "gid": 'V-72883'
+  tag "rid": 'SV-87535r1_rule'
+  tag "stig_id": 'PGS9-00-002200'
+  tag "cci": ['CCI-002165']
+  tag "nist": ['AC-3 (4)', 'Rev_4']
   tag "check": "Review system documentation to identify the required
   discretionary access control (DAC).
 
@@ -88,41 +86,41 @@ control "V-72883" do
   databases_sql = "SELECT datname FROM pg_catalog.pg_database where datname = '#{pg_db}';"
   databases_query = sql.query(databases_sql, [pg_db])
   databases = databases_query.lines
-  types = %w(t s v) # tables, sequences views
+  types = %w{t s v} # tables, sequences views
 
   databases.each do |database|
     schemas_sql = ''
     functions_sql = ''
 
     if database == 'postgres'
-      schemas_sql = "SELECT n.nspname, pg_catalog.pg_get_userbyid(n.nspowner) "\
-        "FROM pg_catalog.pg_namespace n "\
+      schemas_sql = 'SELECT n.nspname, pg_catalog.pg_get_userbyid(n.nspowner) '\
+        'FROM pg_catalog.pg_namespace n '\
         "WHERE pg_catalog.pg_get_userbyid(n.nspowner) <> '#{pg_owner}';"
-      functions_sql = "SELECT n.nspname, p.proname, "\
-        "pg_catalog.pg_get_userbyid(n.nspowner) "\
-        "FROM pg_catalog.pg_proc p "\
-        "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace "\
+      functions_sql = 'SELECT n.nspname, p.proname, '\
+        'pg_catalog.pg_get_userbyid(n.nspowner) '\
+        'FROM pg_catalog.pg_proc p '\
+        'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace '\
         "WHERE pg_catalog.pg_get_userbyid(n.nspowner) <> '#{pg_owner}';"
     else
-      schemas_sql = "SELECT n.nspname, pg_catalog.pg_get_userbyid(n.nspowner) "\
-        "FROM pg_catalog.pg_namespace n "\
-        "WHERE pg_catalog.pg_get_userbyid(n.nspowner) "\
+      schemas_sql = 'SELECT n.nspname, pg_catalog.pg_get_userbyid(n.nspowner) '\
+        'FROM pg_catalog.pg_namespace n '\
+        'WHERE pg_catalog.pg_get_userbyid(n.nspowner) '\
         "NOT IN (#{authorized_owners.map { |e| "'#{e}'" }.join(',')}) "\
         "AND n.nspname !~ '^pg_' AND n.nspname <> 'information_schema';"
-      functions_sql = "SELECT n.nspname, p.proname, "\
-        "pg_catalog.pg_get_userbyid(n.nspowner) "\
-        "FROM pg_catalog.pg_proc p "\
-        "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace "\
-        "WHERE pg_catalog.pg_get_userbyid(n.nspowner) "\
+      functions_sql = 'SELECT n.nspname, p.proname, '\
+        'pg_catalog.pg_get_userbyid(n.nspowner) '\
+        'FROM pg_catalog.pg_proc p '\
+        'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace '\
+        'WHERE pg_catalog.pg_get_userbyid(n.nspowner) '\
         "NOT IN (#{authorized_owners.map { |e| "'#{e}'" }.join(',')}) "\
         "AND n.nspname <> 'pg_catalog' AND n.nspname <> 'information_schema';"
     end
 
     connection_error = "FATAL:\\s+database \"#{database}\" is not currently "\
-      "accepting connections"
+      'accepting connections'
     connection_error_regex = Regexp.new(connection_error)
-    
-    sql_result=sql.query(schemas_sql, [database])
+
+    sql_result = sql.query(schemas_sql, [database])
 
     describe.one do
       describe sql_result do
@@ -134,7 +132,7 @@ control "V-72883" do
       end
     end
 
-    sql_result=sql.query(functions_sql, [database])
+    sql_result = sql.query(functions_sql, [database])
 
     describe.one do
       describe sql_result do
@@ -150,24 +148,24 @@ control "V-72883" do
       objects_sql = ''
 
       if database == 'postgres'
-        objects_sql = "SELECT n.nspname, c.relname, c.relkind, "\
-          "pg_catalog.pg_get_userbyid(n.nspowner) FROM pg_catalog.pg_class c "\
-          "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace "\
+        objects_sql = 'SELECT n.nspname, c.relname, c.relkind, '\
+          'pg_catalog.pg_get_userbyid(n.nspowner) FROM pg_catalog.pg_class c '\
+          'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace '\
           "WHERE c.relkind IN ('#{type}','s','') "\
           "AND pg_catalog.pg_get_userbyid(n.nspowner) <> '#{pg_owner}' "
-          "AND n.nspname !~ '^pg_toast';"
+        "AND n.nspname !~ '^pg_toast';"
       else
-        objects_sql = "SELECT n.nspname, c.relname, c.relkind, "\
-          "pg_catalog.pg_get_userbyid(n.nspowner) FROM pg_catalog.pg_class c "\
-          "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace "\
+        objects_sql = 'SELECT n.nspname, c.relname, c.relkind, '\
+          'pg_catalog.pg_get_userbyid(n.nspowner) FROM pg_catalog.pg_class c '\
+          'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace '\
           "WHERE c.relkind IN ('#{type}','s','') "\
-          "AND pg_catalog.pg_get_userbyid(n.nspowner) "\
+          'AND pg_catalog.pg_get_userbyid(n.nspowner) '\
           "NOT IN (#{authorized_owners.map { |e| "'#{e}'" }.join(',')}) "\
           "AND n.nspname <> 'pg_catalog' AND n.nspname <> 'information_schema'"\
           " AND n.nspname !~ '^pg_toast';"
       end
 
-      sql_result=sql.query(objects_sql, [database])
+      sql_result = sql.query(objects_sql, [database])
 
       describe.one do
         describe sql_result do

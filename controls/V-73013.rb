@@ -1,6 +1,4 @@
-# encoding: utf-8
-
-control "V-73013" do
+control 'V-73013' do
   title "PostgreSQL must associate organization-defined types of security labels
 having organization-defined security label values with information in process."
   desc  "Without the association of security labels to information, there is no
@@ -24,13 +22,13 @@ labels are lost when the data is stored, there is the risk of a data compromise.
 The mechanism used to support security labeling may be the sepgsql feature of
 PostgreSQL, a third-party product, or custom application code."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000313-DB-000309"
-  tag "gid": "V-73013"
-  tag "rid": "SV-87665r1_rule"
-  tag "stig_id": "PGS9-00-009400"
-  tag "cci": ["CCI-002263"]
-  tag "nist": ["AC-16 a", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000313-DB-000309'
+  tag "gid": 'V-73013'
+  tag "rid": 'SV-87665r1_rule'
+  tag "stig_id": 'PGS9-00-009400'
+  tag "cci": ['CCI-002263']
+  tag "nist": ['AC-16 a', 'Rev_4']
   tag "check": "If security labeling is not required, this is not a finding.
 
 First, as the database administrator (shown here as \"postgres\"), run the following
@@ -51,5 +49,4 @@ RLS policies can be very different depending on their use case. For one example 
 using RLS for Security Labels, see supplementary content APPENDIX-D."
 
   only_if { false }
-
 end

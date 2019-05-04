@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
@@ -7,10 +5,10 @@ pg_host = attribute('pg_host')
 pg_data_dir = attribute('pg_data_dir')
 pg_hba_conf_file = attribute('pg_hba_conf_file')
 
-control "V-72979" do
+control 'V-72979' do
   title "PostgreSQL, when utilizing PKI-based authentication, must validate
   certificates by performing RFC 5280-compliant certification path validation."
-  desc  "The DoD standard for authentication is DoD-approved PKI certificates.
+  desc "The DoD standard for authentication is DoD-approved PKI certificates.
   A certificate’s certification path is the path from the end entity certificate
   to a trusted root certification authority (CA). Certification path validation
   is necessary for a relying party to make an informed decision regarding
@@ -25,13 +23,13 @@ control "V-72979" do
   certificates that are invalid and/or counterfeit. This could allow unauthorized
   access to the database."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000175-DB-000067"
-  tag "gid": "V-72979"
-  tag "rid": "SV-87631r1_rule"
-  tag "stig_id": "PGS9-00-007000"
-  tag "cci": ["CCI-000185"]
-  tag "nist": ["IA-5 (2) (a)", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000175-DB-000067'
+  tag "gid": 'V-72979'
+  tag "rid": 'SV-87631r1_rule'
+  tag "stig_id": 'PGS9-00-007000'
+  tag "cci": ['CCI-000185']
+  tag "nist": ['IA-5 (2) (a)', 'Rev_4']
   tag "check": "Note: The following instructions use the PGDATA environment
   variable. See supplementary content APPENDIX-F for instructions on configuring
   PGDATA.

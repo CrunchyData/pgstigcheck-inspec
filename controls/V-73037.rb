@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-73037" do
+control 'V-73037' do
   title "PostgreSQL must invalidate session identifiers upon user logout or other
 session termination."
   desc  "Captured sessions can be reused in \"replay\" attacks. This requirement
@@ -31,13 +29,13 @@ When a user logs out, or when any other session termination event occurs, Postgr
 must terminate the user session(s) to minimize the potential for sessions to be
 hijacked."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000220-DB-000149"
-  tag "gid": "V-73037"
-  tag "rid": "SV-87689r1_rule"
-  tag "stig_id": "PGS9-00-010600"
-  tag "cci": ["CCI-001185"]
-  tag "nist": ["SC-23 (1)", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000220-DB-000149'
+  tag "gid": 'V-73037'
+  tag "rid": 'SV-87689r1_rule'
+  tag "stig_id": 'PGS9-00-010600'
+  tag "cci": ['CCI-001185']
+  tag "nist": ['SC-23 (1)', 'Rev_4']
   tag "check": "As the database administrator (shown here as \"postgres\"), run the
 following SQL:
 

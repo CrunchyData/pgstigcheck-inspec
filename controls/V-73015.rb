@@ -1,11 +1,9 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-73015" do
+control 'V-73015' do
   title "If passwords are used for authentication, PostgreSQL must store only
 hashed, salted representations of passwords."
   desc  "The DoD standard for authentication is DoD-approved PKI certificates.
@@ -18,13 +16,13 @@ or using unsalted hashes would be vulnerable to unauthorized disclosure. Databas
 passwords must always be in the form of one-way, salted hashes when stored
 internally or externally to PostgreSQL."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000171-DB-000074"
-  tag "gid": "V-73015"
-  tag "rid": "SV-87667r1_rule"
-  tag "stig_id": "PGS9-00-009500"
-  tag "cci": ["CCI-000196"]
-  tag "nist": ["IA-5 (1) (c)", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000171-DB-000074'
+  tag "gid": 'V-73015'
+  tag "rid": 'SV-87667r1_rule'
+  tag "stig_id": 'PGS9-00-009500'
+  tag "cci": ['CCI-000196']
+  tag "nist": ['IA-5 (1) (c)', 'Rev_4']
   tag "check": "To check if password encryption is enabled, as the database
 administrator (shown here as \"postgres\"), run the following SQL:
 
@@ -67,7 +65,7 @@ $ sudo service postgresql-9.5 restart"
     its('output') { should match /on|true/i }
   end
 
-  passwords_sql = "SELECT usename FROM pg_shadow "\
+  passwords_sql = 'SELECT usename FROM pg_shadow '\
     "WHERE passwd !~ '^md5[0-9a-f]+$';"
 
   describe sql.query(passwords_sql, [pg_db]) do

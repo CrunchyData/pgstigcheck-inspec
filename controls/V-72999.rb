@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 pg_owner = attribute('pg_owner')
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
@@ -7,8 +5,7 @@ pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 pg_superusers = attribute('pg_superusers')
 
-control "V-72999" do
-
+control 'V-72999' do
   title "PostgreSQL must separate user functionality (including user interface
 services) from database management functionality."
   desc  "Information system management functionality includes functions necessary to
@@ -33,13 +30,13 @@ presented on an interface available for users, information on DBMS settings may 
 inadvertently made available to the user."
 
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000211-DB-000122"
-  tag "gid": "V-72999"
-  tag "rid": "SV-87651r1_rule"
-  tag "stig_id": "PGS9-00-008500"
-  tag "cci": ["CCI-001082"]
-  tag "nist": ["SC-2", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000211-DB-000122'
+  tag "gid": 'V-72999'
+  tag "rid": 'SV-87651r1_rule'
+  tag "stig_id": 'PGS9-00-008500'
+  tag "cci": ['CCI-001082']
+  tag "nist": ['SC-2', 'Rev_4']
 
   tag "check": "Check PostgreSQL settings and vendor documentation to verify that
 administrative functionality is separate from user functionality.
@@ -65,7 +62,7 @@ To remove privileges, see the following example:
 
 ALTER ROLE <username> NOSUPERUSER NOCREATEDB NOCREATEROLE NOBYPASSRLS;"
 
-  privileges = %w(rolcreatedb rolcreaterole rolsuper)
+  privileges = %w{rolcreatedb rolcreaterole rolsuper}
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
   roles_sql = 'SELECT r.rolname FROM pg_catalog.pg_roles r;'
@@ -73,14 +70,14 @@ ALTER ROLE <username> NOSUPERUSER NOCREATEDB NOCREATEROLE NOBYPASSRLS;"
   roles = roles_query.lines
 
   roles.each do |role|
-    unless pg_superusers.include?(role)
-      privileges.each do |privilege|
-        privilege_sql = "SELECT r.#{privilege} FROM pg_catalog.pg_roles r "\
-          "WHERE r.rolname = '#{role}';"
+    next if pg_superusers.include?(role)
 
-        describe sql.query(privilege_sql, [pg_db]) do
-          its('output') { should_not eq 't' }
-        end
+    privileges.each do |privilege|
+      privilege_sql = "SELECT r.#{privilege} FROM pg_catalog.pg_roles r "\
+        "WHERE r.rolname = '#{role}';"
+
+      describe sql.query(privilege_sql, [pg_db]) do
+        its('output') { should_not eq 't' }
       end
     end
   end

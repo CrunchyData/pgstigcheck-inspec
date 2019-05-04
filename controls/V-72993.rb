@@ -1,10 +1,7 @@
-# encoding: utf-8
-
 # @todo this entire test appears to be identical and a duplicate of V-72989.
 # If so, delete this test.
 
-control "V-72993" do
-
+control 'V-72993' do
   title "PostgreSQL must implement NIST FIPS 140-2 validated cryptographic modules
 to protect unclassified information requiring confidentiality and cryptographic
 protection, in accordance with the data owners requirements."
@@ -22,13 +19,13 @@ Requirements For Cryptographic Modules. Note that the product's cryptographic
 modules must be validated and certified by NIST as FIPS-compliant."
 
   impact 0.7
-  tag "severity": "high"
-  tag "gtitle": "SRG-APP-000514-DB-000383"
-  tag "gid": "V-72993"
-  tag "rid": "SV-87645r1_rule"
-  tag "stig_id": "PGS9-00-008200"
-  tag "cci": ["CCI-002450"]
-  tag "nist": ["SC-13", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000514-DB-000383'
+  tag "gid": 'V-72993'
+  tag "rid": 'SV-87645r1_rule'
+  tag "stig_id": 'PGS9-00-008200'
+  tag "cci": ['CCI-002450']
+  tag "nist": ['SC-13', 'Rev_4']
 
   tag "check": "First, as the system administrator, run the following to see if FIPS
 is enabled:

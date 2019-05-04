@@ -1,26 +1,24 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-72963" do
+control 'V-72963' do
   title "PostgreSQL must generate audit records when unsuccessful attempts to
   delete security objects occur."
-  desc  "The removal of security objects from the database/PostgreSQL would
+  desc "The removal of security objects from the database/PostgreSQL would
   seriously degrade a system's information assurance posture. If such an action
   is attempted, it must be logged.
   To aid in diagnosis, it is necessary to keep track of failed attempts in
   addition to the successful ones."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000501-DB-000337"
-  tag "gid": "V-72963"
-  tag "rid": "SV-87615r1_rule"
-  tag "stig_id": "PGS9-00-006300"
-  tag "cci": ["CCI-000172"]
-  tag "nist": ["AU-12 c", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000501-DB-000337'
+  tag "gid": 'V-72963'
+  tag "rid": 'SV-87615r1_rule'
+  tag "stig_id": 'PGS9-00-006300'
+  tag "cci": ['CCI-000172']
+  tag "nist": ['AU-12 c', 'Rev_4']
   tag "check": "Note: The following instructions use the PGDATA environment
   variable. See supplementary content APPENDIX-F for instructions on configuring
   PGDATA.
@@ -57,7 +55,7 @@ control "V-72963" do
     its('output') { should include 'pgaudit' }
   end
 
-  pgaudit_types = %w(ddl read role write)
+  pgaudit_types = %w{ddl read role write}
 
   pgaudit_types.each do |type|
     describe sql.query('SHOW pgaudit.log;', [pg_db]) do

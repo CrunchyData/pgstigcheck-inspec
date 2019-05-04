@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 pg_owner = attribute('pg_owner')
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
@@ -45,7 +43,7 @@ control 'V-72859' do
         result in users either gaining or being denied access inappropriately and
         in conflict with applicable policy."
   impact 0.5
-  tag "severity": 'medium'
+
   tag "gtitle": 'SRG-APP-000033-DB-000084'
   tag "gid": 'V-72859'
   tag "rid": 'SV-87511r1_rule'

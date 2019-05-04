@@ -1,12 +1,10 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 pg_superusers = attribute('pg_superusers')
 
-control "V-72867" do
+control 'V-72867' do
   title "PostgreSQL must uniquely identify and authenticate non-organizational
   users (or processes acting on behalf of non-organizational users)."
   desc  "Non-organizational users include all information system users other
@@ -25,13 +23,13 @@ control "V-72867" do
   organizational operations, organizational assets, individuals, other
   organizations, and the Nation."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000180-DB-000115"
-  tag "gid": "V-72867"
-  tag "rid": "SV-87519r1_rule"
-  tag "stig_id": "PGS9-00-001400"
-  tag "cci": ["CCI-000804"]
-  tag "nist": ["IA-8", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000180-DB-000115'
+  tag "gid": 'V-72867'
+  tag "rid": 'SV-87519r1_rule'
+  tag "stig_id": 'PGS9-00-001400'
+  tag "cci": ['CCI-000804']
+  tag "nist": ['IA-8', 'Rev_4']
   tag "check": "PostgreSQL uniquely identifies and authenticates PostgreSQL
   users through the use of DBMS roles.
   To list all roles in the database, as the database administrator (shown here

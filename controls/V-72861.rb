@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 control 'V-72861' do
   title "PostgreSQL must associate organization-defined types of security labels
   having organization-defined security label values with information in
@@ -20,7 +18,7 @@ transmission."
   If the security labels are lost when the data is stored, there is the risk of
   a data compromise."
   impact 0.5
-  tag "severity": 'medium'
+
   tag "gtitle": 'SRG-APP-000314-DB-000310'
   tag "gid": 'V-72861'
   tag "rid": 'SV-87513r1_rule'
@@ -48,5 +46,4 @@ transmission."
     example of using RLS for Security Labels, see supplementary content APPENDIX-D."
 
   only_if { false }
-
 end

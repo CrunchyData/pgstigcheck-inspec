@@ -1,14 +1,12 @@
-# encoding: utf-8
-
 pg_dba = attribute('pg_dba')
 pg_dba_password = attribute('pg_dba_password')
 pg_db = attribute('pg_db')
 pg_host = attribute('pg_host')
 
-control "V-72981" do
+control 'V-72981' do
   title "PostgreSQL must maintain the confidentiality and integrity of
   information during preparation for transmission."
-  desc  "Information can be either unintentionally or maliciously disclosed or
+  desc "Information can be either unintentionally or maliciously disclosed or
   modified during preparation for transmission, including, for example, during
   aggregation, at protocol transformation points, and during packing/unpacking.
   These unauthorized disclosures or modifications compromise the confidentiality
@@ -22,13 +20,13 @@ control "V-72981" do
   is misleading, this function enables only TLS encryption methods, not SSL.
   See OpenSSL: https://mta.openssl.org/pipermail/openssl-dev/2015-May/001449.htm."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000441-DB-000378"
-  tag "gid": "V-72981"
-  tag "rid": "SV-87633r1_rule"
-  tag "stig_id": "PGS9-00-007200"
-  tag "cci": ["CCI-002420"]
-  tag "nist": ["SC-8 (2)", "Rev_4"]
+
+  tag "gtitle": 'SRG-APP-000441-DB-000378'
+  tag "gid": 'V-72981'
+  tag "rid": 'SV-87633r1_rule'
+  tag "stig_id": 'PGS9-00-007200'
+  tag "cci": ['CCI-002420']
+  tag "nist": ['SC-8 (2)', 'Rev_4']
   tag "check": "If the data owner does not have a strict requirement for ensuring
   data integrity and confidentiality is maintained at every step of the data
   transfer and handling process, this is not a finding.
