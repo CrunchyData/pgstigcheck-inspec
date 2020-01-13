@@ -65,7 +65,7 @@ If pgaudit is not in the current setting, this is a finding.
 As the database administrator (shown here as \"postgres\"), check the current
 settings by running the following SQL:
 
-$ psql -c \"SHOW logging_destination\"
+$ psql -c \"SHOW log_destination\"
 
 If stderr or syslog are not in the current setting, this is a finding."
   tag "fix": "Configure PostgreSQL to enable auditing.

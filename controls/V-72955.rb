@@ -19,6 +19,12 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+
+PG_VER = attribute(
+  'pg_version',
+  description: "The version of the PostgreSQL process which is being inspected (tested)",
+)
+
 PG_DBA = attribute(
   'pg_dba',
   description: 'The postgres DBA user to access the test database',
@@ -69,16 +75,16 @@ control "V-72955" do
   All denials are logged if logging is enabled. To ensure that logging is
   enabled, review supplementary content APPENDIX-C for instructions on enabling
   logging.
-  With `pgaudit` installed the following configurations can be made:
+  With pgaudit installed the following configurations can be made:
   $ sudo su - postgres
   $ vi ${PGDATA?}/postgresql.conf
   Add the following parameters (or edit existing parameters):
   pgaudit.log = 'ddl, write, role'
   Now, as the system administrator, reload the server with the new configuration:
   # SYSTEMD SERVER ONLY
-  $ sudo systemctl reload postgresql-$9.5
+  $ sudo systemctl reload postgresql-${PG_VER}
   # INITD SERVER ONLY
-  $ sudo service postgresql-9.5 reload"
+  $ sudo service postgresql-${PG_VER} reload"
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 

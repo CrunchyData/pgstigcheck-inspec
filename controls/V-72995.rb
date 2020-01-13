@@ -75,6 +75,8 @@ here as \"postgres\"), run the following command:
 $ sudo su - postgres
 $ psql -c \"SELECT * FROM pg_available_extensions where name='pgcrypto'\"
 
+If security labeling is not required, this is not a finding.
+
 If data in the database requires encryption and pgcrypto is not available, this is a
 finding.
 
