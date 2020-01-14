@@ -12,8 +12,8 @@ Technology (NIST) 800-53 and related documents. Comments or proposed revisions
 to this document should be sent via email to the following address:
 disa.stig_spt@mail.mil.
 
-Release Date: 2017-01-20
-Version: 1
+Release Date: 2019-10-25
+Version: 6
 Publisher: DISA
 Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
@@ -76,16 +76,16 @@ PG_HOST = attribute(
     insert a value, alter the table and update the table by running the following
     SQL:
 
-    CREATE TABLE stig_test_table(id INT);
-    INSERT INTO stig_test_table(id) VALUES (0);
-    ALTER TABLE stig_test_table ADD COLUMN name text;
-    UPDATE stig_test_table SET id = 1 WHERE id = 0;
+    CREATE TABLE stig_test(id INT);
+    INSERT INTO stig_test(id) VALUES (0);
+    ALTER TABLE stig_test ADD COLUMN name text;
+    UPDATE stig_test SET id = 1 WHERE id = 0;
 
     Next, as a user without access to the stig_test table, run the following SQL:
 
-    INSERT INTO stig_test_table(id) VALUES (1);
-    ALTER TABLE stig_test_table DROP COLUMN name;
-    UPDATE stig_test_table SET id = 0 WHERE id = 1;
+    INSERT INTO stig_test(id) VALUES (1);
+    ALTER TABLE stig_test DROP COLUMN name;
+    UPDATE stig_test SET id = 0 WHERE id = 1;
 
     The prior SQL should generate errors:
 
@@ -96,7 +96,7 @@ PG_HOST = attribute(
     Now, as the database administrator, drop the test table by running the
     following SQL:
 
-    DROP TABLE stig_test_table;
+    DROP TABLE stig_test;
 
     Now verify the errors were logged:
 
@@ -141,6 +141,7 @@ PG_HOST = attribute(
     postgresql.conf, as the database administrator (shown here as \"postgres\"),
     to the following:
 
+    $ sudo su - postgres
     $ vi ${PGDATA?}/postgresql.conf
     pgaudit.log_catalog='on'
     pgaudit.log_level='log'
@@ -150,17 +151,18 @@ PG_HOST = attribute(
 
     Next, tune the following logging configurations in postgresql.conf:
 
-    $ sudo vi ${PGDATA?}/postgresql.conf
+    $ sudo su - postgres
+    $ vi ${PGDATA?}/postgresql.conf
     log_line_prefix = '%m %u %d %e : '
     log_error_verbosity = default
 
     Last, as the system administrator, restart PostgreSQL:
 
-    # SERVER USING SYSTEMCTL ONLY
-    $ sudo systemctl restart postgresql-9.5
+    # SYSTEMD SERVER ONLY
+    $ sudo systemctl restart postgresql-${PGVER?}
 
-    # SERVER USING INITD ONLY
-    $ sudo service postgresql-9.5 restart"
+    # INITD SERVER ONLY
+    $ sudo service postgresql-${PGVER?} reload"
 
   # @FIXME related to Issue#1
 
@@ -183,6 +185,10 @@ PG_HOST = attribute(
 
     describe admin_sql.query('ALTER TABLE stig_test ADD COLUMN name text;', [PG_DB]) do
       its('output') { should eq 'ALTER TABLE' }
+    end
+
+    describe admin_sql.query('UPDATE stig_test SET id = 1 WHERE id = 0;', [PG_DB]) do
+      its('output') { should eq 'UPDATE 1' }
     end
 
     describe admin_sql.query('show pgaudit.log_catalog') do
@@ -209,7 +215,15 @@ PG_HOST = attribute(
       its('output') { should eq 'CREATE ROLE' }
     end
 
-    describe admin_sql.query('SET ROLE foostigtest; UPDATE stig_test SET id = 1 WHERE id = 0;', [PG_DB]) do
+    describe admin_sql.query('SET ROLE foostigtest; INSERT INTO stig_test(id) VALUES (1);', [PG_DB]) do
+      its('output') { should match /ERROR:  permission denied for relation stig_test/ }
+    end
+
+    describe admin_sql.query('SET ROLE foostigtest; ALTER TABLE stig_test DROP COLUMN name;', [PG_DB]) do
+      its('output') { should match /ERROR:  must be owner of relation stig_test/ }
+    end
+    
+    describe admin_sql.query('SET ROLE foostigtest; UPDATE stig_test SET id = 0 WHERE id = 1;', [PG_DB]) do
       its('output') { should match /ERROR:  permission denied for relation stig_test/ }
     end
 
