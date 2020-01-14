@@ -19,6 +19,33 @@ Source: STIG.DOD.MIL
 uri: http://iase.disa.mil
 -----------------
 =end
+PG_CONF_FILE= attribute(
+  'pg_conf_file',
+  description: 'define path for the postgresql configuration file',
+  default: '/var/lib/pgsql/9.5/data/postgresql.conf'
+)
+
+PG_DBA = attribute(
+  'pg_dba',
+  description: 'The postgres DBA user to access the test database',
+)
+
+PG_DBA_PASSWORD = attribute(
+  'pg_dba_password',
+  description: 'The password for the postgres DBA user',
+)
+
+PG_DB = attribute(
+  'pg_db',
+  description: 'The database used for tests',
+)
+
+PG_HOST = attribute(
+  'pg_host',
+  description: 'The hostname or IP address used to connect to the database',
+)
+
+
 
 control "V-72951" do
   title "PostgreSQL must generate audit records when unsuccessful accesses to
@@ -94,5 +121,68 @@ control "V-72951" do
   All errors and denials are logged if logging is enabled. To ensure that
   logging is enabled, review supplementary content APPENDIX-C for instructions
   on enabling logging."
+
+  
+  admin_sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+
+    describe admin_sql.query('DROP TABLE IF EXISTS test_schema.test_table;', [PG_DB]) do
+      its('output') { should eq 'DROP TABLE' }
+    end
+
+    describe admin_sql.query('DROP SCHEMA IF EXISTS test_schema;', [PG_DB]) do
+      its('output') { should eq 'DROP SCHEMA' }
+    end
+
+    describe admin_sql.query('CREATE SCHEMA test_schema;', [PG_DB]) do
+      its('output') { should eq 'CREATE SCHEMA' }
+    end
+
+    describe admin_sql.query('CREATE TABLE test_schema.test_table;', [PG_DB]) do
+      its('output') { should eq 'CREATE TABLE' }
+    end
+    
+    describe admin_sql.query('INSERT INTO test_schema.test_table(id) VALUES (0);', [PG_DB]) do
+      its('output') { should eq 'INSERT 0 1' }
+    end
+
+    describe admin_sql.query('CREATE ROLE bob;', [PG_DB]) do
+      its('output') { should eq 'CREATE ROLE' }
+    end
+
+    describe admin_sql.query('SET ROLE bob; SELECT * FROM test_schema.test_table;', [PG_DB]) do
+      its('output') { should match /ERROR:  permission denied for schema test_schema/ }
+    end
+
+    describe admin_sql.query('SET ROLE bob; INSERT INTO test_schema.test_table VALUES (0);', [PG_DB]) do
+      its('output') { should match /ERROR:  permission denied for schema test_schema/ }
+    end
+
+    describe admin_sql.query('SET ROLE bob; UPDATE test_schema.test_table SET id = 1 WHERE id = 0;', [PG_DB]) do
+      its('output') { should match /ERROR:  permission denied for schema test_schema/ }
+    end
+
+    describe admin_sql.query('SET ROLE bob; DROP TABLE test_schema.test_table;', [PG_DB]) do
+      its('output') { should match /ERROR:  permission denied for schema test_schema/ }
+    end
+
+    describe admin_sql.query('SET ROLE bob; DROP SCHEMA test_schema;', [PG_DB]) do
+      its('output') { should match /ERROR:  permission denied for schema test_schema/ }
+    end
+
+    describe command('grep "SELECT \* FROM test_schema.test_table" "$(find ${PGDATA?}/pg_log -type f -printf "%T@ %p\0" | sort -rz | sed -Ezn "1s/[^ ]* //p")"') do
+      its('exit_status') { should eq 0 }
+    end
+
+    describe command('grep "INSERT INTO test_schema.test_table VALUES (0)" "$(find ${PGDATA?}/pg_log -type f -printf "%T@ %p\0" | sort -rz | sed -Ezn "1s/[^ ]* //p")"') do
+      its('exit_status') { should eq 0 }
+    end
+
+    describe command('grep "UPDATE test_schema.test_table SET id = 1 WHERE id = 0" "$(find ${PGDATA?}/pg_log -type f -printf "%T@ %p\0" | sort -rz | sed -Ezn "1s/[^ ]* //p")"') do
+      its('exit_status') { should eq 0 }
+    end
+
+    describe command('grep "DROP TABLE test_schema.test_table" "$(find ${PGDATA?}/pg_log -type f -printf "%T@ %p\0" | sort -rz | sed -Ezn "1s/[^ ]* //p")"') do
+      its('exit_status') { should eq 0 }
+    end
 
 end
