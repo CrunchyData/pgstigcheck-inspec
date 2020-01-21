@@ -48,7 +48,7 @@ pg_log_dest: 'syslog'
 pg_syslog_facility: ['local0']
 pg_syslog_owner: 'postgres'
 
-pg_audit_log_dir: "/var/lib/pgsql/9.5/data/pg_log"
+pg_audit_log_dir: "/var/lib/pgsql/data/pg_log"
 pgaudit_log_items: ['ddl','role','read','write']
 pgaudit_log_line_items: ['%m','%u','%c']
 

@@ -1,136 +1,129 @@
-# encoding: utf-8
-#
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
+pg_ver = input('pg_version')
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
+pg_dba = input('pg_dba')
 
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+pg_dba_password = input('pg_dba_password')
 
-PG_VER = attribute(
-  'pg_version',
-  description: "The version of the PostgreSQL process which is being inspected (tested)",
-)
+pg_db = input('pg_db')
 
-PG_DBA = attribute(
-  'pg_dba',
-  description: 'The postgres DBA user to access the test database',
-)
+pg_host = input('pg_host')
 
-PG_DBA_PASSWORD = attribute(
-  'pg_dba_password',
-  description: 'The password for the postgres DBA user',
-)
+pg_data_dir = input('pg_data_dir')
 
-PG_DB = attribute(
-  'pg_db',
-  description: 'The database used for tests',
-)
-
-PG_HOST = attribute(
-  'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
-)
-
-PG_DATA_DIR = attribute(
-  'pg_data_dir',
-  description: 'The postgres data directory',
-)
-
-PG_HBA_CONF_FILE = attribute(
-  'pg_hba_conf_file',
-  description: 'The postgres hba configuration file',
-)
+pg_hba_conf_file = input('pg_hba_conf_file')
 
 control "V-72979" do
   title "PostgreSQL, when utilizing PKI-based authentication, must validate
   certificates by performing RFC 5280-compliant certification path validation."
   desc  "The DoD standard for authentication is DoD-approved PKI certificates.
-  A certificate’s certification path is the path from the end entity certificate
-  to a trusted root certification authority (CA). Certification path validation
-  is necessary for a relying party to make an informed decision regarding
-  acceptance of an end entity certificate. Certification path validation
-  includes checks such as certificate issuer trust, time validity and revocation
-  status for each certificate in the certification path. Revocation status
-  information for CA and subject certificates in a certification path is
-  commonly provided via certificate revocation lists (CRLs) or online
-  certificate status protocol (OCSP) responses.
+
+  A certificate’s certification path is the path from the end entity
+  certificate to a trusted root certification authority (CA). Certification path
+  validation is necessary for a relying party to make an informed decision
+  regarding acceptance of an end entity certificate. Certification path
+  validation includes checks such as certificate issuer trust, time validity and
+  revocation status for each certificate in the certification path. Revocation
+  status information for CA and subject certificates in a certification path is
+  commonly provided via certificate revocation lists (CRLs) or online certificate
+  status protocol (OCSP) responses.
+
   Database Management Systems that do not validate certificates by performing
   RFC 5280-compliant certification path validation are in danger of accepting
   certificates that are invalid and/or counterfeit. This could allow unauthorized
   access to the database."
+
   impact 0.5
   tag "severity": "medium"
   tag "gtitle": "SRG-APP-000175-DB-000067"
   tag "gid": "V-72979"
-  tag "rid": "SV-87631r1_rule"
+  tag "rid": "SV-87631r2_rule"
   tag "stig_id": "PGS9-00-007000"
+  tag "fix_id": "F-79425r6_fix"
   tag "cci": ["CCI-000185"]
   tag "nist": ["IA-5 (2) (a)", "Rev_4"]
-  tag "check": "Note: The following instructions use the PGDATA environment
+  tag "false_negatives": nil
+  tag "false_positives": nil
+  tag "documentable": false
+  tag "mitigations": nil
+  tag "severity_override_guidance": false
+  tag "potential_impacts": nil
+  tag "third_party_tools": nil
+  tag "mitigation_controls": nil
+  tag "responsibility": nil
+  tag "ia_controls": nil
+  desc "check", "Note: The following instructions use the PGDATA environment
   variable. See supplementary content APPENDIX-F for instructions on configuring
-  PGDATA.
+  PGDATA. 
+
   To verify that a CRL file exists, as the database administrator (shown here as
-  \"postgres\"), run the following:
-  $ sudo su - postgres
-  $ psql -c \"SHOW ssl_crl_file\" If this is not set to a CRL file, this is a finding.
+  \"postgres\"), run the following: 
+
+  $ sudo su - postgres 
+  $ psql -c \"SHOW ssl_crl_file\" 
+
+  If this is not set to a CRL file, this is a finding. 
+
   Next verify the existence of the CRL file by checking the directory set in
-  postgresql.conf in the ssl_crl_file parameter from above:
+  postgresql.conf in the ssl_crl_file parameter from above: 
+
   Note: If no directory is specified, then the CRL file should be located in the
-  same directory as postgresql.conf (PGDATA).
-  If the CRL file does not exist, this is a finding.
+  same directory as postgresql.conf (PGDATA). 
+
+  If the CRL file does not exist, this is a finding. 
+
   Next, verify that hostssl entries in pg_hba.conf have \"cert\" and
-  \"clientcert=1\" enabled:
-  $ sudo su - postgres
-  $ grep hostssl ${PGDATA?}/pg_hba.conf
-  If hostssl entries does not contain cert or clientcert=1, this is a finding.
+  \"clientcert=1\" enabled: 
+
+  $ sudo su - postgres 
+  $ grep hostssl ${PGDATA?}/pg_hba.conf 
+
+  If hostssl entries do not contain cert or clientcert=1, this is a finding. 
+
   If certificates are not being validated by performing RFC 5280-compliant
   certification path validation, this is a finding."
-  tag "fix": "Note: The following instructions use the PGDATA environment
-  variable. See supplementary content APPENDIX-F for instructions on configuring
-  PGDATA.
-  To configure PostgreSQL to use SSL, see supplementary content APPENDIX-G.
+  
+  desc "fix", "Note: The following instructions use the PGDATA and PGVER
+  environment variables. See supplementary content APPENDIX-F for instructions on
+  configuring PGDATA and APPENDIX-H for PGVER.
+
+  To configure PostgreSQL to use SSL, see supplementary content APPENDIX-G. 
+
   To generate a Certificate Revocation List, see the official Red Hat
   Documentation:
-  https://access.redhat.com/documentation/en-US/Red_Hat_Update_Infrastructure/
-  2.1/html/Administration_Guide/chap-Red_Hat_Update_Infrastructure-
-  Administration_Guide-Certification_Revocation_List_CRL.html
+  https://access.redhat.com/documentation/en-US/Red_Hat_Update_Infrastructure/2.1/html/Administration_Guide/chap-Red_Hat_Update_Infrastructure-Administration_Guide-Certification_Revocation_List_CRL.html 
+
   As the database administrator (shown here as \"postgres\"), copy the CRL file
-  into the data directory:
+  into the data directory: 
+
   First, as the system administrator, copy the CRL file into the PostgreSQL Data
-  Directory:
-  $ sudo cp root.crl ${PGDATA?}/root.crl
+  Directory: 
+
+  $ sudo cp root.crl ${PGDATA?}/root.crl 
+
   As the database administrator (shown here as \"postgres\"), set the
-  ssl_crl_file parameter to the filename of the CRL:
-  $ sudo su - postgres
-  $ vi ${PGDATA?}/postgresql.conf
-  ssl_crl_file = 'root.crl'
-  Next, in pg_hba.conf, require ssl authentication:
-  $ sudo su - postgres
-  $ vi ${PGDATA?}/pg_hba.conf
-  hostssl <database> <user> <address> cert clientcert=1
-  Now, as the system administrator, reload the server with the new configuration:
-  # SYSTEMD SERVER ONLY
-  $ sudo systemctl reload postgresql-${PG_VER}
-  # INITD SERVER ONLY
-  $ sudo service postgresql-${PG_VER} reload"
+  ssl_crl_file parameter to the filename of the CRL: 
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  $ sudo su - postgres 
+  $ vi ${PGDATA?}/postgresql.conf 
+  ssl_crl_file = 'root.crl' 
 
-  ssl_crl_file_query = sql.query('SHOW ssl_crl_file;', [PG_DB])
+  Next, in pg_hba.conf, require ssl authentication: 
+
+  $ sudo su - postgres 
+  $ vi ${PGDATA?}/pg_hba.conf 
+  hostssl <database> <user> <address> cert clientcert=1 
+
+  Now, as the system administrator, reload the server with the new configuration: 
+
+  # SYSTEMD SERVER ONLY 
+  $ sudo systemctl reload postgresql-${PGVER?}
+
+  # INITD SERVER ONLY 
+  $ sudo service postgresql-${PGVER?} reload"
+
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
+
+  ssl_crl_file_query = sql.query('SHOW ssl_crl_file;', [pg_db])
 
   describe ssl_crl_file_query do
     its('output') { should match /^\w+\.crl$/ }
@@ -139,9 +132,9 @@ control "V-72979" do
   ssl_crl_file = ssl_crl_file_query.output
 
   if ssl_crl_file.empty?
-    ssl_crl_file = "#{PG_DATA_DIR}/root.crl"
+    ssl_crl_file = "#{pg_data_dir}/root.crl"
   elsif File.dirname(ssl_crl_file) == '.'
-    ssl_crl_file = "#{PG_DATA_DIR}/#{ssl_crl_file}"
+    ssl_crl_file = "#{pg_data_dir}/#{ssl_crl_file}"
   end
 
   describe file(ssl_crl_file) do
@@ -149,10 +142,10 @@ control "V-72979" do
   end
 
   describe.one do
-    describe postgres_hba_conf(PG_HBA_CONF_FILE).where { type == 'hostssl' } do
+    describe postgres_hba_conf(pg_hba_conf_file).where { type == 'hostssl' } do
       its('auth_method') { should include 'cert' }
     end
-    describe postgres_hba_conf(PG_HBA_CONF_FILE).where { type == 'hostssl' } do
+    describe postgres_hba_conf(pg_hba_conf_file).where { type == 'hostssl' } do
       its('auth_params') { should match [/clientcert=1.*/] }
     end
   end
