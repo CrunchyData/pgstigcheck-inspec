@@ -1,6 +1,10 @@
 pg_conf_file= input('pg_conf_file')
 
-log_line_prefix = input('log_line_prefix')
+log_line_prefix = input(
+  'log_line_prefix',
+  description: "The required log line elemets per the organizational guidance",
+  value: ['%m','%u','%d','%s']
+)
 
 pg_host = input('pg_host')
 
@@ -15,7 +19,7 @@ pg_db = input('pg_db')
 approved_ext = input(
   'approved_ext',
   description: "the list of approaved postgresql extensions that the database may enable",
-  default: ['pgcrypto']
+  value: ['pgcrypto']
 )
 
 control "V-73007" do

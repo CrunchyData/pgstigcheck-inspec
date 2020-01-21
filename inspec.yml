@@ -74,7 +74,7 @@ inputs:
 
   - name: pg_port
     description: "The port used to connect to the database"
-    type: number
+    type: numeric
     value: <%= ENV['PG_PORT'] %>
     required: true
 
@@ -147,6 +147,12 @@ inputs:
     value: "/var/lib/pgsql/9.5/data/pg_ident.conf"
     required: true
 
+  - name: pg_log_dir
+    description: "The location of the postgres log files on the system"
+    type: string
+    value: "/var/lib/pgsql/9.5/data/pg_log"
+    required: true
+
   - name: pg_object_granted_privileges
     description: "Privileges that should be granted to a role for a database object"
     type: string
@@ -192,6 +198,12 @@ inputs:
     description: "The logging system that postgres should ship logs to (syslog)"
     type: string
     value: "syslog"
+    required: true
+
+  - name: pg_audit_log_dir
+    description: "The location of the postgres audit log files on the system"
+    type: string
+    value: "var/lib/pgsql/9.5/data/pg_log"
     required: true
 
   - name: pgaudit_log_items

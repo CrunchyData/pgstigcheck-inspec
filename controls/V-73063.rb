@@ -22,7 +22,7 @@ pg_superusers = input('pg_superusers')
 
 pg_version = input('pg_version')
 
-pg_shared_dirs = input('pg_shared_dirs'
+pg_shared_dirs = input('pg_shared_dirs')
 
 control "V-73063" do
   title "PostgreSQL must use NIST FIPS 140-2 validated cryptographic modules
