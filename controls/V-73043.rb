@@ -2,14 +2,14 @@ pg_owner = input('pg_owner')
 
 pg_group = input('pg_owner')
 
-pg_ver = input('pg_ver')
+pg_ver = input('pg_version')
 
 pg_data_dir = input('pg_data_dir')
 
 pg_shared_dirs = input(
   'pg_shared_dirs',
   description: 'the postgres shared_libraries directories',
-  default: [
+  value: [
     "/usr/pgsql-#{postgres.version}",
     "/usr/pgsql-#{postgres.version}/bin",
     "/usr/pgsql-#{postgres.version}/include",

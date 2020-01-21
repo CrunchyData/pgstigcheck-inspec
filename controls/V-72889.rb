@@ -16,7 +16,11 @@ pg_host = input('pg_host')
 
 pg_conf_file = input('pg_conf_file')
 
-client_min_mesg = input('client_min_mesg')
+client_min_mesg = input(
+  'client_min_mesg',
+  description: 'the requried value of "client_min_messages" setting',
+  value: 'error'
+)
 
 only_if do
   command('psql').exist?

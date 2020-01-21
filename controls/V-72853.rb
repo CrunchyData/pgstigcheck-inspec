@@ -1,12 +1,12 @@
 pg_owner = input('pg_owner')
 
-pg_ver = input('pg_ver')
+pg_ver = input('pg_version')
 
 pg_data_dir = input('pg_data_dir')
 
 PG_SHARED_LIBS = input(
   'pg_shared_libs',
-  default: [
+  value: [
     "/usr/pgsql-#{pg_ver}",
     "/usr/pgsql-#{pg_ver}/bin",
     "/usr/pgsql-#{pg_ver}/include",

@@ -1,32 +1,14 @@
-pg_ver = input(
-  'pg_version',
-  description: "The version of the PostgreSQL process which is being inspected (tested)",
-)
+pg_ver = input('pg_version')
 
-pg_dba = input(
-  'pg_dba',
-  description: 'The postgres DBA user to access the test database',
-)
+pg_dba = input('pg_dba')
 
-pg_dba_password = input(
-  'pg_dba_password',
-  description: 'The password for the postgres DBA user',
-)
+pg_dba_password = input('pg_dba_password')
 
-pg_db = input(
-  'pg_db',
-  description: 'The database used for tests',
-)
+pg_db = input('pg_db')
 
-pg_host = input(
-  'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
-)
+pg_host = input('pg_host')
 
-pg_timezone = input(
-  'pg_timezone',
-  description: 'PostgreSQL timezone',
-)
+pg_timezone = input('pg_timezone')
 
 control "V-72887" do
   title "PostgreSQL must record time stamps, in audit records and application
