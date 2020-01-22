@@ -8,6 +8,8 @@ pg_db = input('pg_db')
 
 pg_host = input('pg_host')
 
+pg_log_dir = input('pg_log_dir')
+
 control "V-72951" do
   title "PostgreSQL must generate audit records when unsuccessful accesses to
   objects occur."
@@ -157,19 +159,19 @@ control "V-72951" do
       its('output') { should match /ERROR:  permission denied for schema test_schema/ }
     end
 
-    describe command('grep "SELECT \* FROM test_schema.test_table" "$(find ${PGDATA?}/pg_log -type f -printf "%T@ %p\0" | sort -rz | sed -Ezn "1s/[^ ]* //p")"') do
+    describe command("grep 'SELECT \* FROM test_schema.test_table' $(find '#{pg_log_dir}' -type f -printf '%T@ %p\0' | sort -rz | sed -Ezn '1s/[^ ]* //p')") do
       its('exit_status') { should eq 0 }
     end
 
-    describe command('grep "INSERT INTO test_schema.test_table VALUES (0)" "$(find ${PGDATA?}/pg_log -type f -printf "%T@ %p\0" | sort -rz | sed -Ezn "1s/[^ ]* //p")"') do
+    describe command("grep 'INSERT INTO test_schema.test_table VALUES (0)' $(find '#{pg_log_dir}' -type f -printf '%T@ %p\0' | sort -rz | sed -Ezn '1s/[^ ]* //p')") do
       its('exit_status') { should eq 0 }
     end
 
-    describe command('grep "UPDATE test_schema.test_table SET id = 1 WHERE id = 0" "$(find ${PGDATA?}/pg_log -type f -printf "%T@ %p\0" | sort -rz | sed -Ezn "1s/[^ ]* //p")"') do
+    describe command("grep 'UPDATE test_schema.test_table SET id = 1 WHERE id = 0' $(find '#{pg_log_dir}' -type f -printf '%T@ %p\0' | sort -rz | sed -Ezn '1s/[^ ]* //p')") do
       its('exit_status') { should eq 0 }
     end
 
-    describe command('grep "DROP TABLE test_schema.test_table" "$(find ${PGDATA?}/pg_log -type f -printf "%T@ %p\0" | sort -rz | sed -Ezn "1s/[^ ]* //p")"') do
+    describe command("grep 'DROP TABLE test_schema.test_table' '$(find '#{pg_log_dir}' -type f -printf '%T@ %p\0' | sort -rz | sed -Ezn '1s/[^ ]* //p')") do
       its('exit_status') { should eq 0 }
     end
 
