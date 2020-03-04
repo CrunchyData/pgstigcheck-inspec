@@ -214,31 +214,31 @@ pg_timezone: "UTC"
 **Note**: replace the profile's directory name - e.g. - `pgstigcheck-inspec` with `.` if you are in the profile's root directory.
 
 ```sh
-inspec exec pgstigcheck-inspec/controls/V-72845.rb --attrs attributes.mysystem.yml -i <your ssh private key> -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
+inspec exec pgstigcheck-inspec/controls/V-72845.rb --input-files=attributes.mysystem.yml -i <your ssh private key> -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
 ```
 
 or use the `--controls` flag
 
 ```sh
-inspec exec pgstigcheck-inspec --controls=V-72845 V-72861 --attrs attributes.mysystem.yml  -i <your ssh private key>  -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
+inspec exec pgstigcheck-inspec --controls=V-72845 V-72861 --input-file=attributes.mysystem.yml  -i <your ssh private key>  -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
 ```
 
 #### Execute a Single Control and save results as HTML
 
 ```sh
-inspec exec pgstigcheck-inspec --controls=V-72845 --attrs attributes.mysystem.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> --reporter cli html:myresults.html
+inspec exec pgstigcheck-inspec --controls=V-72845 --input-file=attributes.mysystem.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> --reporter cli html:myresults.html
 ```
 
 #### Execute All Controls in the Profile
 
 ```sh
-inspec exec pgstigcheck-inspec --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres"  -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
+inspec exec pgstigcheck-inspec --input-file=attributes.yml -i <your ssh private key> --sudo --sudo-password=<sudo user password> --sudo-options="-u postgres"  -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
 ```
 
 #### Execute all the Controls in the Profile and save results as HTML
 
 ```sh
-inspec exec pgstigcheck-inspec --attrs attributes.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> --reporter cli html:myresults.html
+inspec exec pgstigcheck-inspec --input-files=attributes.yml -i <your ssh private key> --sudo --sudo-password=<sudo user password> --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> --reporter cli html:myresults.html
 ```
 
 ### Reviewing your results
