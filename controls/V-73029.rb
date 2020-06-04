@@ -1,132 +1,116 @@
-# encoding: utf-8
-#
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
+pg_ver = input('pg_version')
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
+pg_owner = input('pg_owner')
 
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-PG_OWNER = attribute(
-  'pg_owner',
-  description: "The system user of the postgres process",
-)
+pg_dba = input('pg_dba')
 
-PG_DBA = attribute(
-  'pg_dba',
-  description: 'The postgres DBA user to access the test database',
-)
+pg_dba_password = input('pg_dba_password')
 
-PG_DBA_PASSWORD = attribute(
-  'pg_dba_password',
-  description: 'The password for the postgres DBA user',
-)
+pg_db = input('pg_db')
 
-PG_DB = attribute(
-  'pg_db',
-  description: 'The database used for tests',
-)
+pg_host = input('pg_host')
 
-PG_HOST = attribute(
-  'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
-)
-
-PG_DATA_DIR = attribute(
-  'pg_data_dir',
-  description: 'The postgres data directory',
-)
+pg_data_dir = input('pg_data_dir')
 
 control "V-73029" do
   title "PostgreSQL must enforce authorized access to all PKI private keys
-stored/utilized by PostgreSQL."
-  desc  "The DoD standard for authentication is DoD-approved PKI certificates. PKI
-certificate-based authentication is performed by requiring the certificate holder to
-cryptographically prove possession of the corresponding private key.
+  stored/utilized by PostgreSQL."
+  desc  "The DoD standard for authentication is DoD-approved PKI certificates.
+  PKI certificate-based authentication is performed by requiring the certificate
+  holder to cryptographically prove possession of the corresponding private key.
 
-If the private key is stolen, an attacker can use the private key(s) to impersonate
-the certificate holder. In cases where PostgreSQL-stored private keys are used to
-authenticate PostgreSQL to the system’s clients, loss of the corresponding private
-keys would allow an attacker to successfully perform undetected man-in-the-middle
-attacks against PostgreSQL system and its clients.
+  If the private key is stolen, an attacker can use the private key(s) to
+  impersonate the certificate holder. In cases where PostgreSQL-stored private
+  keys are used to authenticate PostgreSQL to the system’s clients, loss of the
+  corresponding private keys would allow an attacker to successfully perform
+  undetected man-in-the-middle attacks against PostgreSQL system and its clients.
 
-Both the holder of a digital certificate and the issuing authority must take careful
-measures to protect the corresponding private key. Private keys should always be
-generated and protected in FIPS 140-2 validated cryptographic modules.
+  Both the holder of a digital certificate and the issuing authority must
+  take careful measures to protect the corresponding private key. Private keys
+  should always be generated and protected in FIPS 140-2 validated cryptographic
+  modules.
 
-All access to the private key(s) of PostgreSQL must be restricted to authorized and
-authenticated users. If unauthorized users have access to one or more of
-PostgreSQL's private keys, an attacker could gain access to the key(s) and use them
-to impersonate the database on the network or otherwise perform unauthorized
-actions."
+  All access to the private key(s) of PostgreSQL must be restricted to
+  authorized and authenticated users. If unauthorized users have access to one or
+  more of PostgreSQL's private keys, an attacker could gain access to the key(s)
+  and use them to impersonate the database on the network or otherwise perform
+  unauthorized actions."
+
   impact 0.7
   tag "severity": "high"
   tag "gtitle": "SRG-APP-000176-DB-000068"
   tag "gid": "V-73029"
-  tag "rid": "SV-87681r1_rule"
+  tag "rid": "SV-87681r2_rule"
   tag "stig_id": "PGS9-00-010200"
+  tag "fix_id": "F-79475r5_fix"
   tag "cci": ["CCI-000186"]
   tag "nist": ["IA-5 (2) (b)", "Rev_4"]
-  tag "check": "First, as the database administrator (shown here as \"postgres\"),
-verify the following settings:
+  tag "false_negatives": nil
+  tag "false_positives": nil
+  tag "documentable": false
+  tag "mitigations": nil
+  tag "severity_override_guidance": false
+  tag "potential_impacts": nil
+  tag "third_party_tools": nil
+  tag "mitigation_controls": nil
+  tag "responsibility": nil
+  tag "ia_controls": nil
+  desc "check", "First, as the database administrator (shown here as
+  \"postgres\"), verify the following settings:
 
-Note: If no specific directory given before the name, the files are stored in
-PGDATA.
+  Note: If no specific directory given before the filename, the files are stored
+  in PGDATA.
 
-$ sudo su - postgres
-$ psql -c \"SHOW ssl_ca_file\"
-$ psql -c \"SHOW ssl_cert_file\"
-$ psql -c \"SHOW ssl_crl_file\"
-$ psql -c \"SHOW ssl_key_file\"
+  $ sudo su - postgres
+  $ psql -c \"SHOW ssl_ca_file\"
+  $ psql -c \"SHOW ssl_cert_file\"
+  $ psql -c \"SHOW ssl_crl_file\"
+  $ psql -c \"SHOW ssl_key_file\"
 
-If the directory these files are stored in is not protected, this is a finding."
-  tag "fix": "Store all PostgreSQL PKI private keys in a FIPS 140-2 validated
-cryptographic module. Ensure access to PostgreSQL PKI private keys is restricted to
-only authenticated and authorized users.
+  If the directory these files are stored in is not protected, this is a finding."
+  
+  desc "fix", "Note: The following instructions use the PGDATA and PGVER
+  environment variables. See supplementary content APPENDIX-F for instructions on
+  configuring PGDATA and APPENDIX-H for PGVER.
 
-PostgreSQL private key(s) can be stored in $PGDATA directory, which is only
-accessible by the database owner (usually postgres, DBA) user. Do not allow access
-to this system account to unauthorized users.
+  Store all PostgreSQL PKI private keys in a FIPS 140-2-validated cryptographic
+  module.
 
-To put the keys in a different directory, as the database administrator (shown here
-as \"postgres\"), set the following settings to a protected directory:
+  Ensure access to PostgreSQL PKI private keys is restricted to only
+  authenticated and authorized users. 
 
-$ sudo su - postgres
-$ vi ${PGDATA?}/postgresql.conf
-ssl_ca_file = \"/some/protected/directory/root.crt\"
-ssl_crl_file = \"/some/protected/directory/root.crl\"
-ssl_cert_file = \"/some/protected/directory/server.crt\"
-ssl_key_file = \"/some/protected/directory/server.key\"
+  PostgreSQL private key(s) can be stored in $PGDATA directory, which is only
+  accessible by the database owner (usually postgres, DBA) user. Do not allow
+  access to this system account to unauthorized users. 
 
-Now, as the system administrator, restart the server with the new configuration:
+  To put the keys in a different directory, as the database administrator (shown
+  here as \"postgres\"), set the following settings to a protected directory: 
 
-# SYSTEMD SERVER ONLY
-$ sudo systemctl restartpostgresql-9.5
+  $ sudo su - postgres 
+  $ vi ${PGDATA?}/postgresql.conf 
+  ssl_ca_file = \"/some/protected/directory/root.crt\" 
+  ssl_crl_file = \"/some/protected/directory/root.crl\" 
+  ssl_cert_file = \"/some/protected/directory/server.crt\" 
+  ssl_key_file = \"/some/protected/directory/server.key\" 
 
-# INITD SERVER ONLY
-$ sudo service postgresql-9.5 restart
+  Now, as the system administrator, restart the server with the new
+  configuration: 
 
-For more information on configuring PostgreSQL to use SSL, see supplementary content
-APPENDIX-G."
+  # SYSTEMD SERVER ONLY 
+  $ sudo systemctl restart postgresql-${PGVER?}
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  # INITD SERVER ONLY 
+  $ sudo service postgresql-${PGVER?} restart 
+
+  For more information on configuring PostgreSQL to use SSL, see supplementary
+  content APPENDIX-G."
+
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
   settings = %w(ssl_cert_file ssl_key_file ssl_ca_file ssl_crl_file)
 
   settings.each do |setting|
-    file_query = sql.query("SHOW #{setting};", [PG_DB])
+    file_query = sql.query("SHOW #{setting};", [pg_db])
     file = file_query.output
 
     if file.empty?
@@ -148,9 +132,9 @@ APPENDIX-G."
         ext = 'crl'
       end
 
-      file = "#{PG_DATA_DIR}/#{name}.#{ext}"
+      file = "#{pg_data_dir}/#{name}.#{ext}"
     elsif File.dirname(file) == '.'
-      file = "#{PG_DATA_DIR}/#{file}"
+      file = "#{pg_data_dir}/#{file}"
     end
 
     describe file(file) do
@@ -160,7 +144,7 @@ APPENDIX-G."
     directory = File.dirname(file)
 
     describe directory(directory) do
-      its('owner') { should match /root|#{PG_OWNER}/ }
+      its('owner') { should match /root|#{pg_owner}/ }
       its('mode') { should cmp '0700' }
     end
   end

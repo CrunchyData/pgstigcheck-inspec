@@ -1,136 +1,108 @@
-# encoding: utf-8
-#
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
+pg_dba = input('pg_dba')
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
+pg_dba_password = input('pg_dba_password')
 
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-PG_DBA = attribute(
-  'pg_dba',
-  description: 'The postgres DBA user to access the test database',
-)
+pg_db = input('pg_db')
 
-PG_DBA_PASSWORD = attribute(
-  'pg_dba_password',
-  description: 'The password for the postgres DBA user',
-)
+pg_host = input('pg_host')
 
-PG_DB = attribute(
-  'pg_db',
-  description: 'The database used for tests',
-)
+pg_data_dir = input('pg_data_dir')
 
-PG_HOST = attribute(
-  'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
-)
-
-PG_DATA_DIR = attribute(
-  'pg_data_dir',
-  description: 'The postgres data directory',
-)
-
-PG_CONF_FILE = attribute(
-  'pg_conf_file',
-  description: 'The postgres configuration file',
-)
+pg_conf_file = input('pg_conf_file')
 
 control "V-73061" do
   title "PostgreSQL must protect its audit configuration from unauthorized
-        modification."
-  desc  "Protecting audit data also includes identifying and protecting the tools
-        used to view and manipulate log data. Therefore, protecting audit tools
-        is necessary to prevent unauthorized operation on audit data.
+  modification."
+  desc  "Protecting audit data also includes identifying and protecting the
+  tools used to view and manipulate log data. Therefore, protecting audit tools
+  is necessary to prevent unauthorized operation on audit data.
 
-        Applications providing tools to interface with audit data will leverage
-        user permissions and roles identifying the user accessing the tools and
-        the corresponding rights the user enjoys in order make access decisions
-        regarding the modification of audit tools.
+  Applications providing tools to interface with audit data will leverage
+  user permissions and roles identifying the user accessing the tools and the
+  corresponding rights the user enjoys in order make access decisions regarding
+  the modification of audit tools.
 
-        Audit tools include, but are not limited to, vendor-provided and open source
-        audit tools needed to successfully view and manipulate audit information
-        system activity and records. Audit tools include custom queries and
-        report generators."
+  udit tools include, but are not limited to, vendor-provided and open
+  source audit tools needed to successfully view and manipulate audit information
+  system activity and records. Audit tools include custom queries and report
+  generators."
+
   impact 0.5
   tag "severity": "medium"
-
   tag "gtitle": "SRG-APP-000122-DB-000203"
   tag "gid": "V-73061"
   tag "rid": "SV-87713r1_rule"
   tag "stig_id": "PGS9-00-012200"
+  tag "fix_id": "F-79507r1_fix"
   tag "cci": ["CCI-001494"]
   tag "nist": ["AU-9", "Rev_4"]
+  tag "false_negatives": nil
+  tag "false_positives": nil
+  tag "documentable": false
+  tag "mitigations": nil
+  tag "severity_override_guidance": false
+  tag "potential_impacts": nil
+  tag "third_party_tools": nil
+  tag "mitigation_controls": nil
+  tag "responsibility": nil
+  tag "ia_controls": nil
+  desc "check", "All configurations for auditing and logging can be found in the
+  postgresql.conf configuration file. By default, this file is owned by the
+  database administrator account.
 
-  tag "check": "All configurations for auditing and logging can be found in the
-      postgresql.conf configuration file. By default, this file is owned by the
-      database administrator account.
+  To check that the permissions of the postgresql.conf are owned by the database
+  administrator with permissions of 0600, run the following as the database
+  administrator (shown here as \"postgres\"):
 
-      To check that the permissions of the postgresql.conf are owned by the database
-      administrator with permissions of 0600, run the following as the database
-      administrator (shown here as \"postgres\"):
+  $ sudo su - postgres
+  $ ls -la ${PGDATA?}
 
-      $ sudo su - postgres
-      $ ls -la ${PGDATA?}
+  If postgresql.conf is not owned by the database administrator or does not have
+  0600 permissions, this is a finding.
 
-      If postgresql.conf is not owned by the database administrator or does not
-      have 0600 permissions, this is a finding.
+  #### stderr Logging
 
-      #### stderr Logging
+  To check that logs are created with 0600 permissions, check the postgresql.conf
+  file for the following setting:
 
-      To check that logs are created with 0600 permissions, check the
-      postgresql.conf file for the following setting:
+  $ sudo su - postgres
+  $ psql -c \"SHOW log_file_mode\"
 
-      $ sudo su - postgres
-      $ psql -c \"SHOW log_file_mode\"
+  If permissions are not 0600, this is a finding.
 
-      If permissions are not 0600, this is a finding.
+  #### syslog Logging
 
-      #### syslog Logging
+  If PostgreSQL is configured to use syslog, verify that the logs are owned by
+  root and have 0600 permissions. If they are not, this is a finding."
+  
+  desc "fix", "Apply or modify access controls and permissions (both within
+  PostgreSQL and in the file system/operating system) to tools used to view or
+  modify audit log data. Tools must be configurable by authorized personnel only.
 
-      If PostgreSQL is configured to use syslog, verify that the logs are owned
-      by root and have 0600 permissions. If they are not, this is a finding."
+  $ sudo su - postgres
+  $ vi ${PGDATA?}/postgresql.conf
+  log_file_mode = 0600
 
-  tag "fix": "Apply or modify access controls and permissions (both within PostgreSQL
-      and in the file system/operating system) to tools used to view or modify
-      audit log data. Tools must be configurable by authorized personnel only.
+  Next, as the database administrator (shown here as \"postgres\"), change the
+  ownership and permissions of configuration files in PGDATA:
 
-      $ sudo su - postgres
-      $ vi ${PGDATA?}/postgresql.conf
-      log_file_mode = 0600
+  $ sudo su - postgres
+  $ chown postgres:postgres ${PGDATA?}/*.conf
+$ chmod 0600 ${PGDATA?}/*.conf"
 
-      Next, as the database administrator (shown here as \"postgres\"), change
-      the ownership and permissions of configuration files in PGDATA:
 
-      $ sudo su - postgres
-      $ chown postgres:postgres ${PGDATA?}/*.conf
-      $ chmod 0600 ${PGDATA?}/*.conf"
-
-  describe file(PG_CONF_FILE) do
+  describe file(pg_conf_file) do
     it { should be_file }
     its('mode') { should cmp '0600' }
   end
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  log_destination_query = sql.query('SHOW log_destination;', [PG_DB])
+  log_destination_query = sql.query('SHOW log_destination;', [pg_db])
   log_destination = log_destination_query.output
 
   if log_destination =~ /stderr/i
-    describe sql.query('SHOW log_file_mode;', [PG_DB]) do
+    describe sql.query('SHOW log_file_mode;', [pg_db]) do
       its('output') { should cmp '0600' }
     end
   end
