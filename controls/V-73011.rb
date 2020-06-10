@@ -8,17 +8,7 @@ pg_dba_password = input('pg_dba_password')
 
 pg_db = input('pg_db')
 
-approved_ext = input(
-  'approved_ext',
-  description: "the list of approved postgresql extensions that the database may enable",
-  value: ['pgcrypto']
-)
-
-approved_ext = input(
-  'approved_ext',
-  description: "the list of approved postgresql extensions that the database may enable",
-  value: ['pgcrypto']
-)
+approved_packages = input('approved_packages')
 
 control "V-73011" do
   title "Unused database components which are integrated in PostgreSQL and
@@ -80,25 +70,23 @@ control "V-73011" do
   $ sudo yum erase <package_name>
 
   # Debian Systems
-$ sudo apt-get remove <package_name>"
+  $ sudo apt-get remove <package_name>"
 
   if command('yum').exist?
-    describe.one do
-      approved_ext.each do |extension|
-        describe command("PGPASSWORD='#{pg_dba_password}' psql -U #{pg_dba} -d #{pg_db} -h #{pg_host} -A -t -c \"SELECT * FROM pg_available_extensions WHERE installed_version IS NOT NULL\"") do
-          its('stdout.strip') { should match extension }
-        end
+    lines = command("yum list installed | grep \"postgres\"")
+    lines.each do |package|
+      describe(package) do
+        it { should be_in approved_packages }
       end
     end
   end
   
   if command('dpkg').exist?
-    describe.one do
-      approved_ext.each do |extension|
-        describe command("PGPASSWORD='#{pg_dba_password}' psql -U #{pg_dba} -d #{pg_db} -h #{pg_host} -A -t -c \"SELECT * FROM pg_available_extensions WHERE installed_version IS NOT NULL\"") do
-          its('stdout.strip') { should match extension }
-        end
+    lines = command("yum list installed | grep \"postgres\"")
+    lines.each do |package|
+      describe(package) do
+        it { should be_in approved_packages }
       end
     end
-  end 
+  end
 end

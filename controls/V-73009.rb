@@ -1,11 +1,5 @@
 pg_conf_file= input('pg_conf_file')
 
-log_line_prefix = input(
-  'log_line_prefix',
-  description: "The required log line elemets per the organizational guidance",
-  value: ['%m','%u','%d','%s']
-)
-
 pg_host = input('pg_host')
 
 login_user = input('login_user')

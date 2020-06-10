@@ -146,10 +146,14 @@ control "V-72885" do
   # default setup will be per the CM
   # @todo this test is dupe of V-72847.
     
-  admin_sql = postgres_session(pg_dba, pg_dba_password, pg_host)
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
    
-  describe admin_sql.query('show logging_collector;', [pg_db]) do
+  describe sql.query('show logging_collector;', [pg_db]) do
     its('output') { should_not match /off|false/i }
+  end
+
+  describe sql.query('show log_file_mode;', [pg_db]) do
+    its('output') { should cmp '0600' }
   end
 
   describe directory(pg_log_dir) do
@@ -162,5 +166,4 @@ control "V-72885" do
   describe command("find #{pg_log_dir} -type f -perm 600 ! -perm 600 | wc -l") do
     its('stdout.strip') { should eq '0' }
   end
-
 end

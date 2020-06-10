@@ -18,6 +18,8 @@ pg_hba_conf_file = input('pg_hba_conf_file')
 
 pg_replicas = input('pg_replicas')
 
+approved_auth_methods = input('approved_auth_methods')
+
 control "V-72859" do
   title "PostgreSQL must enforce approved authorizations for logical access to
   information and system resources in accordance with applicable access control
@@ -288,17 +290,17 @@ control "V-72859" do
 
   describe postgres_hba_conf(pg_hba_conf_file).where { type == 'local' } do
     its('user.uniq') { should cmp pg_owner }
-    its('auth_method.uniq') { should cmp(['gss']).or cmp(['sspi']).or cmp(['ldap']) }
+    its('auth_method.uniq') { should_not cmp 'trust'}
   end
 
   describe postgres_hba_conf(pg_hba_conf_file).where { database == 'replication' } do
     its('type.uniq') { should cmp 'host' }
     its('address.uniq.sort') { should cmp pg_replicas.sort }
     its('user.uniq') { should cmp 'replication' }
-    its('auth_method.uniq') { should cmp(['gss']).or cmp(['sspi']).or cmp(['ldap']) }
+    its('auth_method.uniq') { should be_in approved_auth_methods }
   end
 
   describe postgres_hba_conf(pg_hba_conf_file).where { type == 'host' } do
-    its('auth_method.uniq') { should cmp(['gss']).or cmp(['sspi']).or cmp(['ldap']) }
+    its('auth_method.uniq') { should be_in approved_auth_methods }
   end
 end

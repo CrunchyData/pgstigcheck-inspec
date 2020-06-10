@@ -1,15 +1,12 @@
-pg_dba = input('pg_dba')
+pg_latest_version = input('pg_latest_version')
 
-pg_ver = input('pg_version')
+pg_dba = input('pg_dba')
 
 pg_dba_password = input('pg_dba_password')
 
 pg_db = input('pg_db')
 
 pg_host = input('pg_host')
-
-#MANUALLY CHANGE THIS VARIABLE TO THE LATEST AVAILABLE POSTGRES IMAGE
-pg_latest_version = 9.6
 
 control "V-72845" do
   title "Security-relevant software updates to PostgreSQL must be installed
@@ -95,8 +92,9 @@ control "V-72845" do
   desc "fix", "Institute and adhere to policies and procedures to ensure that
   patches are consistently applied to PostgreSQL within the time allowed."
 
-  #MANUALLY CHANGE THE pg_latest_version VARIABLE TO THE LATEST AVAILABLE POSTGRES IMAGE
-  describe (pg_ver) do
-    it { should cmp (pg_latest_version) }  
-  end 
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
+
+  describe sql.query('SHOW server_version;', [pg_db]) do
+    its('output') { should cmp pg_latest_version }
+  end
 end

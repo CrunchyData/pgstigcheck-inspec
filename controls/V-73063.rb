@@ -79,7 +79,11 @@ control "V-73063" do
   For more information on configuring PostgreSQL to use SSL, see supplementary
   content APPENDIX-G."
 
+  only_if do
+    command('openssl').exist?
+  end
+
   describe command('openssl version') do
-      its('stdout') { should include 'fips' }
+    its('stdout') { should include 'fips' }
   end
 end

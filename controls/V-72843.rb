@@ -143,69 +143,69 @@ pg_host = input('pg_host')
     # INITD SERVER ONLY
     $ sudo service postgresql-${PGVER?} reload"
 
-    admin_sql = postgres_session(pg_dba, pg_dba_password, pg_host)    
+    sql = postgres_session(pg_dba, pg_dba_password, pg_host)    
 
-    describe admin_sql.query('DROP TABLE IF EXISTS stig_test;', [pg_db]) do
+    describe sql.query('DROP TABLE IF EXISTS stig_test;', [pg_db]) do
       its('output') { should eq 'DROP TABLE' }
     end
 
-    describe admin_sql.query('CREATE TABLE stig_test(id INT);', [pg_db]) do
+    describe sql.query('CREATE TABLE stig_test(id INT);', [pg_db]) do
       its('output') { should eq 'CREATE TABLE' }
     end
 
-    describe admin_sql.query('INSERT INTO stig_test(id) VALUES (0);', [pg_db]) do
+    describe sql.query('INSERT INTO stig_test(id) VALUES (0);', [pg_db]) do
       its('output') { should eq 'INSERT 0 1' }
     end
 
-    describe admin_sql.query('ALTER TABLE stig_test ADD COLUMN name text;', [pg_db]) do
+    describe sql.query('ALTER TABLE stig_test ADD COLUMN name text;', [pg_db]) do
       its('output') { should eq 'ALTER TABLE' }
     end
 
-    describe admin_sql.query('UPDATE stig_test SET id = 1 WHERE id = 0;', [pg_db]) do
+    describe sql.query('UPDATE stig_test SET id = 1 WHERE id = 0;', [pg_db]) do
       its('output') { should eq 'UPDATE 1' }
     end
 
-    describe admin_sql.query('show pgaudit.log_catalog') do
+    describe sql.query('show pgaudit.log_catalog') do
       its('output') { should_not match /off|false/i }
     end
 
-    describe admin_sql.query('show pgaudit.log_level') do
+    describe sql.query('show pgaudit.log_level') do
       its('output') { should eq 'log' }
     end
 
-    describe admin_sql.query('show pgaudit.log_parameter') do
+    describe sql.query('show pgaudit.log_parameter') do
       its('output') { should_not match /off|false/i }
     end
 
-    describe admin_sql.query('show pgaudit.log_statement_once') do
+    describe sql.query('show pgaudit.log_statement_once') do
       its('output') { should eq 'off' }
     end
 
-    describe admin_sql.query('show pgaudit.log') do
+    describe sql.query('show pgaudit.log') do
       its('output') { should eq 'ddl,read,role, write' }
     end
 
-    describe admin_sql.query('CREATE ROLE foostigtest LOGIN CONNECTION LIMIT 100;') do
+    describe sql.query('CREATE ROLE foostigtest LOGIN CONNECTION LIMIT 100;') do
       its('output') { should eq 'CREATE ROLE' }
     end
 
-    describe admin_sql.query('SET ROLE foostigtest; INSERT INTO stig_test(id) VALUES (1);', [pg_db]) do
+    describe sql.query('SET ROLE foostigtest; INSERT INTO stig_test(id) VALUES (1);', [pg_db]) do
       its('output') { should match /ERROR:  permission denied for relation stig_test/ }
     end
 
-    describe admin_sql.query('SET ROLE foostigtest; ALTER TABLE stig_test DROP COLUMN name;', [pg_db]) do
+    describe sql.query('SET ROLE foostigtest; ALTER TABLE stig_test DROP COLUMN name;', [pg_db]) do
       its('output') { should match /ERROR:  must be owner of relation stig_test/ }
     end
     
-    describe admin_sql.query('SET ROLE foostigtest; UPDATE stig_test SET id = 0 WHERE id = 1;', [pg_db]) do
+    describe sql.query('SET ROLE foostigtest; UPDATE stig_test SET id = 0 WHERE id = 1;', [pg_db]) do
       its('output') { should match /ERROR:  permission denied for relation stig_test/ }
     end
 
-   describe admin_sql.query('DROP TABLE stig_test;', [pg_db]) do
+   describe sql.query('DROP TABLE stig_test;', [pg_db]) do
       its('output') { should eq 'DROP TABLE' }
    end
   
-  describe admin_sql.query('DROP ROLE foostigtest') do
+  describe sql.query('DROP ROLE foostigtest') do
       its('output') { should eq 'DROP ROLE' }
   end   
 

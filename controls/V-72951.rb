@@ -8,7 +8,7 @@ pg_db = input('pg_db')
 
 pg_host = input('pg_host')
 
-pg_log_dir = input('pg_log_dir')
+pg_audit_log_dir = input('pg_audit_log_dir')
 
 control "V-72951" do
   title "PostgreSQL must generate audit records when unsuccessful accesses to
@@ -113,50 +113,53 @@ control "V-72951" do
   enabling logging."
 
 
-  admin_sql = postgres_session(pg_dba, pg_dba_password, pg_host)
+    sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-    describe admin_sql.query('DROP TABLE IF EXISTS test_schema.test_table;', [pg_db]) do
+    describe sql.query('DROP TABLE IF EXISTS test_schema.test_table;', [pg_db]) do
       its('output') { should eq 'DROP TABLE' }
     end
 
-    describe admin_sql.query('DROP SCHEMA IF EXISTS test_schema;', [pg_db]) do
+    describe sql.query('DROP SCHEMA IF EXISTS test_schema;', [pg_db]) do
       its('output') { should eq 'DROP SCHEMA' }
     end
 
-    describe admin_sql.query('CREATE SCHEMA test_schema;', [pg_db]) do
+    describe sql.query('CREATE SCHEMA test_schema;', [pg_db]) do
       its('output') { should eq 'CREATE SCHEMA' }
     end
 
-    describe admin_sql.query('CREATE TABLE test_schema.test_table(id INT);', [pg_db]) do
+    describe sql.query('CREATE TABLE test_schema.test_table(id INT);', [pg_db]) do
       its('output') { should eq 'CREATE TABLE' }
     end
     
-    describe admin_sql.query('INSERT INTO test_schema.test_table(id) VALUES (0);', [pg_db]) do
+    describe sql.query('INSERT INTO test_schema.test_table(id) VALUES (0);', [pg_db]) do
       its('output') { should eq 'INSERT 0 1' }
     end
 
-    describe admin_sql.query('CREATE ROLE bob;', [pg_db]) do
+    describe sql.query('CREATE ROLE bob;', [pg_db]) do
       its('output') { should eq 'CREATE ROLE' }
     end
 
-    describe admin_sql.query('SET ROLE bob; SELECT * FROM test_schema.test_table;', [pg_db]) do
+    describe sql.query('SET ROLE bob; SELECT * FROM test_schema.test_table;', [pg_db]) do
       its('output') { should match /ERROR:  permission denied for schema test_schema/ }
     end
 
-    describe admin_sql.query('SET ROLE bob; INSERT INTO test_schema.test_table VALUES (0);', [pg_db]) do
+    describe sql.query('SET ROLE bob; INSERT INTO test_schema.test_table VALUES (0);', [pg_db]) do
       its('output') { should match /ERROR:  permission denied for schema test_schema/ }
     end
 
-    describe admin_sql.query('SET ROLE bob; UPDATE test_schema.test_table SET id = 1 WHERE id = 0;', [pg_db]) do
+    describe sql.query('SET ROLE bob; UPDATE test_schema.test_table SET id = 1 WHERE id = 0;', [pg_db]) do
       its('output') { should match /ERROR:  permission denied for schema test_schema/ }
     end
 
-    describe admin_sql.query('SET ROLE bob; DROP TABLE test_schema.test_table;', [pg_db]) do
+    describe sql.query('SET ROLE bob; DROP TABLE test_schema.test_table;', [pg_db]) do
       its('output') { should match /ERROR:  permission denied for schema test_schema/ }
     end
 
-    describe admin_sql.query('SET ROLE bob; DROP SCHEMA test_schema;', [pg_db]) do
+    describe sql.query('SET ROLE bob; DROP SCHEMA test_schema;', [pg_db]) do
       its('output') { should match /ERROR:  permission denied for schema test_schema/ }
     end
 
+    describe command("cat `find #{pg_audit_log_dir} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d\" \"` | grep \"permission denied for schema test_schema\"") do
+      its('stdout') { should match /^.*permission denied for schema test_schema.*$/ }
+    end
 end

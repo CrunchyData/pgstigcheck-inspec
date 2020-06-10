@@ -82,7 +82,7 @@ control "V-72871" do
 
   Do not allow general users direct console access to PostgreSQL."
 
-describe "Skip Test" do
+  describe "Skip Test" do
     skip "This is a manual check"
   end
 end

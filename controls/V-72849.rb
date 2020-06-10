@@ -1,5 +1,7 @@
 pg_hba_conf_file = input('pg_hba_conf_file')
 
+approved_auth_methods = input('approved_auth_methods')
+
 control "V-72849" do
   title "PostgreSQL must integrate with an organization-level
   authentication/access mechanism providing account management and automation for
@@ -96,14 +98,14 @@ control "V-72849" do
   it and obtain approval, as appropriate."
 
   describe postgres_hba_conf(pg_hba_conf_file).where { type == 'local' } do
-    its('auth_method.uniq') { should cmp(['gss']).or cmp(['sspi']).or cmp(['ldap']) }
+    its('auth_method.uniq') { should be_in approved_auth_methods }
   end
 
   describe postgres_hba_conf(pg_hba_conf_file).where { database == 'replication' } do
-    its('auth_method.uniq') { should cmp(['gss']).or cmp(['sspi']).or cmp(['ldap']) }
+    its('auth_method.uniq') { should be_in approved_auth_methods }
   end
   
   describe postgres_hba_conf(pg_hba_conf_file).where { type == 'host' } do
-    its('auth_method.uniq') { should cmp(['gss']).or cmp(['sspi']).or cmp(['ldap']) }
+    its('auth_method.uniq') { should be_in approved_auth_methods }
   end
 end

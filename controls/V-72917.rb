@@ -1,3 +1,5 @@
+pg_version = input('pg_version')
+
 control "V-72917" do
   title "When updates are applied to PostgreSQL software, any software
   components that have been replaced or made unnecessary must be removed."
@@ -13,13 +15,6 @@ control "V-72917" do
 
   A transition period may be necessary when both the old and the new software
   are required. This should be taken into account in the planning."
-
-  #Specify all packages and their versions that should be installed
-  approved_versions = input(
-  'approved versions',
-  description: "the list of approved postgresql versions and software that the database may enable",
-  value: ['postgresql96-9.6']
-)
 
   impact 0.5
   tag "severity": "medium"
@@ -52,11 +47,13 @@ control "V-72917" do
   desc "fix", "Use package managers (RPM or apt-get) for installing PostgreSQL.
   Unused software is removed when updated."
 
-  describe.one do
-    approved_versions.each do |versions|
-      describe command("rpm -qa | grep postgres") do
-        its('stdout.strip') { should match versions }
-      end
+  lines = command("rpm -qa | grep postgres").stdout.split("\n")
+
+  pg_version_parsed = pg_version.tr('.','')
+
+  lines.each do |package|
+    describe(package) do
+      it { should include (pg_version_parsed) }
     end
   end
 end

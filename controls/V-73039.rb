@@ -8,6 +8,8 @@ pg_log_dir = input('pg_log_dir')
 
 pg_superusers = input('pg_superusers')
 
+pgaudit_installation = input('pgaudit_installation')
+
 control "V-73039" do
   title "PostgreSQL must protect its audit features from unauthorized access."
   desc  "Protecting audit data also includes identifying and protecting the
@@ -109,7 +111,7 @@ control "V-73039" do
     it { should be_grouped_into pg_group }
   end 
 
-  describe file('/usr/pgsql-9.5/share/contrib/pgaudit') do
+  describe file(pgaudit_installation) do
     it { should_not be_owned_by 'root' }
   end 
 
@@ -118,7 +120,7 @@ control "V-73039" do
     it { should be_grouped_into pg_group }
   end 
 
-  describe file('/usr/pgsql-9.5/share/contrib/pgaudit') do
+  describe file(pgaudit_installation) do
     it { should_not be_owned_by 'root' }
   end
 

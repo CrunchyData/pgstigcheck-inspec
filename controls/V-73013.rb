@@ -64,7 +64,7 @@ control "V-73013" do
   RLS policies can be very different depending on their use case. For one example
   of using RLS for Security Labels, see supplementary content APPENDIX-D."
 
-  describe command("psql -c \"\\d+ .\"") do
-    its('stdout') { should include 'seclabel' }
-  end 
+  describe "Skip Test" do
+    skip "Check if security labeling is implemented according to the system documentation"
+  end
 end

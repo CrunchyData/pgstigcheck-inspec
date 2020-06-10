@@ -1,5 +1,15 @@
 pg_log_dir = input('pg_log_dir')
 
+pg_dba = input('pg_dba')
+
+pg_dba_password = input('pg_dba_password')
+
+pg_db = input('pg_db')
+
+pg_host = input('pg_host')
+
+pg_audit_log_dir = input('pg_audit_log_dir')
+
 control "V-72977" do
   title "PostgreSQL must generate audit records when unsuccessful attempts to
   add privileges/permissions occur."
@@ -63,12 +73,13 @@ control "V-72977" do
   is enabled, review supplementary content APPENDIX-C for instructions on
   enabling logging."
 
-
-  describe command('psql -c "CREATE ROLE bob; CREATE TABLE test(id INT)"') do
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
+  
+  describe sql.query('CREATE ROLE bob; CREATE TABLE test(id INT);', [pg_db]) do
   end
 
-  describe command('psql -c "SET ROLE bob; GRANT ALL PRIVILEGES ON test TO bob;"') do
-    its('stderr') { should include 'ERROR'}
+  describe sql.query('SET ROLE bob; GRANT ALL PRIVILEGES ON test TO bob;', [pg_db]) do
+    its('output') { should include 'ERROR'}
   end
 
   describe command("cat `find #{pg_audit_log_dir} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d\" \"` | grep \"permission denied for relation test\"") do
