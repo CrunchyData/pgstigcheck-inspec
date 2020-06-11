@@ -26,7 +26,8 @@ pg_table: ''
 login_user: ''
 login_host: ''
 
-pg_version: '9.5'
+pg_latests_version: ''
+pg_version: '9.6'
 
 pg_data_dir: "/var/lib/pgsql/9.5/data"
 pg_conf_file: "/var/lib/pgsql/9.5/data/postgresql.conf"
@@ -47,6 +48,8 @@ pg_log_dest: 'syslog'
 pg_syslog_facility: ['local0']
 pg_syslog_owner: 'postgres'
 
+pgaudit_installation: ''
+
 pgaudit_log_items: ['ddl','role','read','write']
 pgaudit_log_line_items: ['%m','%u','%c']
 
@@ -65,3 +68,15 @@ pg_replicas: [
 pg_max_connections: '100'
 
 pg_timezone: 'UTC'
+
+approved_auth_methods: [
+  '',
+  ]
+  
+ approved_packages: [
+  '',
+  ]
+  
+  approved_ext: [
+  '',
+  ]
