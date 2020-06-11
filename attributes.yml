@@ -73,10 +73,10 @@ approved_auth_methods: [
   '',
   ]
   
- approved_packages: [
+approved_packages: [
   '',
   ]
   
-  approved_ext: [
+ approved_ext: [
   '',
   ]
