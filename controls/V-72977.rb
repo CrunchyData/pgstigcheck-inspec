@@ -79,7 +79,7 @@ control "V-72977" do
   end
 
   describe sql.query('SET ROLE bob; GRANT ALL PRIVILEGES ON test TO bob;', [pg_db]) do
-    its('output') { should include 'ERROR'}
+    its('output') { should match /ERROR: permission denied for relation test/ }
   end
 
   describe command("cat `find #{pg_audit_log_dir} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d\" \"` | grep \"permission denied for relation test\"") do

@@ -1,37 +1,16 @@
-pg_owner = input(
-  'pg_owner',
-  description: "The system user of the postgres process",
-)
+pg_owner = input('pg_owner')
 
-pg_dba = input(
-  'pg_dba',
-  description: 'The postgres DBA user to access the test database',
-)
+pg_dba = input('pg_dba')
 
-pg_dba_password = input(
-  'pg_dba_password',
-  description: 'The password for the postgres DBA user',
-)
+pg_dba_password = input('pg_dba_password')
 
-pg_db = input(
-  'pg_db',
-  description: 'The database used for tests',
-)
+pg_db = input('pg_db')
 
-pg_host = input(
-  'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
-)
+pg_host = input('pg_host')
 
-pg_data_dir = input(
-  'pg_data_dir',
-  description: 'The postgres data directory',
-)
+pg_data_dir = input('pg_data_dir')
 
-pg_superusers = input(
-  'pg_superusers',
-  description: 'Authorized superuser accounts',
-)
+pg_superusers = input('pg_superusers')
 
 control "V-72891" do
   title "PostgreSQL must allow only the ISSM (or individuals or roles appointed

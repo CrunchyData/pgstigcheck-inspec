@@ -1,5 +1,3 @@
-pg_latest_version = input('pg_latest_version')
-
 pg_dba = input('pg_dba')
 
 pg_dba_password = input('pg_dba_password')
@@ -95,6 +93,24 @@ control "V-72845" do
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
   describe sql.query('SHOW server_version;', [pg_db]) do
-    its('output') { should cmp pg_latest_version }
+    its('output') { should cmp  }
+  end
+
+  rpm_packages = command("rpm -qa | grep postgres").stdout.split("\n")
+
+  pg_version_parsed = pg_version.tr('.','')
+
+  rpm_packages.each do |package|
+    describe(package) do
+      it { should include (pg_version_parsed) }
+    end
+  end
+
+  apt_packages = command("apt-cache policy postgres").stdout.split("\n")
+
+  apt_packages.each do |package|
+    describe(package) do
+      it { should include (pg_version_parsed) }
+    end
   end
 end

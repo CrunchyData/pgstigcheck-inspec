@@ -123,7 +123,7 @@ control "V-73049" do
 
   describe postgres_hba_conf(pg_hba_conf_file).where { type == 'local' } do
     its('user.uniq') { should cmp pg_owner }
-    its('auth_method.uniq') { should be_in approved_auth_methods }
+    its('auth_method.uniq') { should_not include 'trust'}
   end
 
   describe postgres_hba_conf(pg_hba_conf_file).where { database == 'replication' } do

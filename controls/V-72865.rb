@@ -130,7 +130,11 @@ control "V-72865" do
               its('output') { should match pg_settings_acl_regex }
             end
           end
-          # TODO: Add test for column acl
+            
+          describe "Skip Test" do
+              skip "Check if column acl is correct"
+          end
+        
           tested.push(obj)
         end
       end

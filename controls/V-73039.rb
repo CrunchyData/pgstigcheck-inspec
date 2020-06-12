@@ -6,6 +6,14 @@ pg_owner = input('pg_owner')
 
 pg_log_dir = input('pg_log_dir')
 
+pg_dba = input('pg_dba')
+
+pg_dba_password = input('pg_dba_password')
+
+pg_db = input('pg_db')
+
+pg_host = input('pg_host')
+
 pg_superusers = input('pg_superusers')
 
 pgaudit_installation = input('pgaudit_installation')
@@ -124,5 +132,20 @@ control "V-73039" do
     it { should_not be_owned_by 'root' }
   end
 
-  #todo Needs automation of superuser check
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
+
+  roles_sql = 'SELECT r.rolname FROM pg_catalog.pg_roles r;'
+  roles_query = sql.query(roles_sql, [pg_db])
+  roles = roles_query.lines
+
+  roles.each do |role|
+    unless pg_superusers.include?(role)
+      superuser_sql = "SELECT r.rolsuper FROM pg_catalog.pg_roles r "\
+        "WHERE r.rolname = '#{role}';"
+
+      describe sql.query(superuser_sql, [pg_db]) do
+        its('output') { should_not eq 't' }
+      end
+    end
+  end
 end

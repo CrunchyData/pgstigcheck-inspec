@@ -10,11 +10,7 @@ pg_dba_password = input('pg_dba_password')
 
 pg_db = input('pg_db')
 
-approved_ext = input(
-  'approved_ext',
-  description: "the list of approaved postgresql extensions that the database may enable",
-  value: ['pgcrypto']
-)
+approved_ext = input('approved_ext')
 
 control "V-73007" do
   title "Unused database components, PostgreSQL software, and database objects

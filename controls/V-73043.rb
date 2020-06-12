@@ -22,17 +22,7 @@ pg_ident_conf_file = input('pg_ident_conf_file')
 
 pg_user_defined_conf_file = input('pg_user_defined_conf')
 
-pg_shared_dirs = input(
-  'pg_shared_dirs',
-  description: 'the postgres shared_libraries directories',
-  value: [
-    "/usr/pgsql-#{postgres.version}",
-    "/usr/pgsql-#{postgres.version}/bin",
-    "/usr/pgsql-#{postgres.version}/include",
-    "/usr/pgsql-#{postgres.version}/lib",
-    "/usr/pgsql-#{postgres.version}/share"
-    ]
-)
+pg_shared_dirs = input('pg_shared_dirs')
 
 control "V-73043" do
   title "PostgreSQL must protect its audit features from unauthorized removal."

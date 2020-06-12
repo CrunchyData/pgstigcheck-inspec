@@ -8,8 +8,6 @@ pg_db = input('pg_db')
 
 pg_host = input('pg_host')
 
-pg_superusers = input('pg_superusers')
-
 pg_object_granted_privileges = input('pg_object_granted_privileges')
 
 pg_object_public_privileges = input('pg_object_public_privileges')

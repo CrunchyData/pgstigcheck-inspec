@@ -1,28 +1,3 @@
-pg_owner = input('pg_owner')
-
-pg_group = input('pg_group')
-
-pg_dba = input('pg_dba')
-
-pg_dba_password = input('pg_dba_password')
-
-pg_db = input('pg_db')
-
-pg_host = input('pg_host')
-
-pg_port = input('pg_port')
-
-pg_data_dir = input('pg_data_dir')
-
-pg_conf_file = input('pg_conf_file')
-
-pg_user_defined_conf = input('pg_user_defined_conf')
-
-pg_superusers = input('pg_superusers')
-
-pg_version = input('pg_version')
-
-pg_shared_dirs = input('pg_shared_dirs')
 
 control "V-73063" do
   title "PostgreSQL must use NIST FIPS 140-2 validated cryptographic modules

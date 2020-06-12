@@ -112,7 +112,6 @@ control "V-72951" do
   is enabled, review supplementary content APPENDIX-C for instructions on
   enabling logging."
 
-
     sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
     describe sql.query('DROP TABLE IF EXISTS test_schema.test_table;', [pg_db]) do
@@ -156,10 +155,14 @@ control "V-72951" do
     end
 
     describe sql.query('SET ROLE bob; DROP SCHEMA test_schema;', [pg_db]) do
-      its('output') { should match /ERROR:  permission denied for schema test_schema/ }
+      its('output') { should match /ERROR:  must be owner of schema test_schema/ }
     end
 
     describe command("cat `find #{pg_audit_log_dir} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d\" \"` | grep \"permission denied for schema test_schema\"") do
       its('stdout') { should match /^.*permission denied for schema test_schema.*$/ }
+    end
+
+    describe command("cat `find #{pg_audit_log_dir} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d\" \"` | grep \"must be owner of schema test_schema\"") do
+      its('stdout') { should match /^.*must be owner of schema test_schema.*$/ }
     end
 end

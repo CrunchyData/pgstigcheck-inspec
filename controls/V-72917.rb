@@ -47,11 +47,11 @@ control "V-72917" do
   desc "fix", "Use package managers (RPM or apt-get) for installing PostgreSQL.
   Unused software is removed when updated."
 
-  lines = command("rpm -qa | grep postgres").stdout.split("\n")
+  packages = command("rpm -qa | grep postgres").stdout.split("\n")
 
   pg_version_parsed = pg_version.tr('.','')
 
-  lines.each do |package|
+  packages.each do |package|
     describe(package) do
       it { should include (pg_version_parsed) }
     end

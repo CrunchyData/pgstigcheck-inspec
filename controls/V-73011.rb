@@ -73,8 +73,8 @@ control "V-73011" do
   $ sudo apt-get remove <package_name>"
 
   if command('yum').exist?
-    lines = command("yum list installed | grep \"postgres\"")
-    lines.each do |package|
+    yum_packages = command("yum list installed | grep \"postgres\"")
+    yum_packages.each do |package|
       describe(package) do
         it { should be_in approved_packages }
       end
@@ -82,8 +82,8 @@ control "V-73011" do
   end
   
   if command('dpkg').exist?
-    lines = command("yum list installed | grep \"postgres\"")
-    lines.each do |package|
+    dpkg_packages = command("dpkg --get-selections | grep \"postgres\"")
+    dpkg_packages.each do |package|
       describe(package) do
         it { should be_in approved_packages }
       end

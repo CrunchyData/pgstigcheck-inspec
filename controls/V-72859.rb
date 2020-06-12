@@ -283,7 +283,10 @@ control "V-72859" do
         describe sql.query(relacl_sql, [database]) do
           its('output') { should match object_acl_regex }
         end
-        # TODO: Add test for column acl
+        
+        describe "Skip Test" do
+          skip "Check if column acl is correct"
+        end
       end
     end
   end
