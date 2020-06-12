@@ -6,6 +6,8 @@ pg_db = input('pg_db')
 
 pg_host = input('pg_host')
 
+pg_version = input('pg_version')
+
 control "V-72845" do
   title "Security-relevant software updates to PostgreSQL must be installed
   within the time period directed by an authoritative source (e.g., IAVM, CTOs,
@@ -93,24 +95,26 @@ control "V-72845" do
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
   describe sql.query('SHOW server_version;', [pg_db]) do
-    its('output') { should cmp  }
+    its('output') { should cmp pg_version}
   end
 
-  rpm_packages = command("rpm -qa | grep postgres").stdout.split("\n")
+  if command('rpm').exist?
+    rpm_packages = command("rpm -qa | grep postgres").stdout.split("\n")
 
-  pg_version_parsed = pg_version.tr('.','')
-
-  rpm_packages.each do |package|
-    describe(package) do
-      it { should include (pg_version_parsed) }
+    rpm_packages.each do |package|
+      describe(package) do
+        it { should include (pg_version) }
+      end
     end
   end
 
-  apt_packages = command("apt-cache policy postgres").stdout.split("\n")
+  if command('apt-cache').exist?
+    apt_packages c= command("apt-cache policy postgres").stdout.split("\n")
 
-  apt_packages.each do |package|
-    describe(package) do
-      it { should include (pg_version_parsed) }
+    apt_packages.each do |package|
+      describe(package) do
+        it { should include (pg_version) }
+      end
     end
   end
 end
