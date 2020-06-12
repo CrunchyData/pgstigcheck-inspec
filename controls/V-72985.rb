@@ -99,11 +99,7 @@ control "V-72985" do
 
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
-  log_line_prefix_escapes = %w(%m)
-
-  log_line_prefix_escapes.each do |escape|
-    describe sql.query('SHOW log_line_prefix;', [pg_db]) do
-      its('output') { should include escape }
-    end
+  describe sql.query('SHOW log_line_prefix;', [pg_db]) do
+    its('output') { should match '%m' }
   end
 end
