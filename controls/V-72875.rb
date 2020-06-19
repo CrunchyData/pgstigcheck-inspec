@@ -1,7 +1,7 @@
 control "V-72875" do
   title "PostgreSQL and associated applications, when making use of dynamic
-code execution, must scan input data for invalid values that may indicate a
-code injection attack."
+  code execution, must scan input data for invalid values that may indicate a
+  code injection attack."
   desc  "With respect to database management systems, one class of threat is
   known as SQL Injection, or more generally, code injection. It takes advantage
   of the dynamic execution capabilities of various programming languages,
@@ -76,13 +76,12 @@ code injection attack."
   tag "ia_controls": nil
   desc "check", "Review PostgreSQL source code (trigger procedures, functions) and
   application source code to identify cases of dynamic code execution.
-
-  If dynamic code execution is employed without protective measures against code
+  If dynamic code execution is deployed without protective measures against code
   injection, this is a finding."
   desc "fix", "Where dynamic code execution is used, modify the code to implement
   protections against code injection (IE: prepared statements)."
 
-    describe "Skip Test" do
-    skip "This is a manual check"
+  describe "Review PostgreSQL source code and application source code to identify cases of dynamic code execution" do
+    skip "If dynamic code execution is deployed without protective measures against code injection, this is a finding."
   end
 end

@@ -40,7 +40,7 @@ control "V-73071" do
   cryptography enabled; or by other means ensure that FIPS 140-2-certified
   OpenSSL libraries are used by the DBMS."
 
-  describe "Skip Test" do
-    skip "This is a manual check"
+  describe "Check that the deployment is using FIPS 140-2- compliant OpenSSL" do
+    skip "If FIPS encryption is not enabled, this is a finding."
   end
 end

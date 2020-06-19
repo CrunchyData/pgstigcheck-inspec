@@ -112,7 +112,7 @@ control "V-72863" do
     its('output') { should be <= pg_max_connections }
   end
 
-  describe sql.query('SELECT rolname, rolconnlimit from pg_authid;', [pg_db]) do
+  describe sql.query('SELECT rolname, rolconnlimit from pg_authid EXCEPT SELECT rolname, rolconnlimit from pg_authid where rolname = \'pg_signal_backend\';', [pg_db]) do
     its('output') { should_not include '-1' }
   end
 end

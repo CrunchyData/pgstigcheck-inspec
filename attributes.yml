@@ -38,6 +38,7 @@ pg_shared_dirs: [
   "/usr/pgsql-9.5",
   "/usr/pgsql-9.5/bin",
   "/usr/pgsql-9.5/lib",
+  "/usr/pgsql-9.5/include",
   "/usr/pgsql-9.5/share"
   ]
 
@@ -81,3 +82,5 @@ approved_packages: [
  approved_ext: [
   '',
   ]
+
+pgaudit_installation: ''

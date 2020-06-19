@@ -49,7 +49,7 @@ control "V-72877" do
   is a finding."
   desc "fix", "Allocate sufficient audit file/table space to support peak demand."
 
-  describe "Skip Test" do
-    skip "This is a manual check"
+  describe "Investigate if there are any incidents where PostgreSQL ran out of audit log space." do
+    skip "If there have been incidents where PostgreSQL ran out of audit log space, this is a finding."
   end
 end

@@ -283,14 +283,15 @@ control "V-72859" do
         describe sql.query(relacl_sql, [database]) do
           its('output') { should match object_acl_regex }
         end
-        
-        describe "Skip Test" do
-          skip "Check if column acl is correct"
-        end
       end
     end
   end
 
+  describe "Column acl check" do
+    skip "Review all access privileges and column access privileges list. If any roles' 
+    privileges exceed those documented, this is a finding."
+  end
+  
   describe postgres_hba_conf(pg_hba_conf_file).where { type == 'local' } do
     its('user.uniq') { should cmp pg_owner }
     its('auth_method.uniq') { should_not cmp 'trust'}

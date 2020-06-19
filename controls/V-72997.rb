@@ -89,7 +89,7 @@ control "V-72997" do
 
   Implement the approved permissions. Revoke any unapproved permissions."
   
-  describe "Skip Test" do
-    skip "This is a manual check"
+  describe "Review PostgreSQL and database security settings with respect to non-administrative users' permissions." do
+    skip "If any such permissions exist and are not documented and approved, this is a finding"
   end
 end

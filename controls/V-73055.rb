@@ -61,7 +61,8 @@ control "V-73055" do
   For information on configuring PostgreSQL to use SSL, see supplementary content
   APPENDIX-G."
 
-  describe "Skip Test" do
-    skip "This is a manual check"
+  describe "The cn  attribute of the certificate will be compared to the requested database user name, and if they match the login will be allowed." do
+    skip "If the cn and the username mapping do not match, this is a finding."
+    skip "If the cn does not match the users listed in PostgreSQL and no user mapping is used, this is a finding."
   end
 end

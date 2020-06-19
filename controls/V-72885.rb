@@ -139,12 +139,6 @@ control "V-72885" do
   $ chown root:root <log directory name>/<log_filename>
   $ chmod 0700 <log directory name>
   $ chmod 0600 <log directory name>/*.log"
-
-  # @todo also need to test that error logging is enabled (where?) or test if log
-  # outputs to stderr? the pg_log directory should be 0700.
-  # @todo we need to decide how we are going to test for error logging and what the
-  # default setup will be per the CM
-  # @todo this test is dupe of V-72847.
     
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
    

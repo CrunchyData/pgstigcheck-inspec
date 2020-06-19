@@ -72,7 +72,7 @@ control "V-73027" do
 
   SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE user LIKE '%'"
 
-  describe "This can not be automated" do
-    skip "manually perform this test"
+  describe "Determine all situations where a user must re-authenticate" do
+    skip "If the provided SQL queries do not force re-authentication, this is a finding."
   end 
 end

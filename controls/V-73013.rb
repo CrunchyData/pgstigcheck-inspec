@@ -64,7 +64,7 @@ control "V-73013" do
   RLS policies can be very different depending on their use case. For one example
   of using RLS for Security Labels, see supplementary content APPENDIX-D."
 
-  describe "Skip Test" do
-    skip "Check if security labeling is implemented according to the system documentation"
+  describe "Check security labeling requirements" do
+    skip "If security labeling is not implemented or does not reliably maintain labels on information in process, this is a finding."
   end
 end

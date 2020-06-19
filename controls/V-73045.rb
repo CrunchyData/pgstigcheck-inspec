@@ -111,8 +111,7 @@ control "V-73045" do
     its('output') { should cmp 'local0'}
   end  
 
-  #Can not automate checking of continuous network connection
-  describe "Skip Test" do
-    skip "This is a manual check"
+  describe "Configure PostgreSQL or deploy and configure software tools to transfer audit records to a centralized log management system" do
+    skip "If continuous network connection to the log management system does not exist, or at least weekly in the absence of such a connection. This is a finding"
   end
 end

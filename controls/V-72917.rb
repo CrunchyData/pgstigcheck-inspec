@@ -49,11 +49,9 @@ control "V-72917" do
 
   packages = command("rpm -qa | grep postgres").stdout.split("\n")
 
-  pg_version_parsed = pg_version.tr('.','')
-
   packages.each do |package|
     describe(package) do
-      it { should include (pg_version_parsed) }
+      it { should include (pg_version) }
     end
   end
 end

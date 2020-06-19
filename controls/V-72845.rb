@@ -98,21 +98,20 @@ control "V-72845" do
     its('output') { should cmp pg_version}
   end
 
-  if command('rpm').exist?
-    rpm_packages = command("rpm -qa | grep postgres").stdout.split("\n")
+  if os.debian?
+    apt_packages = command("apt-cache policy postgres").stdout.split("\n")
 
-    rpm_packages.each do |package|
-      describe(package) do
+    apt_packages.each do |packages|
+      describe(packages) do
         it { should include (pg_version) }
       end
     end
-  end
+  
+  elsif os.linux? || os.redhat?
+    rpm_packages = command("rpm -qa | grep postgres").stdout.split("\n")
 
-  if command('apt-cache').exist?
-    apt_packages c= command("apt-cache policy postgres").stdout.split("\n")
-
-    apt_packages.each do |package|
-      describe(package) do
+    rpm_packages.each do |packages|
+      describe(packages) do
         it { should include (pg_version) }
       end
     end

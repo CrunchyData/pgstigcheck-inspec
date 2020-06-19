@@ -96,8 +96,15 @@ control "V-72841" do
     its('output') { should eq pg_port }
   end
 
-  describe port(pg_port) do
-    it { should be_listening }
-    its('processes') { should include 'postgres' }
+  if virtualization.system == 'docker'
+	describe "The docker container must have networking tools to check its ports and their processes" do
+	  skip "If the currently defined port configuration is deemed prohibited, this is a finding."
+	end
+
+  else
+    describe port(pg_port) do
+      it { should be_listening }
+      its('processes') { should include 'postgres' }
+	end
   end
 end

@@ -75,7 +75,7 @@ control "V-73051" do
   # restore at 5 pm every day of the week, month, year at the 0 minute mark. 
   0 17 * * * postgres /var/lib/pgsql/no_login.sh -d postgres -r"
 
-  describe "Skip Test" do
-    skip "This is a manual check"
+  describe "Check if organization's definition of circumstances requiring automatic session termination is met" do
+    skip "If the documentation requires automatic session termination, but PostgreSQL is not configured accordingly, this is a finding"
   end
 end

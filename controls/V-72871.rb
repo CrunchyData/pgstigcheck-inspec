@@ -82,7 +82,11 @@ control "V-72871" do
 
   Do not allow general users direct console access to PostgreSQL."
 
-  describe "Skip Test" do
-    skip "This is a manual check"
+  describe "Review PostgreSQL code, application code, settings, column and field definitions, and constraints to determine 
+  whether the database is protected against invalid input." do
+    skip "If code exists that allows invalid data to be acted upon or input into the database, this is a finding."
+    skip "If column/field definitions do not exist in the database, this is a finding."
+    skip "If columns/fields do not contain constraints and validity checking where required, this is a finding."
+    skip "If prepared statements are not used, this is a finding."
   end
 end

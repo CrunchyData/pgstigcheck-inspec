@@ -71,7 +71,8 @@ control "V-73023" do
 
   Schedule this script in cron to run around the clock."
 
-  describe "Skip Test" do
-    skip "This is a manual check"
+  describe "Check system configuration for storage alerts." do
+    skip "Review system configuration. If no script/tool is monitoring the partition for the PostgreSQL log directories, this is a finding."
+    skip "If appropriate support staff are not notified immediately upon storage volume utilization reaching 75%, this is a finding"
   end
 end

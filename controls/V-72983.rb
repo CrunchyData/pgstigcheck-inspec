@@ -62,7 +62,7 @@ control "V-72983" do
   To ensure that logging is enabled, review supplementary content APPENDIX-C for
   instructions on enabling logging."
 
-  describe "Skip Test" do
-    skip "This is a manual check"
+  describe "Check PostgreSQL auditing to determine whether organization-defined auditable events are being audited by the system" do
+    skip "If organization-defined auditable events are not being audited, this is a finding."
   end
 end

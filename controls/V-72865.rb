@@ -131,8 +131,9 @@ control "V-72865" do
             end
           end
             
-          describe "Skip Test" do
-              skip "Check if column acl is correct"
+          describe "Column acl check" do
+            skip "Review all access privileges and column access privileges list. 
+            If any roles' privileges exceed those documented, this is a finding."
           end
         
           tested.push(obj)

@@ -49,7 +49,7 @@ control "V-73057" do
   policy, and to ensure copies of production data are not left in unsecured
   locations."
 
-  describe "Skip Test" do
-    skip "This is a manual check"
+  describe "Review the procedures for the refreshing of development/test data from production." do
+    skip "If code for data movement does not comply with the organization-defined data transfer policy and/or fails to remove any copies of production data from unprotected locations, this is a finding."
   end
 end

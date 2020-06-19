@@ -48,7 +48,7 @@ control "V-72899" do
   desc "fix", "Develop, document, and implement procedures to restrict and track
   use of the PostgreSQL software installation account."
 
-  describe "Skip Test" do
-    skip "This is a manual check"
+  describe "Review procedures for controlling, granting access to, and tracking use of the PostgreSQL software installation account(s)." do
+    skip "If account(s) are not restricted to the minimum personnel required or if unauthorized access to the account has been granted, this is a finding"
   end
 end

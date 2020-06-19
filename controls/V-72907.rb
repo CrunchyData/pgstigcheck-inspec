@@ -1,14 +1,10 @@
-pg_ver = input('pg_version')
-
 pg_dba = input('pg_dba')
 
-pg_dba_password = input('pg_dba_password')
+pg_dba_password = input('pg_dba_password',)
 
 pg_db = input('pg_db')
 
 pg_host = input('pg_host')
-
-pg_log_dir = input('pg_log_dir')
 
 pg_audit_log_dir = input('pg_audit_log_dir')
 
@@ -78,10 +74,11 @@ control "V-72907" do
 
   All errors and denials are logged if logging is enabled."
 
-
   #Execute an incorrectly-formed SQL statement with bad syntax, to prompt log ouput
 
-  describe command("PGPASSWORD='#{pg_dba_password}' psql -U #{pg_dba} -d #{pg_db} -h #{pg_host} -A -t -c \"CREAT TABLE incorrect_syntax2(id INT);\"") do
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
+
+  describe sql.query('CREAT TABLE incorrect_syntax2(id INT);', [pg_db]) do
     its('stdout') { should match // }     
   end
 
@@ -91,5 +88,4 @@ control "V-72907" do
   describe command("cat `find #{pg_audit_log_dir} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d\" \"` | grep \"syntax error at or near\"") do
     its('stdout') { should match /^.*syntax error at or near .CREAT..*$/ }
   end
-
  end 

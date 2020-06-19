@@ -4,16 +4,7 @@ pg_ver = input('pg_version')
 
 pg_data_dir = input('pg_data_dir')
 
-PG_SHARED_LIBS = input(
-  'pg_shared_libs',
-  value: [
-    "/usr/pgsql-#{pg_ver}",
-    "/usr/pgsql-#{pg_ver}/bin",
-    "/usr/pgsql-#{pg_ver}/include",
-    "/usr/pgsql-#{pg_ver}/lib",
-    "/usr/pgsql-#{pg_ver}/share"
-  ]
-)
+pg_shared_dirs = input('pg_shared_dirs')
 
 control "V-72853" do
   title "Privileges to change PostgreSQL software modules must be limited."
@@ -96,18 +87,14 @@ control "V-72853" do
   $ sudo chown root:root /usr/pgsql-${PGVER?}/bin/*
   $ sudo chmod 0755 /usr/pgsql-${PGVER?}/bin/*"
 
-
-  #ver=nil
-  #ver=inspec.command("psql --version | awk \'{ print $NF }\' | awk -F. \'{ print $1\".\"$2 }\'").stdout.strip
-
   describe file(pg_data_dir) do
       it { should be_directory }
       it { should be_owned_by pg_owner }
       its('mode') { should cmp '0700' }
     end
 
-    PG_SHARED_LIBS.each do |libs|
-      describe file(libs) do
+    pg_shared_dirs.each do |dirs|
+      describe file(dirs) do
         it { should be_directory }
         it { should be_owned_by 'root' }
         its('mode') { should cmp '0755' }

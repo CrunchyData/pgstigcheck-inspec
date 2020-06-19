@@ -48,7 +48,7 @@ control "V-72893" do
   It is possible to create scripts or implement third-party tools to enable
   real-time alerting for audit failures in PostgreSQL."
 
-  describe "Skip Test" do
-    skip "This is a manual check"
+  describe "Review the system documentation to determine which audit failure events require real-time alerts." do
+    skip "If the real-time alerting that is specified in the documentation is not enabled, this is a finding."
   end 
 end

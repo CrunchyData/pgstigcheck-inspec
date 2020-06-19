@@ -1,11 +1,3 @@
-pg_dba = input('pg_dba')
-
-pg_dba_password = input('pg_dba_password')
-
-pg_db = input('pg_db')
-
-pg_host = input('pg_host')
-
 control "V-72861" do
   title "PostgreSQL must associate organization-defined types of security
   labels having organization-defined security label values with information in
@@ -75,9 +67,7 @@ control "V-72861" do
   RLS policies can be very different depending on their use case. For one example
   of using RLS for Security Labels, see supplementary content APPENDIX-D."
 
-  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
-
-  describe "Skip Test" do
-    skip "Check if security labeling is implemented according to the system documentation"
+  describe "Check security labeling is implemented according to the system documentation" do
+    skip "If security labeling is required if a policy is not attaced to the table, this is a finding."
   end
 end

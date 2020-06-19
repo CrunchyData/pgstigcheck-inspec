@@ -106,7 +106,8 @@ control "V-73053" do
   See the PostgreSQL documentation for more details:
   http://www.postgresql.org/docs/current/static/sql-revoke.html"
 
-  describe "Skip Test" do
-    skip "This is a manual check"
+  describe "Review the system documentation to obtain the definition of the PostgreSQL functionality considered privileged in the context of the system in question." do
+  skip "If the configuration does not protect all of the actions defined as privileged, this is a finding."
+  skip "If PostgreSQL instance uses procedural languages, such as pl/Python or pl/R, without AO authorization, this is a finding."
   end
 end
