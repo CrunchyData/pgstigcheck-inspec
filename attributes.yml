@@ -79,8 +79,16 @@ approved_packages: [
   '',
   ]
   
- approved_ext: [
+approved_ext: [
   '',
   ]
 
 pgaudit_installation: ''
+
+pg_object_granted_privileges: 'arwDxt'
+
+pg_object_public_privileges: 'r'
+
+pg_object_exceptions: [
+  'pg_setting',
+  ]
