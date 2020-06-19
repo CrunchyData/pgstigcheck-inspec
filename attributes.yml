@@ -89,6 +89,8 @@ pg_object_granted_privileges: 'arwDxt'
 
 pg_object_public_privileges: 'r'
 
+client_min_mesg: ''
+
 pg_object_exceptions: [
   'pg_setting',
   ]
