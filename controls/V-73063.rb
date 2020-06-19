@@ -1,4 +1,3 @@
-
 control "V-73063" do
   title "PostgreSQL must use NIST FIPS 140-2 validated cryptographic modules
   for cryptographic operations."
@@ -55,11 +54,12 @@ control "V-73063" do
   content APPENDIX-G."
 
   if virtualization.system == 'docker'
-	describe "The docker container must have openssl to enforce encryption" do
-	  skip "If \"fips\" is not included in the openssl version, this is a finding."
-	end
+	  describe "The docker container must have openssl to enforce encryption" do
+	    skip "If \"fips\" is not included in the openssl version, this is a finding."
+	  end
 
-  describe command('openssl version') do
-    its('stdout') { should include 'fips' }
+    describe command('openssl version') do
+      its('stdout') { should include 'fips' }
+    end
   end
 end
