@@ -1,5 +1,4 @@
 pg_version = input('pg_version')
-approved_packages = input('approved_packages')
 
 control "V-72917" do
   title "When updates are applied to PostgreSQL software, any software
