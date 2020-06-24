@@ -1,4 +1,5 @@
 pg_version = input('pg_version')
+approved_packages = input('approved_packages')
 
 control "V-72917" do
   title "When updates are applied to PostgreSQL software, any software
@@ -47,11 +48,21 @@ control "V-72917" do
   desc "fix", "Use package managers (RPM or apt-get) for installing PostgreSQL.
   Unused software is removed when updated."
 
-  packages = command("rpm -qa | grep postgres").stdout.split("\n")
+  if os.debian?
+    dpkg_packages = command("apt list --installed | grep \"postgres\"").stdout.split("\n")
+    dpkg_packages.each do |packages|
+      describe(packages) do
+        it { should match pg_version }
+      end
+    end
 
-  packages.each do |package|
-    describe(package) do
-      it { should include (pg_version) }
+  elsif os.linux? || os.redhat?
+    rpm_packages = command("rpm -qa | grep \"postgres\"").stdout.split("\n")
+
+    rpm_packages.each do |packages|
+      describe(packages) do
+        it { should match pg_version }
+      end
     end
   end
 end

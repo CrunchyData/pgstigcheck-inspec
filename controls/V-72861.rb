@@ -68,6 +68,6 @@ control "V-72861" do
   of using RLS for Security Labels, see supplementary content APPENDIX-D."
 
   describe "Check security labeling is implemented according to the system documentation" do
-    skip "If security labeling is required if a policy is not attaced to the table, this is a finding."
+    skip "If security labeling is required if a policy is not attached to the table, this is a finding."
   end
 end

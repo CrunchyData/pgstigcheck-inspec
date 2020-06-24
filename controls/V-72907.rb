@@ -79,7 +79,7 @@ control "V-72907" do
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
 
   describe sql.query('CREAT TABLE incorrect_syntax2(id INT);', [pg_db]) do
-    its('stdout') { should match // }     
+    its('output') { should match // }     
   end
 
   #Find the most recently modified log file in the pg_audit_log_dir, grep for the syntax error statement, and then

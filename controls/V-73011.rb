@@ -72,19 +72,18 @@ control "V-73011" do
   # Debian Systems
   $ sudo apt-get remove <package_name>"
 
-  if command('yum').exist?
-    yum_packages = command("yum list installed | grep \"postgres\"")
-    yum_packages.each do |package|
-      describe(package) do
-        it { should be_in approved_packages }
+  if os.debian?
+    dpkg_packages = command("dpkg --get-selections | grep \"postgres\"").stdout.tr('install','').split("\n")
+    dpkg_packages.each do |packages|
+      describe(packages) do
+        it { should be_in approvaed_packages }
       end
     end
-  end
   
-  if command('dpkg').exist?
-    dpkg_packages = command("dpkg --get-selections | grep \"postgres\"")
-    dpkg_packages.each do |package|
-      describe(package) do
+  elsif os.linux? || os.redhat?
+    yum_packages = command("yum list installed | grep \"postgres\"").stdout.strip.tr(' ','').split("\n")
+    yum_packages.each do |packages|
+      describe(packages) do
         it { should be_in approved_packages }
       end
     end

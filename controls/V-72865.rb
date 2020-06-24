@@ -130,16 +130,15 @@ control "V-72865" do
               its('output') { should match pg_settings_acl_regex }
             end
           end
-            
-          describe "Column acl check" do
-            skip "Review all access privileges and column access privileges list. 
-            If any roles' privileges exceed those documented, this is a finding."
-          end
-        
           tested.push(obj)
         end
       end
     end
+  end
+
+  describe "Column acl check" do
+    skip "Review all access privileges and column access privileges list. 
+    If any roles' privileges exceed those documented, this is a finding."
   end
 
   describe directory(pg_data_dir) do

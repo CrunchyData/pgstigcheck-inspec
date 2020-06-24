@@ -56,8 +56,9 @@ control "V-73063" do
   if virtualization.system == 'docker'
 	  describe "The docker container must have openssl to enforce encryption" do
 	    skip "If \"fips\" is not included in the openssl version, this is a finding."
-	  end
-
+    end
+  
+  elsif virtualization.system != 'docker'
     describe command('openssl version') do
       its('stdout') { should include 'fips' }
     end

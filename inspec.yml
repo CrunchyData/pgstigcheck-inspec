@@ -10,9 +10,243 @@ summary: "The Security Technical Implementation Guide is published as a tool to
           improve the security of Department of Defense (DoD) information
           systems. The requirements are derived from the National Institute of
           Standards and Technology (NIST) 800-53 and related documents. 
-          Release Date: 2017-01-20
+          Release Date: 2019-10-25
           Version: 1
           Publisher: DISA
           Source: STIG.DOD.MIL
           uri: http://iase.disa.mil"
-version: 1.0.0
+
+version: 1.6.0
+supports:
+  - os-family: linux
+
+# Note:
+# Export the <%= ENV['pg_owner'] %> to the environment to set them at runtime.
+
+inputs:
+  - name: pg_owner
+    description: "The system user of the postgres process"
+    type: string
+    value: <%= ENV['PG_OWNER'] %>
+    required: true
+
+  - name: pg_group
+    description: "The system group of the progress process"
+    type: string
+    value: <%= ENV['PG_OWNER_GRP'] %> #postgres
+    required: true
+
+  - name: pg_owner_password
+    description: "The postgres database owner password"
+    type: string
+    value: <%= ENV['PG_OWNER_PWD'] %>
+    retured: true
+
+  - name: pg_dba
+    description: "The postgres DBA user to access the test database"
+    type: string
+    value: <%= ENV['PG_DBA'] %>
+    required: true
+
+  - name: pg_dba_password
+    description: "The password for the postgres DBA user"
+    type: string
+    value: <%= ENV['PG_DBA_PWD'] %>
+    required: true
+
+  - name: pg_user
+    description: "The postgres daatabase system user"
+    type: string
+    value: <%= ENV['PG_USER'] %>
+    required: true
+
+  - name: pg_user_password
+    description: "The postgres database system user password"
+    type: string
+    value: <%= ENV['PG_USER_PWD'] %>
+    required: true
+
+  - name: pg_host
+    description: "The hostname or IP address used to connect to the database"
+    type: string
+    value: <%= ENV['PG_HOST'] %>
+    required: true
+
+  - name: pg_port
+    description: "The port used to connect to the database"
+    type: numeric
+    value: <%= ENV['PG_PORT'] %>
+    required: true
+
+  - name: login_user
+    description: "The host login account that can login to the postgres host"
+    type: string
+    value: <%= ENV['LOGIN_USER'] %>
+
+  - name: login_host
+    description: "The host ip address that can access the postgres host"
+    type: string
+    value: <%= ENV['LOGIN_HOST'] %>
+
+  - name: pg_syslog_owner
+    description: "The syslog process owner that the progress logs should use"
+    type: string
+    value: <%= ENV['PG_SYSLOG_OWNER'] %> #'postgres'
+
+  - name: pg_syslog_facility
+    description: "The syslog facility that postgres should be set to use for logging"
+    type: array
+    value:
+      - local0
+
+  - name: pg_db
+    description: "The database used for stig configuration tests"
+    type: string
+    value: "stig"
+    required: true
+
+  - name: pg_table
+    description: "The database table used for testing stig configuration tests"
+    type: string
+    value: "stig"
+    required: true
+
+  - name: pg_version
+    description: "The version of the Postgres software"
+    type: string
+    value: "9.5"
+    required: true
+
+  - name: pg_data_dir
+    description: "The postgres data directory"
+    type: string
+    value: "/var/lib/pgsql/9.5/data"
+    required: true
+
+  - name: pg_conf_file
+    description: "The postgres configuration file"
+    type: string
+    value: "/var/lib/pgsql/9.5/data/postgresql.conf"
+    required: true
+
+  - name: pg_user_defined_conf
+    description: "An additional postgres configuration file used to override default values"
+    type: string
+    value: "/var/lib/pgsql/9.5/data/stig-postgresql.conf"
+    required: true
+
+  - name: pg_hba_conf_file
+    description: "The postgres hba configuration file"
+    type: string
+    value: "/var/lib/pgsql/9.5/data/pg_hba.conf"
+    required: true
+
+  - name: pg_ident_conf_file
+    description: "The location of the `pg_ident_conf` file on the system"
+    type: string
+    value: "/var/lib/pgsql/9.5/data/pg_ident.conf"
+    required: true
+
+  - name: pg_log_dir
+    description: "The location of the postgres log files on the system"
+    type: string
+    value: "/var/lib/pgsql/9.5/data/pg_log"
+    required: true
+
+  - name: pg_object_granted_privileges
+    description: "Privileges that should be granted to a role for a database object"
+    type: string
+    value: "arwdDxt"
+    required: true
+
+  - name: pg_object_public_privileges
+    description: "Privileges that should be granted to public for a database object"
+    type: string
+    value: "r"
+    required: true
+
+  - name: pg_object_exceptions
+    description: "List of database objects that should be returned from tests"
+    type: array
+    value:
+      - "pg_settings"
+    required: true
+
+  - name: pg_shared_dirs
+    description: "The location of the Postgres system libraries"
+    type: array
+    value:
+      - "/usr/pgsql-9.5"
+      - "/usr/pgsql-9.5/bin"
+      - "/usr/pgsql-9.5/lib"
+      - "/usr/pgsql-9.5/share"
+    required: true
+
+  - name: pg_conf_mode
+    description: "The desired `mode` of the Postgres `potgres.conf` file."
+    type: string
+    value: "0600"
+    required: true
+
+  - name: pg_ssl
+    description: "The desired value to have postgres use ssl or not (on|off)"
+    type: string
+    value: "on"
+    required: true
+
+  - name: pg_log_dest
+    description: "The logging system that postgres should ship logs to (syslog)"
+    type: string
+    value: "syslog"
+    required: true
+
+  - name: pg_audit_log_dir
+    description: "The location of the postgres audit log files on the system"
+    type: string
+    value: "var/lib/pgsql/9.5/data/pg_log"
+    required: true
+
+  - name: pgaudit_log_items
+    description: "The expected item types that postgres should log to the logging system"
+    type: array
+    value:
+      - "ddl"
+      - "role"
+      - "read"
+      - "write"
+
+  - name: pgaudit_log_line_items
+    description: "The expected configuration of the items that progress is logging"
+    type: array
+    value:
+      - "%m"
+      - "%u"
+      - "%c"
+
+  - name: pg_superusers
+    description: "Authorized superuser accounts"
+    type: array
+    value:
+      - "postgres"
+
+  - name: pg_users
+    description: "authorized postgres user accounts"
+    type: array
+    value:
+      - ""
+
+  - name: pg_replicas
+    description: "List of postgres replicas in CIDR notation"
+    type: array
+    value:
+      - "192.168.1.3/32"
+
+  - name: pg_max_connections
+    description: "The maximum allowed number of connections to the postgres instance at any one time."
+    type: string
+    value: "100"
+
+  - name: pg_timezone
+    description: "The timezone of the postgres server"
+    type: string
+    value: "UTC"

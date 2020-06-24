@@ -76,13 +76,17 @@ control "V-72977" do
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
   
   describe sql.query('CREATE ROLE bob; CREATE TABLE test(id INT);', [pg_db]) do
+    its('output') { should match /CREATE TABLE/ }
   end
 
   describe sql.query('SET ROLE bob; GRANT ALL PRIVILEGES ON test TO bob;', [pg_db]) do
-    its('output') { should match /ERROR: permission denied for relation test/ }
+    its('output') { should match /\nERROR:  permission denied for relation test\ncommand terminated with exit code 1\n/ }
   end
 
   describe command("cat `find #{pg_audit_log_dir} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d\" \"` | grep \"permission denied for relation test\"") do
     its('stdout') { should match /^.*permission denied for relation test.*$/ }
+  end
+
+  describe sql.query('DROP ROLE bob; \c db; DROP TABLE "test" CASCADE', [pg_db]) do
   end
 end
