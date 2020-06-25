@@ -53,14 +53,18 @@ control "V-73063" do
   For more information on configuring PostgreSQL to use SSL, see supplementary
   content APPENDIX-G."
 
-  if virtualization.system == 'docker'
-	  describe "The docker container must have openssl to enforce encryption" do
-	    skip "If \"fips\" is not included in the openssl version, this is a finding."
+  if os.debian?
+    describe command("dpkg -l | grep -i openssl") do
+      its('stdout') {should include 'openssl' }
     end
   
-  elsif virtualization.system != 'docker'
-    describe command('openssl version') do
-      its('stdout') { should include 'fips' }
+  elsif os.linux? || os.redhat?
+    describe command("rpm -qa | grep -i openssl") do
+      its('stdout') {should include 'openssl' }
     end
+  end
+
+  describe command('openssl version') do
+    its('stdout') { should include 'fips' }
   end
 end

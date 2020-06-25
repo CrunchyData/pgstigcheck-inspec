@@ -121,11 +121,12 @@ control "V-73039" do
 
   describe file(pgaudit_installation) do
     it { should_not be_owned_by 'root' }
+    it { should be_grouped_into 'root' }
   end 
 
   describe directory(pg_data_dir) do
-    it { should be_owned_by 'root' }
-    it { should be_grouped_into 'root' }
+    it { should be_owned_by pg_owner }
+    it { should be_grouped_into pg_group }
   end 
 
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
