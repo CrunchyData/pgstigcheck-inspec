@@ -71,7 +71,7 @@ control "V-72901" do
     end
     if virtualization.system == 'docker'
       describe "If any non-PostgreSQL software directories exist on the disk directory, examine or investigate their use." do
-        skip "If any of the directories are used by other applications, including third-party applications that use the PostgreSQL, this is a finding."
+        skip "If this directory is used by other applications, including third-party applications that use the PostgreSQL, this is a finding."
       end
       
     else
