@@ -69,6 +69,7 @@ control "V-72901" do
       it { should be_grouped_into 'root' }
       its('mode') { should cmp '0755' }
     end
+  end  
 
   if virtualization.system == 'docker'
     describe "If any non-PostgreSQL software directories exist on the disk directory, examine or investigate their use." do

@@ -84,6 +84,6 @@ control "V-72975" do
   end
 
   describe command("cat `find #{pg_audit_log_dir} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d\" \"` | grep \"permission denied for relation\"") do
-    its('stdout') { should match /^.*fooaudittest.*$/ }
+   its('stdout') { should match /^.*pg_authid.*$/ }
   end   
 end
