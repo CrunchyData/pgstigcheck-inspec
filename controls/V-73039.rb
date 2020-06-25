@@ -120,7 +120,7 @@ control "V-73039" do
   end 
 
   describe file(pgaudit_installation) do
-    it { should_not be_owned_by 'root' }
+    it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
   end 
 
