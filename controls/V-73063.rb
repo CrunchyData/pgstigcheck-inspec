@@ -53,15 +53,8 @@ control "V-73063" do
   For more information on configuring PostgreSQL to use SSL, see supplementary
   content APPENDIX-G."
 
-  if os.debian?
-    describe command("dpkg -l | grep -i openssl") do
-      its('stdout') {should include 'openssl' }
-    end
-  
-  elsif os.linux? || os.redhat?
-    describe command("rpm -qa | grep -i openssl") do
-      its('stdout') {should include 'openssl' }
-    end
+  describe command('openssl') do
+    it { should exist }
   end
 
   describe command('openssl version') do
