@@ -62,11 +62,11 @@ Goto <https://downloads.chef.io/inspec/stable> and copy download link
 
 For example:
 
-- <https://packages.chef.io/files/stable/inspec/4.18.51/el/7/inspec-4.18.51-1.el7.x86_64.rpm>
+- <https://packages.chef.io/files/stable/inspec/4.20.10/el/8/inspec-4.20.10-1.el7.x86_64.rpm>
 
 
 ```sh
-sudo yum insall https://packages.chef.io/files/stable/inspec/4.18.51/el/7/inspec-4.18.51-1.el7.x86_64.rpm
+sudo yum insall https://packages.chef.io/files/stable/inspec/4.20.10/el/8/inspec-4.20.10-1.el7.x86_64.rpm
 ```
 
 #### Ensure InSpec Installed and is 4.x or higher
@@ -101,24 +101,24 @@ gem install inspec
 inspec --version
 ```
 
-### Setting & Reviewing the Core Profile Attributes
+### Setting & Reviewing the Core Profile Inputs
 
-The `core` or `shared` attributes are set in the `inspec.yml` file in the profile. This stores the default values for the
-shared attributes that the profile uses to examine your system.
+The `core` or `shared` inputs are set in the `inspec.yml` file in the profile. This stores the default values for the
+shared inputs that the profile uses to examine your system.
 
-These attributes _should not be edited directly_!
+These inputs _should not be edited directly_!
 
-If you need to override the default values for the core attributes to better match your system under evaluation, please:
+If you need to override the default values for the core inputs to better match your system under evaluation, please:
 
-1. Review the attributes and their defaults in the `inspec.yml` and note the attributes/inputs you need to tailor for your installation.
-2. Create a `system` or `instance` specific `attributes.yml` - such as `attributes.mysystem.yml` and override the attributes with this file.
-3. When you run the profile, you can load your updated attributes using the `--attrs` flag on the `inspec exec` command (see below)
+1. Review the inputs and their defaults in the `inspec.yml` and note the inputs you need to tailor for your installation.
+2. Create a `system` or `instance` specific `inputs.yml` - such as `inputs.mysystem.yml` and override the inputs with this file.
+3. When you run the profile, you can load your updated inputs using the `--attrs` flag on the `inspec exec` command (see below)
 
-### Sensitive Attributes (aka `passwords`, `system accounts` and `owners` in your PostgreSQL database )
+### Sensitive Inputs (aka `passwords`, `system accounts` and `owners` in your PostgreSQL database )
 
 The recommend way to store sensitive information is to use one of the environmental variables outlined below. For instance, you can set the password for the PostgreSQL user with the `PG_USER_PWD` environmental variable.
 
-Alternatively, you can set these variables in your `attributes.mysystem.yml` file, but again, this is not recommended for sensitive information like passwords.
+Alternatively, you can set these variables in your `inputs.mysystem.yml` file, but again, this is not recommended for sensitive information like passwords.
 
 #### Set the following `environment variables` before you run the profile:
 
@@ -135,7 +135,7 @@ Alternatively, you can set these variables in your `attributes.mysystem.yml` fil
 - LOGIN_HOST
 - PG_SYSLOG_OWNER
 
-### Examples for your `attributes.mysystem.yml`
+### Examples for your `inputs.mysystem.yml`
 
 #### OS Group, User
 
@@ -214,31 +214,31 @@ pg_timezone: "UTC"
 **Note**: replace the profile's directory name - e.g. - `pgstigcheck-inspec` with `.` if you are in the profile's root directory.
 
 ```sh
-inspec exec pgstigcheck-inspec/controls/V-72845.rb --input-files=attributes.mysystem.yml -i <your ssh private key> -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
+inspec exec pgstigcheck-inspec/controls/V-72845.rb --input-files=inputs.mysystem.yml -i <your ssh private key> -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
 ```
 
 or use the `--controls` flag
 
 ```sh
-inspec exec pgstigcheck-inspec --controls=V-72845 V-72861 --input-file=attributes.mysystem.yml  -i <your ssh private key>  -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
+inspec exec pgstigcheck-inspec --controls=V-72845 V-72861 --input-file=inputs.mysystem.yml  -i <your ssh private key>  -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
 ```
 
 #### Execute a Single Control and save results as HTML
 
 ```sh
-inspec exec pgstigcheck-inspec --controls=V-72845 --input-file=attributes.mysystem.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> --reporter cli html:myresults.html
+inspec exec pgstigcheck-inspec --controls=V-72845 --input-file=inputs.mysystem.yml -i <your ssh private key> --sudo --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> --reporter cli html:myresults.html
 ```
 
 #### Execute All Controls in the Profile
 
 ```sh
-inspec exec pgstigcheck-inspec --input-file=attributes.yml -i <your ssh private key> --sudo --sudo-password=<sudo user password> --sudo-options="-u postgres"  -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
+inspec exec pgstigcheck-inspec --input-file=inputs.yml -i <your ssh private key> --sudo --sudo-password=<sudo user password> --sudo-options="-u postgres"  -t ssh://<user>@<db host>:<port> --reporter cli json:myresults.json
 ```
 
 #### Execute all the Controls in the Profile and save results as HTML
 
 ```sh
-inspec exec pgstigcheck-inspec --input-files=attributes.yml -i <your ssh private key> --sudo --sudo-password=<sudo user password> --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> --reporter cli html:myresults.html
+inspec exec pgstigcheck-inspec --input-files=inputs.yml -i <your ssh private key> --sudo --sudo-password=<sudo user password> --sudo-options="-u postgres" -t ssh://<user>@<db host>:<port> --reporter cli html:myresults.html
 ```
 
 ### Reviewing your results
