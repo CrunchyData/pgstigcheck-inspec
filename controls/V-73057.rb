@@ -1,62 +1,55 @@
-# encoding: utf-8
-#
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-
 control "V-73057" do
   title "Database contents must be protected from unauthorized and unintended
-information transfer by enforcement of a data-transfer policy."
-  desc  "Applications, including PostgreSQLs, must prevent unauthorized and
-unintended information transfer via shared system resources.
+  information transfer by enforcement of a data-transfer policy."
+  desc  "Applications, including PostgreSQL, must prevent unauthorized and
+  unintended information transfer via shared system resources.  
 
-Data used for the development and testing of applications often involves copying
-data from production. It is important that specific procedures exist for this
-process, to include the conditions under which such transfer may take place, where
-the copies may reside, and the rules for ensuring sensitive data are not exposed.
+  Data used for the development and testing of applications often involves
+  copying data from production. It is important that specific procedures exist
+  for this process, to include the conditions under which such transfer may take
+  place, where the copies may reside, and the rules for ensuring sensitive data
+  are not exposed. 
 
-Copies of sensitive data must not be misplaced or left in a temporary location
-without the proper controls."
+  Copies of sensitive data must not be misplaced or left in a temporary
+  location without the proper controls."
+
   impact 0.5
   tag "severity": "medium"
   tag "gtitle": "SRG-APP-000243-DB-000128"
   tag "gid": "V-73057"
-  tag "rid": "SV-87709r1_rule"
+  tag "rid": "SV-87709r2_rule"
   tag "stig_id": "PGS9-00-011900"
+  tag "fix_id": "F-79503r1_fix"
   tag "cci": ["CCI-001090"]
   tag "nist": ["SC-4", "Rev_4"]
-  tag "check": "Review the procedures for the refreshing of development/test data
-from production.
+  tag "false_negatives": nil
+  tag "false_positives": nil
+  tag "documentable": false
+  tag "mitigations": nil
+  tag "severity_override_guidance": false
+  tag "potential_impacts": nil
+  tag "third_party_tools": nil
+  tag "mitigation_controls": nil
+  tag "responsibility": nil
+  tag "ia_controls": nil
+  desc "check", "Review the procedures for the refreshing of development/test data
+  from production.
 
-Review any scripts or code that exists for the movement of production data to
-development/test systems, or to any other location or for any other purpose.
+  Review any scripts or code that exists for the movement of production data to
+  development/test systems, or to any other location or for any other purpose.
 
-Verify that copies of production data are not left in unprotected locations.
+  Verify that copies of production data are not left in unprotected locations.
 
-If the code that exists for data movement does not comply with the
-organization-defined data transfer policy and/or fails to remove any copies of
-production data from unprotected locations, this is a finding."
+  If the code that exists for data movement does not comply with the
+  organization-defined data transfer policy and/or fails to remove any copies of
+  production data from unprotected locations, this is a finding."
 
-  tag "fix": "Modify any code used for moving data from production to
-development/test systems to comply with the organization-defined data transfer
-policy, and to ensure copies of production data are not left in unsecured locations."
+  desc "fix", "Modify any code used for moving data from production to
+  development/test systems to comply with the organization-defined data transfer
+  policy, and to ensure copies of production data are not left in unsecured
+  locations."
 
-  only_if { false }
-
+  describe "Review the procedures for the refreshing of development/test data from production." do
+    skip "If code for data movement does not comply with the organization-defined data transfer policy and/or fails to remove any copies of production data from unprotected locations, this is a finding."
+  end
 end

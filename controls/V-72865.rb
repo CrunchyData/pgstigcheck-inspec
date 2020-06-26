@@ -1,124 +1,88 @@
-# encoding: utf-8
-#
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
+pg_owner = input('pg_owner')
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
+pg_group = input('pg_group')
 
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-PG_OWNER = attribute(
-  'pg_owner',
-  description: "The system user of the postgres process",
-)
+pg_dba = input('pg_dba',)
 
-PG_GROUP = attribute(
-  'pg_group',
-  description: "The system group of the postgres process",
-)
+pg_dba_password = input('pg_dba_password')
 
-PG_DBA = attribute(
-  'pg_dba',
-  description: 'The postgres DBA user to access the test database',
-)
+pg_db = input('pg_db')
 
-PG_DBA_PASSWORD = attribute(
-  'pg_dba_password',
-  description: 'The password for the postgres DBA user',
-)
+pg_host = input('pg_host')
 
-PG_DB = attribute(
-  'pg_db',
-  description: 'The database used for tests',
-)
+pg_data_dir = input('pg_data_dir')
 
-PG_HOST = attribute(
-  'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
-)
-
-PG_DATA_DIR = attribute(
-  'pg_data_dir',
-  description: 'The postgres data directory',
-)
-
-PG_SUPERUSERS = attribute(
-  'pg_superusers',
-  description: 'Authorized superuser accounts',
-)
+pg_superusers = input('pg_superusers')
 
 control "V-72865" do
-  # @todo update the title of this control to something sane
-    title "The role(s)/group(s) used to modify database structure (including but
-          not necessarily limited to tables, indexes, storage, etc.) and logic
-          modules (functions, trigger procedures, links to software external to
-          PostgreSQL, etc.) must be restricted to authorized users."
-    desc  "If PostgreSQL were to allow any user to make changes to database
-          structure or logic, those changes might be implemented without
-          undergoing the appropriate testing and approvals that are part of a
-          robust change management process.
+  title "The role(s)/group(s) used to modify database structure (including but
+  not necessarily limited to tables, indexes, storage, etc.) and logic modules
+  (functions, trigger procedures, links to software external to PostgreSQL, etc.)
+  must be restricted to authorized users."
+  desc  "If PostgreSQL were to allow any user to make changes to database
+  structure or logic, those changes might be implemented without undergoing the
+  appropriate testing and approvals that are part of a robust change management
+  process.
 
-          Accordingly, only qualified and authorized individuals must be allowed
-          to obtain access to information system components for purposes of
-          initiating changes, including upgrades and modifications.
+  Accordingly, only qualified and authorized individuals must be allowed to
+  obtain access to information system components for purposes of initiating
+  changes, including upgrades and modifications.
 
-          Unmanaged changes that occur to the database software libraries or
-          configuration can lead to unauthorized or compromised installations."
-    impact 0.5
-    tag "severity": "medium"
-    tag "gtitle": "SRG-APP-000133-DB-000362"
-    tag "gid": "V-72865"
-    tag "rid": "SV-87517r1_rule"
-    tag "stig_id": "PGS9-00-001300"
-    tag "cci": ["CCI-001499"]
-    tag "nist": ["CM-5 (6)", "Rev_4"]
-    tag "check": "Note: The following instructions use the PGDATA environment
-                  variable. See supplementary content APPENDIX-F for instructions
-                  on configuring PGDATA.
+  Unmanaged changes that occur to the database software libraries or
+  configuration can lead to unauthorized or compromised installations."
 
-                  As the database administrator (shown here as \"postgres\"),
-                  list all users and their permissions by running the following
-                  SQL:
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000133-DB-000362"
+  tag "gid": "V-72865"
+  tag "rid": "SV-87517r1_rule"
+  tag "stig_id": "PGS9-00-001300"
+  tag "fix_id": "F-79307r1_fix"
+  tag "cci": ["CCI-001499"]
+  tag "nist": ["CM-5 (6)", "Rev_4"]
+  tag "false_negatives": nil
+  tag "false_positives": nil
+  tag "documentable": false
+  tag "mitigations": nil
+  tag "severity_override_guidance": false
+  tag "potential_impacts": nil
+  tag "third_party_tools": nil
+  tag "mitigation_controls": nil
+  tag "responsibility": nil
+  tag "ia_controls": nil
+  desc "check", "Note: The following instructions use the PGDATA environment
+  variable. See supplementary content APPENDIX-F for instructions on configuring
+  PGDATA.
 
-                  $ sudo su - postgres
-                  $ psql -c \"\\dp *.*\"
+  As the database administrator (shown here as \"postgres\"), list all users and
+  their permissions by running the following SQL:
 
-                  Verify that all objects have the correct privileges. If they do
-                  not, this is a finding.
+  $ sudo su - postgres
+  $ psql -c \"\\dp *.*\"
 
-                  Next, as the database administrator (shown here as \"postgres\"),
-                  verify the permissions of the database directory on the
-                  filesystem:
+  Verify that all objects have the correct privileges. If they do not, this is a
+  finding.
 
-                  $ ls -la ${PGDATA?}
+  Next, as the database administrator (shown here as \"postgres\"), verify the
+  permissions of the database directory on the filesystem:
 
-                  If permissions of the database directory are not limited to an
-                  authorized user account, this is a finding."
+  $ ls -la ${PGDATA?}
 
-    tag "fix": "As the database administrator, revoke any permissions from a role
-                that are deemed unnecessary by running the following SQL:
+  If permissions of the database directory are not limited to an authorized user
+  account, this is a finding."
 
-                ALTER ROLE bob NOCREATEDB;
-                ALTER ROLE bob NOCREATEROLE;
-                ALTER ROLE bob NOSUPERUSER;
-                ALTER ROLE bob NOINHERIT;
-                REVOKE SELECT ON some_function FROM bob;"
+  desc "fix", "As the database administrator, revoke any permissions from a role
+  that are deemed unnecessary by running the following SQL:
 
-  sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
+  ALTER ROLE bob NOCREATEDB;
+  ALTER ROLE bob NOCREATEROLE;
+  ALTER ROLE bob NOSUPERUSER;
+  ALTER ROLE bob NOINHERIT;
+  REVOKE SELECT ON some_function FROM bob;"
 
-  authorized_owners = PG_SUPERUSERS
+  sql = postgres_session(pg_dba, pg_dba_password, pg_host)
+
+  authorized_owners = pg_superusers
   owners = authorized_owners.join('|')
 
   object_granted_privileges = 'arwdDxtU'
@@ -138,7 +102,7 @@ control "V-72865" do
     "WHERE c.relkind IN ('r', 'v', 'm', 'S', 'f');"
 
   databases_sql = 'SELECT datname FROM pg_catalog.pg_database where not datistemplate;'
-  databases_query = sql.query(databases_sql, [PG_DB])
+  databases_query = sql.query(databases_sql, [pg_db])
   databases = databases_query.lines
 
   databases.each do |database|
@@ -166,16 +130,20 @@ control "V-72865" do
               its('output') { should match pg_settings_acl_regex }
             end
           end
-          # TODO: Add test for column acl
           tested.push(obj)
         end
       end
     end
   end
 
-  describe directory(PG_DATA_DIR) do
+  describe "Column acl check" do
+    skip "Review all access privileges and column access privileges list. 
+    If any roles' privileges exceed those documented, this is a finding."
+  end
+
+  describe directory(pg_data_dir) do
     it { should be_directory }
-    it { should be_owned_by PG_OWNER }
+    it { should be_owned_by pg_owner }
     its('mode') { should cmp '0700' }
   end
 end

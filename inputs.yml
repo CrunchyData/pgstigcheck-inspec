@@ -1,7 +1,7 @@
 # encoding: utf-8
 #
-# This is an example of an attributes file that can be passed to the profile
-# to override the defaults of the attributes defined in each of the tests.
+# This is an example of an input file that can be passed to the profile
+# to override the defaults of the inputs defined in each of the tests.
 # You can use this to automatically adjust your tests when using automation or
 # programmatic deployment or validation of different deployment patterns without
 # having to adjust the core profile.
@@ -26,7 +26,7 @@ pg_table: ''
 login_user: ''
 login_host: ''
 
-pg_version: '9.5'
+pg_version: '9.6'
 
 pg_data_dir: "/var/lib/pgsql/9.5/data"
 pg_conf_file: "/var/lib/pgsql/9.5/data/postgresql.conf"
@@ -38,6 +38,7 @@ pg_shared_dirs: [
   "/usr/pgsql-9.5",
   "/usr/pgsql-9.5/bin",
   "/usr/pgsql-9.5/lib",
+  "/usr/pgsql-9.5/include",
   "/usr/pgsql-9.5/share"
   ]
 
@@ -47,15 +48,17 @@ pg_log_dest: 'syslog'
 pg_syslog_facility: ['local0']
 pg_syslog_owner: 'postgres'
 
+pgaudit_installation: ''
+
 pgaudit_log_items: ['ddl','role','read','write']
 pgaudit_log_line_items: ['%m','%u','%c']
 
 pg_superusers: [
-  'postgres',
+  'postgres'
   ]
 
 pg_users: [
-  '',
+  ''
   ]
 
 pg_replicas: [
@@ -65,3 +68,27 @@ pg_replicas: [
 pg_max_connections: '100'
 
 pg_timezone: 'UTC'
+
+approved_auth_methods: [
+  'gss',
+  'sspi',
+  'ldap'
+  ]
+
+approved_packages: [
+  ''
+  ]
+  
+approved_ext: [
+  ''
+  ]
+
+pgaudit_installation: ''
+
+pg_object_granted_privileges: 'arwDxt'
+
+pg_object_public_privileges: 'r'
+
+pg_object_exceptions: [
+  'pg_setting'
+  ]
