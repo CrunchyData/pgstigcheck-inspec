@@ -119,7 +119,7 @@ control "V-73039" do
     it { should be_grouped_into pg_group }
   end 
 
-  describe file(pgaudit_installation) do
+  describe directory(pgaudit_installation) do
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
   end 

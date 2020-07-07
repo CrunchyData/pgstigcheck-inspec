@@ -101,6 +101,6 @@ control "V-72923" do
   end
 
   describe command("cat `find #{pg_audit_log_dir} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d\" \"` | grep \"does not exist\"") do
-    its('stdout') { should match /^.*role .foo. does not exist.*$/ }
+    its('stdout') { should match /^.*role \"pgauditrolefailuretest\" does not exist.*$/ }
   end
 end

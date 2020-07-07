@@ -75,7 +75,7 @@ control "V-72977" do
 
   sql = postgres_session(pg_dba, pg_dba_password, pg_host)
   
-  describe sql.query('CREATE ROLE bob; CREATE TABLE test(id INT);', [pg_db]) do
+  describe sql.query('DROP ROLE IF EXISTS bob; CREATE ROLE bob; CREATE TABLE test(id INT);', [pg_db]) do
     its('output') { should match /CREATE TABLE/ }
   end
 
@@ -87,6 +87,6 @@ control "V-72977" do
     its('stdout') { should match /^.*permission denied for relation test.*$/ }
   end
 
-  describe sql.query('DROP ROLE bob; \c db; DROP TABLE "test" CASCADE', [pg_db]) do
+  describe sql.query('DROP ROLE bob; DROP TABLE "test" CASCADE', [pg_db]) do
   end
 end
