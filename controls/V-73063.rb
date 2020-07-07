@@ -8,7 +8,6 @@ control "V-73063" do
   should not be relied on for authentication, confidentiality or integrity. Weak
   cryptography could allow an attacker to gain access to and modify data stored
   in the database as well as the administration settings of the DBMS.
-
   Applications, including DBMSs, utilizing cryptography are required to use
   approved NIST FIPS 140-2 validated cryptographic modules that meet the
   requirements of applicable federal laws, Executive Orders, directives,
