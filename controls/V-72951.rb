@@ -157,7 +157,7 @@ control "V-72951" do
     describe sql.query('SET ROLE bob; DROP SCHEMA test_schema;', [pg_db]) do
       its('output') { should match /ERROR:  must be owner of schema test_schema/ }
     end
-    
+  
     describe sql.query('DROP ROLE bob;', [pg_db]) do    
     end
 

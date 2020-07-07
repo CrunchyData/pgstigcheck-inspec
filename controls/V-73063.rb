@@ -8,7 +8,6 @@ control "V-73063" do
   should not be relied on for authentication, confidentiality or integrity. Weak
   cryptography could allow an attacker to gain access to and modify data stored
   in the database as well as the administration settings of the DBMS.
-
   Applications, including DBMSs, utilizing cryptography are required to use
   approved NIST FIPS 140-2 validated cryptographic modules that meet the
   requirements of applicable federal laws, Executive Orders, directives,
@@ -53,14 +52,11 @@ control "V-73063" do
   For more information on configuring PostgreSQL to use SSL, see supplementary
   content APPENDIX-G."
 
-  if virtualization.system == 'docker'
-    describe "The postgres container must have OpenSSL configured to meet FIPS Compliance" do
-      skip "If \"fips\" is not included in the openssl version, this is a finding."
-    end
+  describe command('openssl') do
+    it { should exist }
+  end
 
-  else
-    describe command('openssl version') do
-      its('stdout') { should include 'fips' }
-    end
+  describe command('openssl version') do
+    its('stdout') { should include 'fips' }
   end
 end
