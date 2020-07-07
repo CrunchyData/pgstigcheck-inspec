@@ -157,6 +157,9 @@ control "V-72951" do
     describe sql.query('SET ROLE bob; DROP SCHEMA test_schema;', [pg_db]) do
       its('output') { should match /ERROR:  must be owner of schema test_schema/ }
     end
+    
+    describe sql.query('DROP ROLE bob;', [pg_db]) do    
+    end
 
     describe command("cat `find #{pg_audit_log_dir} -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d\" \"` | grep \"permission denied for schema test_schema\"") do
       its('stdout') { should match /^.*permission denied for schema test_schema.*$/ }
