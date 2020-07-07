@@ -53,11 +53,14 @@ control "V-73063" do
   For more information on configuring PostgreSQL to use SSL, see supplementary
   content APPENDIX-G."
 
-  describe command('openssl') do
-    it { should exist }
-  end
+  if virtualization.system == 'docker'
+    describe "The postgres container must have OpenSSL configured to meet FIPS Compliance" do
+      skip "If \"fips\" is not included in the openssl version, this is a finding."
+    end
 
-  describe command('openssl version') do
-    its('stdout') { should include 'fips' }
+  else
+    describe command('openssl version') do
+      its('stdout') { should include 'fips' }
+    end
   end
 end
