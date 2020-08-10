@@ -1,5 +1,3 @@
-pg_owner = input('pg_owner')
-
 pg_dba = input('pg_dba')
 
 pg_dba_password = input('pg_dba_password')

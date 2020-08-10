@@ -9,7 +9,7 @@ license: Apache 2.0
 summary: "The Security Technical Implementation Guide is published as a tool to
           improve the security of Department of Defense (DoD) information
           systems. The requirements are derived from the National Institute of
-          Standards and Technology (NIST) 800-53 and related documents. 
+          Standards and Technology (NIST) 800-53 and related documents.
           Release Date: 2019-10-25
           Version: 1
           Publisher: DISA
@@ -20,78 +20,63 @@ version: 1.6.0
 supports:
   - os-family: linux
 
-# Note:
-# Export the <%= ENV['pg_owner'] %> to the environment to set them at runtime.
-
 inputs:
   - name: pg_owner
     description: "The system user of the postgres process"
     type: string
-    value: <%= ENV['PG_OWNER'] %>
     required: true
 
   - name: pg_group
     description: "The system group of the progress process"
     type: string
-    value: <%= ENV['PG_OWNER_GRP'] %> #postgres
     required: true
 
   - name: pg_owner_password
     description: "The postgres database owner password"
     type: string
-    value: <%= ENV['PG_OWNER_PWD'] %>
     retured: true
 
   - name: pg_dba
     description: "The postgres DBA user to access the test database"
     type: string
-    value: <%= ENV['PG_DBA'] %>
     required: true
 
   - name: pg_dba_password
     description: "The password for the postgres DBA user"
     type: string
-    value: <%= ENV['PG_DBA_PWD'] %>
     required: true
 
   - name: pg_user
     description: "The postgres daatabase system user"
     type: string
-    value: <%= ENV['PG_USER'] %>
     required: true
 
   - name: pg_user_password
     description: "The postgres database system user password"
     type: string
-    value: <%= ENV['PG_USER_PWD'] %>
     required: true
 
   - name: pg_host
     description: "The hostname or IP address used to connect to the database"
     type: string
-    value: <%= ENV['PG_HOST'] %>
     required: true
 
   - name: pg_port
     description: "The port used to connect to the database"
     type: numeric
-    value: <%= ENV['PG_PORT'] %>
     required: true
 
   - name: login_user
     description: "The host login account that can login to the postgres host"
     type: string
-    value: <%= ENV['LOGIN_USER'] %>
 
   - name: login_host
     description: "The host ip address that can access the postgres host"
     type: string
-    value: <%= ENV['LOGIN_HOST'] %>
 
   - name: pg_syslog_owner
     description: "The syslog process owner that the progress logs should use"
     type: string
-    value: <%= ENV['PG_SYSLOG_OWNER'] %> #'postgres'
 
   - name: pg_syslog_facility
     description: "The syslog facility that postgres should be set to use for logging"

@@ -1,7 +1,3 @@
-pg_host = input('pg_host')
-
-login_user = input('login_user')
-
 pg_dba = input('pg_dba')
 
 pg_dba_password = input('pg_dba_password')

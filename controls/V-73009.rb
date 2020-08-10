@@ -1,8 +1,4 @@
-pg_conf_file= input('pg_conf_file')
-
 pg_host = input('pg_host')
-
-login_user = input('login_user')
 
 pg_dba = input('pg_dba')
 

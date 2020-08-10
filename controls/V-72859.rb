@@ -1,5 +1,3 @@
-pg_ver = input('pg_version')
-
 pg_owner = input('pg_owner')
 
 pg_dba = input('pg_dba')
@@ -10,9 +8,7 @@ pg_db = input('pg_db')
 
 pg_host = input('pg_host')
 
-pg_data_dir = input('pg_data_dir')
-
-pg_superusers = input('pg_superusers')
+spg_superusers = input('pg_superusers')
 
 pg_hba_conf_file = input('pg_hba_conf_file')
 

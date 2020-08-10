@@ -10,8 +10,6 @@ pg_host = input('pg_host')
 
 pg_users = input('pg_users')
 
-pg_data_dir = input('pg_data_dir')
-
 pg_hba_conf_file = input('pg_hba_conf_file')
 
 pg_replicas = input('pg_replicas')

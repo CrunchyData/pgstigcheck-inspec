@@ -1,12 +1,8 @@
-pg_ver = input('pg_version')
-
 pg_dba = input('pg_dba')
 
 pg_dba_password = input('pg_dba_password')
 
 pg_db = input('pg_db')
-
-pg_host = input('pg_host')
 
 pg_log_dir = input('pg_log_dir')
 

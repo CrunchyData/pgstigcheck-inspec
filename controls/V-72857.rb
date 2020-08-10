@@ -1,5 +1,3 @@
-pg_data_dir = input('pg_data_dir')
-
 pg_hba_conf_file = input('pg_hba_conf_file')
 
 control "V-72857" do

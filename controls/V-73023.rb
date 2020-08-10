@@ -1,5 +1,3 @@
-pg_ver = input('pg_version')
-
 control "V-73023" do
   title "The system must provide a warning to appropriate support staff when
   allocated audit record storage volume reaches 75% of maximum audit record

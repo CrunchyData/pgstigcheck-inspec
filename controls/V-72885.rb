@@ -4,15 +4,11 @@ pg_dba_password = input('pg_dba_password')
 
 pg_db = input('pg_db')
 
-pg_port = input('pg_port')
-
 pg_host = input('pg_host')
 
 pg_log_dir = input('pg_log_dir')
 
 pg_owner = input('pg_owner')
-
-pg_conf_file = input('pg_conf_file')
 
 control "V-72885" do
   title "The audit information produced by PostgreSQL must be protected from

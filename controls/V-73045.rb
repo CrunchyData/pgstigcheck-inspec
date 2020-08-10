@@ -1,5 +1,3 @@
-pg_ver = input('pg_version')
-
 pg_dba = input('pg_dba')
 
 pg_dba_password = input('pg_dba_password')
@@ -7,8 +5,6 @@ pg_dba_password = input('pg_dba_password')
 pg_db = input('pg_db')
 
 pg_host = input('pg_host')
-
-pg_port = input('pg_port')
 
 control "V-73045" do
   title "PostgreSQL must off-load audit data to a separate log management

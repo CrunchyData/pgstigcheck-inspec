@@ -1,5 +1,3 @@
-pg_conf_file= input('pg_conf_file')
-
 pg_dba = input('pg_dba')
 
 pg_dba_password = input('pg_dba_password')

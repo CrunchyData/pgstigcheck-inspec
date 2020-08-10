@@ -1,5 +1,3 @@
-pg_ver = input('pg_version')
-
 pg_owner = input('pg_owner')
 
 pg_dba = input('pg_dba')

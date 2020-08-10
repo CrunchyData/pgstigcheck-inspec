@@ -8,8 +8,6 @@ pg_db = input('pg_db')
 
 pg_host = input('pg_host')
 
-pg_data_dir = input('pg_data_dir')
-
 pg_conf_file = input('pg_conf_file')
 
 pg_user_defined_conf = input('pg_user_defined_conf')

@@ -1,5 +1,3 @@
-pg_version = input('pg_version')
-
 pg_shared_dirs = input('pg_shared_dirs')
 
 control "V-72901" do
