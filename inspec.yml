@@ -20,78 +20,54 @@ version: 1.6.0
 supports:
   - os-family: linux
 
+# Note:
+# Export the <%= ENV['pg_owner'] %> to the environment to set them at runtime.
+
 inputs:
   - name: pg_owner
     description: "The system user of the postgres process"
     type: string
+    value: "postgres"
     required: true
 
   - name: pg_group
     description: "The system group of the progress process"
     type: string
+    value: "postgres"
     required: true
-
-  - name: pg_owner_password
-    description: "The postgres database owner password"
-    type: string
-    retured: true
 
   - name: pg_dba
     description: "The postgres DBA user to access the test database"
     type: string
+    value: "postgres"
     required: true
 
   - name: pg_dba_password
     description: "The password for the postgres DBA user"
     type: string
+    value: "postgres"
     required: true
 
   - name: pg_user
     description: "The postgres daatabase system user"
     type: string
-    required: true
-
-  - name: pg_user_password
-    description: "The postgres database system user password"
-    type: string
+    value: "postgres"
     required: true
 
   - name: pg_host
     description: "The hostname or IP address used to connect to the database"
     type: string
+    value: "localhost"
     required: true
 
   - name: pg_port
     description: "The port used to connect to the database"
     type: numeric
+    value: '5432'
     required: true
-
-  - name: login_user
-    description: "The host login account that can login to the postgres host"
-    type: string
-
-  - name: login_host
-    description: "The host ip address that can access the postgres host"
-    type: string
-
-  - name: pg_syslog_owner
-    description: "The syslog process owner that the progress logs should use"
-    type: string
-
-  - name: pg_syslog_facility
-    description: "The syslog facility that postgres should be set to use for logging"
-    type: array
-    value:
-      - local0
 
   - name: pg_db
     description: "The database used for stig configuration tests"
-    type: string
-    value: "stig"
-    required: true
-
-  - name: pg_table
-    description: "The database table used for testing stig configuration tests"
     type: string
     value: "stig"
     required: true
@@ -173,40 +149,11 @@ inputs:
     value: "0600"
     required: true
 
-  - name: pg_ssl
-    description: "The desired value to have postgres use ssl or not (on|off)"
-    type: string
-    value: "on"
-    required: true
-
-  - name: pg_log_dest
-    description: "The logging system that postgres should ship logs to (syslog)"
-    type: string
-    value: "syslog"
-    required: true
-
   - name: pg_audit_log_dir
     description: "The location of the postgres audit log files on the system"
     type: string
     value: "var/lib/pgsql/9.5/data/pg_log"
     required: true
-
-  - name: pgaudit_log_items
-    description: "The expected item types that postgres should log to the logging system"
-    type: array
-    value:
-      - "ddl"
-      - "role"
-      - "read"
-      - "write"
-
-  - name: pgaudit_log_line_items
-    description: "The expected configuration of the items that progress is logging"
-    type: array
-    value:
-      - "%m"
-      - "%u"
-      - "%c"
 
   - name: pg_superusers
     description: "Authorized superuser accounts"

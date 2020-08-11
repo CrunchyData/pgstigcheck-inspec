@@ -8,15 +8,15 @@
 
 pg_owner: 'postgres'
 pg_group: 'postgres'
-pg_owner_password: ''
+pg_owner_password: 'postgres'
 
-pg_dba: ''
-pg_dba_password: ''
-pg_db: ''
+pg_dba: 'postgres'
+pg_dba_password: 'postgres'
+pg_db: 'db'
 
-pg_user: ''
-pg_host: ''
-pg_port: ''
+pg_user: 'user'
+pg_host: 'localhost'
+pg_port: '5432'
 
 pg_version: '9.6'
 
